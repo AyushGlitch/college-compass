@@ -1,15 +1,16 @@
 import { Stack } from 'expo-router';
+import { View } from 'react-native';
 
 import { Container } from '~/components/Container';
-import { ScreenContent } from '~/components/ScreenContent';
+
 
 export default function Home() {
-  return (
-    <>
-      <Stack.Screen options={{ title: 'Tab Two' }} />
-      <Container>
-        <ScreenContent path="app/(drawer)/(tabs)/two.tsx" title="Tab Two" />
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <Stack.Screen options={{ title: 'Tab Two' }} />
+            <Container>
+                <View className='bg-red-500 h-screen w-screen' />
+            </Container>
+        </>
+    );
 }
