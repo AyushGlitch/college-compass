@@ -1,16 +1,16 @@
 import { Stack } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, View } from 'react-native'
+import { View } from 'react-native';
 
-import { Container } from '~/components/Container'
+import { Container } from '~/components/Container';
 
 export default function Home() {
   return (
-      <>
-        <Stack.Screen options={{ title: 'Home' }} />
-        <Container>
-          <SafeAreaView className='bg-red-500 h-screen w-screen' />
-        </Container>
-      </>
+    <>
+      <Stack.Screen options={{ title: 'Home' }} />
+      <Container>
+        <View className="h-screen w-screen bg-red-500" />
+      </Container>
+    </>
   );
 }
