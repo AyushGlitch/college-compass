@@ -1,7 +1,7 @@
 import '../global.css';
 
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
 
 SplashScreen.preventAutoHideAsync();
@@ -13,6 +13,10 @@ export const unstable_settings = {
 
 export default function RootLayout() {
     const isDark = false; // TODO: temporary solution
+    const isAuthenticated = false; // TODO: temporary solution
+
+    const router = useRouter();
+    const segments = useSegments();
 
     const [fontsLoaded, error] = useFonts({
         'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
@@ -35,6 +39,17 @@ export default function RootLayout() {
     if (!fontsLoaded && !error) {
         return null;
     }
+
+    // Routes user back to onboarding if not authenticated
+    useEffect(() => {
+        const inProtectedGroup = segments[0] === '(protected)';
+
+        if (isAuthenticated && !inProtectedGroup) {
+            router.replace('/(protected)/(drawer)');
+        } else if (!isAuthenticated && inProtectedGroup) {
+            router.replace('/');
+        }
+    }, [isAuthenticated]);
 
     return (
         <Stack

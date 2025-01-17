@@ -5,12 +5,6 @@ import CustomButton from '~/components/CustomButton';
 import { Redirect, router } from 'expo-router';
 
 const OnboardingScreen = () => {
-    const isAuthenticated = false; // TODO: temporary solution. change this to access main app
-
-    if (isAuthenticated) {
-        return <Redirect href={'/(protected)/(drawer)'} />;
-    }
-
     return (
         <Container className="justify-center gap-4 p-4">
             <View className="flex-1 justify-center">
