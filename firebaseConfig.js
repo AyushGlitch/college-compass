@@ -1,4 +1,6 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
+import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 // import { getAnalytics } from "firebase/analytics";
 
 // Optionally import the services that you want to use
@@ -19,5 +21,8 @@ const firebaseConfig = {
     measurementId: 'G-T5T8YZWYT2',
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+export const auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
 // const analytics = getAnalytics(app);

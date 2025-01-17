@@ -2,7 +2,9 @@ import '../global.css';
 
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter, useSegments } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { auth } from 'firebaseConfig';
+import { ActivityIndicator } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -12,11 +14,12 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-    const isDark = false; // TODO: temporary solution
-    const isAuthenticated = false; // TODO: temporary solution
-
     const router = useRouter();
     const segments = useSegments();
+    const isDark = false; // TODO: temporary solution
+
+    const [isInitializing, setIsInitializing] = useState(true);
+    const [user, setUser] = useState();
 
     const [fontsLoaded, error] = useFonts({
         'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
@@ -36,20 +39,33 @@ export default function RootLayout() {
         if (fontsLoaded) SplashScreen.hideAsync();
     }, [fontsLoaded, error]);
 
-    if (!fontsLoaded && !error) {
-        return null;
-    }
+    // if (!fontsLoaded && !error) {
+    //     return null;
+    // }
 
-    // Routes user back to onboarding if not authenticated
     useEffect(() => {
-        const inProtectedGroup = segments[0] === '(protected)';
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            console.log('onAuthStateChanged', user);
+            setUser(user as any);
+            if (isInitializing) setIsInitializing(false);
+        });
+        return () => unsubscribe();
+    }, []);
 
-        if (isAuthenticated && !inProtectedGroup) {
-            router.replace('/(protected)/(drawer)');
-        } else if (!isAuthenticated && inProtectedGroup) {
-            router.replace('/');
+    useEffect(() => {
+        if (!isInitializing) {
+            const inProtectedGroup = segments[0] === '(protected)';
+            if (user && !inProtectedGroup) {
+                router.replace('/(protected)/(drawer)');
+            } else if (!user && inProtectedGroup) {
+                router.replace('/');
+            }
         }
-    }, [isAuthenticated]);
+    }, [user, isInitializing]);
+
+    if (isInitializing || !fontsLoaded) {
+        return <ActivityIndicator />;
+    }
 
     return (
         <Stack
