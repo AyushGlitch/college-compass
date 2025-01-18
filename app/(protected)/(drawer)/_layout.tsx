@@ -51,8 +51,20 @@ function CustomDrawerContent(props: any) {
     return (
         <View style={{ flex: 1 }}>
             {/* Drawer Header */}
-            <View className="w-full items-center justify-center" style={{ paddingTop: top + 10 }}>
-                <View className="aspect-square h-32 bg-red-500" />
+            <View className="w-full">
+                <View
+                    className="mx-auto aspect-square w-[50%] items-center justify-center p-4"
+                    style={{ paddingTop: top + 10 }}>
+                    {/* <View className="aspect-square h-32 bg-red-500" /> */}
+                    <Image
+                        source={require('assets/app-assets/NIT-Delhi_Logo.png')}
+                        resizeMode="contain"
+                        className="w-full"
+                    />
+                </View>
+                <Text className="border-b border-gray-300 pb-4 text-center font-pblack text-sm">
+                    National Institute of Technology, Delhi
+                </Text>
             </View>
 
             {/* Drawer Items */}
@@ -63,12 +75,20 @@ function CustomDrawerContent(props: any) {
             {/* Footer Links */}
             <View
                 style={{ paddingBottom: bottom + 10 }}
-                className="flex-row items-center justify-center gap-4 border-t border-gray-300 py-3">
+                className="flex-row items-center justify-around gap-4 border-t border-gray-300 py-3">
+                {/* NIT Delhi Website */}
                 <TouchableOpacity
                     className="my-auto aspect-square items-center justify-center p-2"
                     onPress={() => Linking.openURL('https://nitdelhi.ac.in/')}>
                     <MaterialCommunityIcons name="web" size={24} color="grey" />
                     <Text className="font-pbold text-sm text-black/60">NITD</Text>
+                </TouchableOpacity>
+                {/* NIT Delhi ERP */}
+                <TouchableOpacity
+                    className="my-auto aspect-square items-center justify-center p-2"
+                    onPress={() => Linking.openURL('https://nitdelhi.ac.in/')}>
+                    <MaterialCommunityIcons name="web" size={24} color="grey" />
+                    <Text className="font-pbold text-sm text-black/60">ERP</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -77,7 +97,7 @@ function CustomDrawerContent(props: any) {
 
 const DrawerLayout = () => (
     <Drawer
-        screenOptions={{
+        screenOptions={({ navigation }) => ({
             headerLeft: () => (
                 <Ionicons
                     name="menu"
@@ -87,12 +107,13 @@ const DrawerLayout = () => (
                     style={{
                         paddingHorizontal: 20,
                     }}
+                    onPress={() => navigation.openDrawer()}
                 />
             ),
             drawerStyle: {
                 width: '70%',
             },
-        }}
+        })}
         drawerContent={CustomDrawerContent}>
         <Drawer.Screen
             name="index"

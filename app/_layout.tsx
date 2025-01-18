@@ -17,7 +17,7 @@ export default function RootLayout() {
     const segments = useSegments();
     const isDark = false; // TODO: temporary solution
 
-    const [isInitializing, setIsInitializing] = useState(false);
+    const [isInitializing, setIsInitializing] = useState(true);
     const [user, setUser] = useState(true);
 
     const [fontsLoaded, error] = useFonts({
@@ -37,6 +37,7 @@ export default function RootLayout() {
 
         if (fontsLoaded) {
             SplashScreen.hideAsync();
+            setIsInitializing(false);
         }
     }, [fontsLoaded, error]);
 
