@@ -2,7 +2,6 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { Container } from '~/components/Container';
 import CustomButton from '~/components/CustomButton';
-import { router } from 'expo-router';
 
 const OnboardingScreen3 = () => {
     return (
@@ -14,9 +13,9 @@ const OnboardingScreen3 = () => {
                 </Text>
             </View>
             <CustomButton
-                title="Login"
+                title="Sign in with Google"
                 containerStyles="w-full"
-                handlePress={() => console.warn('OAuth Login')}
+                handlePress={() => console.warn('Sign in using Google')}
             />
         </Container>
     );

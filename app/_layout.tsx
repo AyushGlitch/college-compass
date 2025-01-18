@@ -3,7 +3,6 @@ import '../global.css';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter, useSegments } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { auth } from 'firebaseConfig';
 import { ActivityIndicator } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
@@ -18,8 +17,8 @@ export default function RootLayout() {
     const segments = useSegments();
     const isDark = false; // TODO: temporary solution
 
-    const [isInitializing, setIsInitializing] = useState(true);
-    const [user, setUser] = useState();
+    const [isInitializing, setIsInitializing] = useState(false);
+    const [user, setUser] = useState(true);
 
     const [fontsLoaded, error] = useFonts({
         'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
@@ -36,21 +35,23 @@ export default function RootLayout() {
     useEffect(() => {
         if (error) throw error;
 
-        if (fontsLoaded) SplashScreen.hideAsync();
+        if (fontsLoaded) {
+            SplashScreen.hideAsync();
+        }
     }, [fontsLoaded, error]);
 
     // if (!fontsLoaded && !error) {
     //     return null;
     // }
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            console.log('onAuthStateChanged', user);
-            setUser(user as any);
-            if (isInitializing) setIsInitializing(false);
-        });
-        return () => unsubscribe();
-    }, []);
+    // useEffect(() => {
+    //     const unsubscribe = auth.onAuthStateChanged((user) => {
+    //         console.log('onAuthStateChanged', user);
+    //         setUser(user as any);
+    //         if (isInitializing) setIsInitializing(false);
+    //     });
+    //     return () => unsubscribe();
+    // }, []);
 
     useEffect(() => {
         if (!isInitializing) {
