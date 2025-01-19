@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container } from '~/components/Container';
 import CustomButton from '~/components/CustomButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import uuid from 'react-native-uuid';
 
 const ColabNotesScreen = () => {
