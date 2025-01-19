@@ -165,6 +165,16 @@ const DrawerLayout = () => (
                 ),
             }}
         />
+        <Drawer.Screen
+            name="colabNotes"
+            options={{
+                headerTitle: 'Collab Notes',
+                drawerLabel: 'Collab Notes',
+                drawerIcon: ({ size, color }) => (
+                    <MaterialCommunityIcons name="application-edit" size={size} color={color} />
+                ),
+            }}
+        />
     </Drawer>
 );
 
