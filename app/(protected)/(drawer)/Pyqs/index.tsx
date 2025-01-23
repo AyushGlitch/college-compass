@@ -7,7 +7,7 @@ export default function PYQs() {
     const webViewRef = useRef<any>();
     const [currentUrl, setCurrentUrl] = useState('');
 
-    const eduzoneUrl = 'https://eduzone-nitd.pages.dev/search/1';
+    const eduzoneUrl = 'https://eduzone-nitd.pages.dev/';
 
     const injectedJavaScript = `
     (function() {
