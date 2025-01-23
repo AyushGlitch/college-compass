@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const AttendanceScreen = () => {
+const HistoryScreen = () => {
   return (
     <View>
-      <Text>AttendanceScreen</Text>
+      <Text>HistoryScreen</Text>
     </View>
   )
 }
 
-export default AttendanceScreen
+export default HistoryScreen

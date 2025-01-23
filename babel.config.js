@@ -1,6 +1,6 @@
 module.exports = function (api) {
     api.cache(true);
-    const plugins = [];
+    const plugins =  [["inline-import", { "extensions": [".sql"]}]];
 
     plugins.push('react-native-reanimated/plugin');
 
