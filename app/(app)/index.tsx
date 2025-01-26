@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
 import { Container } from '~/components/Container';
 import CustomButton from '~/components/CustomButton';
@@ -20,7 +20,7 @@ const OnboardingScreen = () => {
             <CustomButton
                 title="Continue"
                 containerStyles="w-full"
-                handlePress={() => router.push('/onboarding2')}
+                handlePress={() => router.push('/(app)/onboarding2')}
             />
         </Container>
     );

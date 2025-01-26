@@ -20,7 +20,7 @@ const OnboardingScreen2 = () => {
             <CustomButton
                 title="Continue"
                 containerStyles="w-full"
-                handlePress={() => router.push('/onboarding3')}
+                handlePress={() => router.push('/(app)/onboarding3')}
             />
         </Container>
     );
