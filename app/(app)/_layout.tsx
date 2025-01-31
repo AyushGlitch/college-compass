@@ -16,6 +16,8 @@ import { ActivityIndicator } from 'react-native';
 import { db } from '~/db/drizzle';
 import migrations from '~/db/migrations/migrations';
 
+import { FIREBASE_AUTH } from 'firebaseConfig';
+
 type Result = {
     count: number;
 }[];
@@ -51,6 +53,7 @@ async function seedData(db: ExpoSQLiteDatabase) {
 }
 
 export default function AppLayout() {
+    const auth = FIREBASE_AUTH; // IMPORTING AUTH INSTANCE
     const router = useRouter();
     const segments = useSegments();
     console.warn('CURRENT ROUTE:', segments);
@@ -58,11 +61,12 @@ export default function AppLayout() {
     const isDark = false; // TODO: temporary solution
 
     const [isInitializing, setIsInitializing] = useState(true);
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(true); // FIREBASE AUTH USER
 
     const { success, error } = useMigrations(db, migrations);
     useDrizzleStudio(db);
 
+    // SEEDING DATA IF NEEDED INITIALLY
     useEffect(() => {
         if (error) throw error;
 
@@ -72,6 +76,17 @@ export default function AppLayout() {
         }
     }, [success, error]);
 
+    // LISTENING TO AUTH STATE CHANGES
+    // useEffect(() => {
+    //     const unsubscribe = auth.onAuthStateChanged((user) => {
+    //         console.log('onAuthStateChanged', user);
+    //         setUser(user);
+    //         if (isInitializing) setIsInitializing(false);
+    //     });
+    //     return () => unsubscribe();
+    // }, []);
+
+    // REDIRECTING BASED ON AUTH STATUS
     useEffect(() => {
         if (!isInitializing) {
             const inProtectedGroup = segments[1] === '(protected)';

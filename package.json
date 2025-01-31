@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-picker/picker": "2.9.0",
     "@react-navigation/bottom-tabs": "^7.0.5",
     "@react-navigation/drawer": "^7.0.0",
@@ -29,6 +30,7 @@
     "expo-sqlite": "~15.0.6",
     "expo-status-bar": "~2.0.1",
     "expo-system-ui": "~4.0.7",
+    "firebase": "^11.2.0",
     "nativewind": "latest",
     "react": "18.3.1",
     "react-dom": "18.3.1",
