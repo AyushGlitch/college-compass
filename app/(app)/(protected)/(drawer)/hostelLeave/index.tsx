@@ -37,6 +37,7 @@ const HostelLeave = () => {
         setShowDatePicker(null);
     };
 
+    // TODO: Add rich html email template for Gmail API
     const sendEmail = () => {
         if (!leaveDate || !returnDate || !leaveTime || !reason || !destination) {
             Alert.alert('Error', 'Please fill in all fields before sending.');
@@ -44,16 +45,17 @@ const HostelLeave = () => {
         }
 
         const emailSubject = 'Hostel Leave Application';
+
         const emailBody = `
   Dear Warden,
   
   I am writing to formally request leave from the hostel. Below are the details of my leave:
   
-  - **Date of Leaving:** ${dayjs(leaveDate).format('DD/MM/YYYY')}
-  - **Date of Return:** ${dayjs(returnDate).format('DD/MM/YYYY')}
-  - **Leaving Time:** ${dayjs(leaveTime).format('hh:mm A')}
-  - **Destination:** ${destination}
-  - **Reason for Leave:** ${reason}
+  📅 *Date of Leaving:* ${dayjs(leaveDate).format('DD/MM/YYYY')}
+  📅 *Date of Return:* ${dayjs(returnDate).format('DD/MM/YYYY')}
+  ⏰ *Leaving Time:* ${dayjs(leaveTime).format('hh:mm A')}
+  📍 *Destination:* ${destination}
+  📝 *Reason for Leave:* ${reason}
   
   I assure you that I will abide by all hostel rules and return on the mentioned date. Kindly grant me permission for the leave.
   
@@ -61,9 +63,7 @@ const HostelLeave = () => {
   
   Sincerely,  
   [Your Name]  
-  [Your Roll Number]  
-  [Your Room Number]  
-  [Your Contact Number]  
+  [Your Roll Number] | [Your Room Number] | [Your Contact Number]
       `;
 
         const recipientEmail = '221210006@nitdelhi.ac.in';
