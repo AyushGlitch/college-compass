@@ -49,7 +49,7 @@ function CustomDrawerContent(props: any) {
     const { top, bottom } = useSafeAreaInsets();
 
     return (
-        <View className='flex-1'>
+        <View className="flex-1">
             {/* Drawer Header */}
             <View className="w-full">
                 <View
@@ -122,7 +122,6 @@ const DrawerLayout = () => (
                 headerTitle: 'Home',
                 drawerLabel: 'Home',
                 drawerIcon: ({ size, color }) => <Ionicons name="home" size={size} color={color} />,
-                // headerStyle: { backgroundColor: 'black' },
             }}
         />
 

@@ -8,15 +8,16 @@ import * as Google from 'expo-auth-session/providers/google';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { FIREBASE_AUTH } from '~/firebaseConfig';
 import { makeRedirectUri } from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession();
 
 const OnboardingScreen3 = () => {
     const auth = FIREBASE_AUTH; // GET FIREBASE AUTH INSTANCE
     const [isLoading, setIsLoading] = useState(false);
 
     // GOOGLE AUTH FLOW REQUEST
-    const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    const [request, response, promptAsync] = Google.useAuthRequest({
         webClientId: '499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com',
         androidClientId: '499007111473-js9hv6mda0chi4bp2t3g054qnl12mgkk.apps.googleusercontent.com',
         scopes: ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/gmail.readonly'],
@@ -34,17 +35,27 @@ const OnboardingScreen3 = () => {
     useEffect(() => {
         if (response?.type === 'success') {
             console.warn('expo-auth-session response', response);
-            const { id_token } = response.params; // Extract id_token instead of access_token
+            const { idToken, accessToken, refreshToken, expiresIn }: any = response.authentication; // Extract id_token instead of access_token
 
-            if (!id_token) {
-                console.error('No ID Token received!');
+            if (!idToken || !accessToken || !refreshToken || !expiresIn) {
+                console.error('Missing Tokens!');
                 return;
             }
 
-            const credential = GoogleAuthProvider.credential(id_token);
+            const credential = GoogleAuthProvider.credential(idToken);
             signInWithCredential(auth, credential)
-                .then((userCredential) => {
+                .then(async (userCredential) => {
                     console.log('User signed in:', userCredential.user);
+
+                    const promises = [
+                        AsyncStorage.setItem('accessToken', accessToken),
+                        AsyncStorage.setItem('refreshToken', refreshToken),
+                        AsyncStorage.setItem(
+                            'expiryTime',
+                            (Date.now() + expiresIn * 1000).toString()
+                        ),
+                    ];
+                    await Promise.all(promises);
                 })
                 .catch((error) => {
                     console.error('Sign-in failed:', error);
