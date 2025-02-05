@@ -17,15 +17,15 @@ const EmailSorter = () => {
             setLoading(true);
             setError(null); // Reset errors
             const fetchedEmails = await fetchEmails();
-            
+
             if (fetchedEmails) {
                 setEmails(fetchedEmails);
             } else {
-                setError("No emails found.");
+                setError('No emails found.');
                 setEmails([]);
             }
         } catch (err) {
-            setError("Failed to fetch emails. Please try again.");
+            setError('Failed to fetch emails. Please try again.');
             setEmails([]);
         } finally {
             setLoading(false);
@@ -52,11 +52,11 @@ const EmailSorter = () => {
                 </View>
             ) : error ? (
                 <View className="flex-1 items-center justify-center">
-                    <Text className="text-red-500 font-semibold">{error}</Text>
+                    <Text className="font-semibold text-red-500">{error}</Text>
                 </View>
             ) : emails.length === 0 ? (
                 <View className="flex-1 items-center justify-center">
-                    <Text className="text-gray-500 font-medium">No emails found.</Text>
+                    <Text className="font-medium text-gray-500">No emails found.</Text>
                 </View>
             ) : (
                 <FlatList
@@ -64,7 +64,11 @@ const EmailSorter = () => {
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => <EmailCard email={item} accessToken={accessToken} />}
                     refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#007AFF"]} />
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                            colors={['#007AFF']}
+                        />
                     }
                 />
             )}

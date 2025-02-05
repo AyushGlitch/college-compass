@@ -1,47 +1,47 @@
 {
-  "project_info": {
-    "project_number": "499007111473",
-    "project_id": "college-compass-6354f",
-    "storage_bucket": "college-compass-6354f.firebasestorage.app"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:499007111473:android:442e0cb686eca5e2993010",
-        "android_client_info": {
-          "package_name": "com.aditya221210011.collegecompass"
-        }
-      },
-      "oauth_client": [
+    "project_info": {
+        "project_number": "499007111473",
+        "project_id": "college-compass-6354f",
+        "storage_bucket": "college-compass-6354f.firebasestorage.app"
+    },
+    "client": [
         {
-          "client_id": "499007111473-js9hv6mda0chi4bp2t3g054qnl12mgkk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.aditya221210011.collegecompass",
-            "certificate_hash": "9ca348b00f75704baa6697950c00f2edf7624bca"
-          }
-        },
-        {
-          "client_id": "499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDTLdlwen7ppC4surid-5MhWsuHJFW6A2o"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com",
-              "client_type": 3
+            "client_info": {
+                "mobilesdk_app_id": "1:499007111473:android:442e0cb686eca5e2993010",
+                "android_client_info": {
+                    "package_name": "com.aditya221210011.collegecompass"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "499007111473-js9hv6mda0chi4bp2t3g054qnl12mgkk.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "com.aditya221210011.collegecompass",
+                        "certificate_hash": "9ca348b00f75704baa6697950c00f2edf7624bca"
+                    }
+                },
+                {
+                    "client_id": "499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyDTLdlwen7ppC4surid-5MhWsuHJFW6A2o"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com",
+                            "client_type": 3
+                        }
+                    ]
+                }
             }
-          ]
         }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    ],
+    "configuration_version": "1"
 }

@@ -1,176 +1,170 @@
 interface preDefinedTimeTableDataInterface {
-    degreeId: string,
-    branchId: string,
-    semester: number,
-    courseId: string,
-    isLecture: number,
-    isLab: number,
+    degreeId: string;
+    branchId: string;
+    semester: number;
+    courseId: string;
+    isLecture: number;
+    isLab: number;
 }
-
 
 const CSE6: preDefinedTimeTableDataInterface[] = [
     {
-        degreeId: "B.Tech",
-        branchId: "CSE",
+        degreeId: 'B.Tech',
+        branchId: 'CSE',
         semester: 6,
-        courseId: "CSBB351",
+        courseId: 'CSBB351',
         isLecture: 1,
         isLab: 1,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "CSE",
+        degreeId: 'B.Tech',
+        branchId: 'CSE',
         semester: 6,
-        courseId: "CSBB352",
+        courseId: 'CSBB352',
         isLecture: 1,
         isLab: 1,
     },
-]
-
+];
 
 const ECE6: preDefinedTimeTableDataInterface[] = [
     {
-        degreeId: "B.Tech",
-        branchId: "ECE",
+        degreeId: 'B.Tech',
+        branchId: 'ECE',
         semester: 6,
-        courseId: "ECLB351",
+        courseId: 'ECLB351',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "ECE",
+        degreeId: 'B.Tech',
+        branchId: 'ECE',
         semester: 6,
-        courseId: "ECBB352",
+        courseId: 'ECBB352',
         isLecture: 1,
         isLab: 1,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "ECE",
+        degreeId: 'B.Tech',
+        branchId: 'ECE',
         semester: 6,
-        courseId: "ECBB353",
+        courseId: 'ECBB353',
         isLecture: 1,
         isLab: 1,
     },
-]
-
+];
 
 const EE6: preDefinedTimeTableDataInterface[] = [
     {
-        degreeId: "B.Tech",
-        branchId: "EE",
+        degreeId: 'B.Tech',
+        branchId: 'EE',
         semester: 6,
-        courseId: "EEB351",
+        courseId: 'EEB351',
         isLecture: 1,
         isLab: 1,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "EE",
+        degreeId: 'B.Tech',
+        branchId: 'EE',
         semester: 6,
-        courseId: "EEP352",
+        courseId: 'EEP352',
         isLecture: 0,
         isLab: 1,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "EE",
+        degreeId: 'B.Tech',
+        branchId: 'EE',
         semester: 6,
-        courseId: "CSB310",
+        courseId: 'CSB310',
         isLecture: 1,
         isLab: 1,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "EE",
+        degreeId: 'B.Tech',
+        branchId: 'EE',
         semester: 6,
-        courseId: "HML352",
+        courseId: 'HML352',
         isLecture: 1,
         isLab: 0,
     },
-]
-
+];
 
 const ME6: preDefinedTimeTableDataInterface[] = [
     {
-        degreeId: "B.Tech",
-        branchId: "ME",
+        degreeId: 'B.Tech',
+        branchId: 'ME',
         semester: 6,
-        courseId: "MELB351",
+        courseId: 'MELB351',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "ME",
+        degreeId: 'B.Tech',
+        branchId: 'ME',
         semester: 6,
-        courseId: "MEBB361",
+        courseId: 'MEBB361',
         isLecture: 1,
         isLab: 1,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "ME",
+        degreeId: 'B.Tech',
+        branchId: 'ME',
         semester: 6,
-        courseId: "MEBB362",
+        courseId: 'MEBB362',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "ME",
+        degreeId: 'B.Tech',
+        branchId: 'ME',
         semester: 6,
-        courseId: "MEBB363",
+        courseId: 'MEBB363',
         isLecture: 1,
         isLab: 1,
     },
-]
-
+];
 
 const CE6: preDefinedTimeTableDataInterface[] = [
     {
-        degreeId: "B.Tech",
-        branchId: "CE",
+        degreeId: 'B.Tech',
+        branchId: 'CE',
         semester: 6,
-        courseId: "CELB351",
+        courseId: 'CELB351',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "CE",
+        degreeId: 'B.Tech',
+        branchId: 'CE',
         semester: 6,
-        courseId: "CELB352",
+        courseId: 'CELB352',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "CE",
+        degreeId: 'B.Tech',
+        branchId: 'CE',
         semester: 6,
-        courseId: "CELB353",
+        courseId: 'CELB353',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "CE",
+        degreeId: 'B.Tech',
+        branchId: 'CE',
         semester: 6,
-        courseId: "CELB354",
+        courseId: 'CELB354',
         isLecture: 1,
         isLab: 0,
     },
     {
-        degreeId: "B.Tech",
-        branchId: "CE",
+        degreeId: 'B.Tech',
+        branchId: 'CE',
         semester: 6,
-        courseId: "HMLB359",
+        courseId: 'HMLB359',
         isLecture: 1,
         isLab: 0,
     },
-]
-
+];
 
 export const preDefinedTTData6: preDefinedTimeTableDataInterface[] = [
     ...CSE6,
@@ -178,4 +172,4 @@ export const preDefinedTTData6: preDefinedTimeTableDataInterface[] = [
     ...EE6,
     ...ME6,
     ...CE6,
-]
+];
