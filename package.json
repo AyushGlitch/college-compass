@@ -14,7 +14,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
     "@react-native-async-storage/async-storage": "1.23.1",
-    "@react-native-community/datetimepicker": "8.2.0",
+    "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-picker/picker": "2.9.0",
     "@react-navigation/bottom-tabs": "^7.0.5",
     "@react-navigation/drawer": "^7.0.0",
@@ -24,6 +24,7 @@
     "dayjs": "^1.11.13",
     "drizzle-orm": "^0.38.4",
     "expo": "^52.0.25",
+    "expo-auth-session": "~6.0.3",
     "expo-clipboard": "~7.0.1",
     "expo-constants": "~17.0.4",
     "expo-crypto": "~14.0.2",
@@ -48,8 +49,7 @@
     "react-native-uuid": "^2.0.3",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "zustand": "^4.5.1",
-    "expo-auth-session": "~6.0.3"
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

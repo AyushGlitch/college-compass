@@ -14,21 +14,41 @@ export default function Home() {
         <>
             <Drawer.Screen
                 options={{
+                    headerTitle: "Dashboard",
+                    headerTitleStyle: { fontSize: 20, fontWeight: "bold", color: "#333" },
                     headerRight: () => (
                         <TouchableOpacity
-                            className="px-4"
+                            className="mr-4 rounded-lg bg-cyan-600 px-4 py-2"
                             onPress={() => {
                                 const storage_keys = ['accessToken', 'refreshToken', 'expiryTime'];
                                 AsyncStorage.multiRemove(storage_keys);
                                 signOut(auth);
                             }}>
-                            <Text className="text-cyan-600">Sign Out</Text>
+                            <Text className="text-white font-semibold">Sign Out</Text>
                         </TouchableOpacity>
                     ),
                 }}
             />
             <Container>
-                <View className="h-screen w-screen bg-red-500"></View>
+                <View className="flex-1 items-center justify-center bg-gray-100 p-6">
+                    <Text className="mb-4 text-2xl font-bold text-gray-800">Welcome to Your Dashboard 🎉</Text>
+                    <Text className="text-gray-600 text-center">
+                        Access all features easily from the menu. Manage emails, sort past questions, mark attendance, 
+                        apply for hostel leave, and collaborate on notes!
+                    </Text>
+
+                    <View className="mt-6 w-full flex-row flex-wrap justify-center gap-4">
+                        {["Email Sorter", "PYQs", "Hostel Leave", "Attendance", "Colab Notes"].map((feature) => (
+                            <TouchableOpacity
+                                key={feature}
+                                className="w-40 rounded-lg bg-blue-600 p-4 shadow-lg"
+                                onPress={() => alert(`Opening ${feature}`)}
+                            >
+                                <Text className="text-center text-lg font-semibold text-white">{feature}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </View>
             </Container>
         </>
     );
