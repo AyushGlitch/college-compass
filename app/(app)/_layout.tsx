@@ -103,7 +103,7 @@ export default function AppLayout() {
                 router.replace('/(app)/onboarding3');
             }
         }
-    }, [user, isInitializing]);
+    }, [user, isInitializing, segments]);
 
     if (isInitializing) {
         return <ActivityIndicator className="flex-1 items-center justify-center" size={'large'} />;

@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Container } from '~/components/Container';
 import CustomButton from '~/components/CustomButton';
 
@@ -9,15 +9,21 @@ import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { FIREBASE_AUTH } from '~/firebaseConfig';
 import { makeRedirectUri } from 'expo-auth-session';
 
-WebBrowser.maybeCompleteAuthSession();
+// WebBrowser.maybeCompleteAuthSession();
 
 const OnboardingScreen3 = () => {
     const auth = FIREBASE_AUTH; // GET FIREBASE AUTH INSTANCE
+    const [isLoading, setIsLoading] = useState(false);
 
     // GOOGLE AUTH FLOW REQUEST
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
         webClientId: '499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com',
         androidClientId: '499007111473-js9hv6mda0chi4bp2t3g054qnl12mgkk.apps.googleusercontent.com',
+        scopes: ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/gmail.readonly'],
+        extraParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+        },
         redirectUri: makeRedirectUri({
             scheme: 'com.aditya221210011.collegecompass',
             path: '/(app)/onboarding3',
@@ -46,6 +52,17 @@ const OnboardingScreen3 = () => {
         }
     }, [response]);
 
+    if (isLoading) {
+        return (
+            <Container className="justify-center gap-4">
+                <Text className="text-center font-pbold text-3xl">
+                    Please wait while we Sign you in
+                </Text>
+                <ActivityIndicator size="large" />
+            </Container>
+        );
+    }
+
     return (
         <Container className="justify-center gap-4 p-4">
             <View className="flex-1 justify-center gap-4">
@@ -57,8 +74,18 @@ const OnboardingScreen3 = () => {
             <CustomButton
                 title="Sign in with Google"
                 containerStyles="w-full"
-                // handlePress={() => console.warn('Sign in using Google')}
-                handlePress={() => promptAsync()}
+                handlePress={async () => {
+                    try {
+                        setIsLoading(true);
+                        console.log('Starting Google Sign-In...');
+                        const res = await promptAsync();
+                        console.log('PromptAsync Response:', JSON.stringify(res, null, 2));
+                    } catch (error) {
+                        console.error('Error during Google Sign-In:', error);
+                    } finally {
+                        setIsLoading(false);
+                    }
+                }}
             />
         </Container>
     );

@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { deleteDatabaseAsync, openDatabaseSync } from 'expo-sqlite';
 
-let expo = openDatabaseSync('db.db', { enableChangeListener: true });
+let expo = openDatabaseSync('db', { enableChangeListener: true });
 
 // if (expo) {
 //     deleteDatabaseAsync("db.db")
