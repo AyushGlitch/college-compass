@@ -5,7 +5,7 @@ A comprehensive mobile application designed to streamline academic and campus ma
 ## Features
 
 ### 🔤 Email Sorter
-- Intelligent email categorization using TensorFlow.js
+- Intelligent email categorization using machine learning
 - Automated prioritization of academic and administrative emails
 - Seamless integration with institutional Gmail accounts
 
@@ -36,21 +36,32 @@ A comprehensive mobile application designed to streamline academic and campus ma
 
 ## Technology Stack
 
-### Frontend
-- **Framework**: React Native with Expo
-- **State Management**: React Context API
-- **UI Components**: React Native Paper
+### Frontend Framework
+- **React Native with Expo**: A powerful framework for building cross-platform mobile applications. Expo provides a managed workflow that simplifies development by providing pre-built native components and development tools.
 
-### Backend
-- **Server**: Firebase
-- **Database**: SQLite
-- **Real-time Features**: WebSocket APIs, Y.js
+### Database and ORM
+- **Expo SQLite**: A built-in SQLite implementation for Expo apps that provides a lightweight, serverless database solution perfect for local data storage.
+- **Drizzle ORM**: A TypeScript ORM that provides type-safe database queries and schema management, making it easier to work with SQLite in a type-safe manner.
 
-### APIs and Services
-- Gmail API for email integration
-- TensorFlow.js for email categorization
-- Firebase Authentication
+### State Management and Data Fetching
+- **TanStack Query**: Powerful asynchronous state management for fetching, caching, and updating data in React applications. It provides features like automatic background refetching, cache management, and optimistic updates.
 
+### Backend Services
+- **Firebase**: A comprehensive backend-as-a-service platform that provides authentication, hosting, and real-time database capabilities.
+
+### Real-time Features
+- **WebSocket APIs**: Enables real-time bi-directional communication between the client and server.
+- **Y.js**: A CRDT framework that enables real-time collaboration features in the app, particularly useful for the collaborative notes feature.
+
+### APIs and Integration
+- **Gmail API**: Enables integration with institutional email systems, allowing the app to manage and organize student emails.
+
+This technology stack was chosen to provide:
+- Robust local data persistence with SQLite and Drizzle
+- Efficient state management and data synchronization with TanStack Query
+- Real-time collaboration capabilities with Y.js
+- Secure authentication and backend services with Firebase
+- Cross-platform compatibility and easy deployment with Expo
 
 ### Project Timeline
 ![Project Timeline](image.png)
