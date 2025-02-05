@@ -24,12 +24,17 @@ export const fetchEmails = async () => {
         }
 
         // Fetch details of each email (Gmail API only returns message IDs initially)
-        const emailPromises = data.messages.slice(0, 10).map(async (msg: any) => {
-            const emailResponse = await fetch(`${GMAIL_API_URL}/${msg.id}`, {
-                headers: { Authorization: `Bearer ${token}` },
+        const emailPromises = data.messages
+            .slice(0, 10)
+            .map(async (msg: any) => {
+                const emailResponse = await fetch(
+                    `${GMAIL_API_URL}/${msg.id}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                return emailResponse.json();
             });
-            return emailResponse.json();
-        });
 
         const emails = await Promise.all(emailPromises);
         return emails;

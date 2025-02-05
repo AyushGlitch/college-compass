@@ -14,11 +14,23 @@ export default function Home() {
 
     // Features and their correct routes based on the given structure
     const features = [
-        { name: 'Email Sorter', route: '/(app)/(protected)/(drawer)/emailSorter' as const },
+        {
+            name: 'Email Sorter',
+            route: '/(app)/(protected)/(drawer)/emailSorter' as const,
+        },
         { name: 'PYQs', route: '/(app)/(protected)/(drawer)/pyq' as const },
-        { name: 'Hostel Leave', route: '/(app)/(protected)/(drawer)/hostelLeave' as const },
-        { name: 'Attendance', route: '/(app)/(protected)/(drawer)/attendance' as const },
-        { name: 'Colab Notes', route: '/(app)/(protected)/(drawer)/colabNotes' as const },
+        {
+            name: 'Hostel Leave',
+            route: '/(app)/(protected)/(drawer)/hostelLeave' as const,
+        },
+        {
+            name: 'Attendance',
+            route: '/(app)/(protected)/(drawer)/attendance' as const,
+        },
+        {
+            name: 'Colab Notes',
+            route: '/(app)/(protected)/(drawer)/colabNotes' as const,
+        },
     ];
 
     return (
@@ -26,16 +38,26 @@ export default function Home() {
             <Drawer.Screen
                 options={{
                     headerTitle: 'Dashboard',
-                    headerTitleStyle: { fontSize: 20, fontWeight: 'bold', color: '#333' },
+                    headerTitleStyle: {
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        color: '#333',
+                    },
                     headerRight: () => (
                         <TouchableOpacity
                             className="mr-4 rounded-lg bg-cyan-600 px-4 py-2"
                             onPress={() => {
-                                const storage_keys = ['accessToken', 'refreshToken', 'expiryTime'];
+                                const storage_keys = [
+                                    'accessToken',
+                                    'refreshToken',
+                                    'expiryTime',
+                                ];
                                 AsyncStorage.multiRemove(storage_keys);
                                 signOut(auth);
                             }}>
-                            <Text className="font-semibold text-white">Sign Out</Text>
+                            <Text className="font-semibold text-white">
+                                Sign Out
+                            </Text>
                         </TouchableOpacity>
                     ),
                 }}
@@ -46,9 +68,9 @@ export default function Home() {
                         Welcome to Your Dashboard 🎉
                     </Text>
                     <Text className="text-center text-gray-600">
-                        Access all features easily from the menu. Manage emails, sort past
-                        questions, mark attendance, apply for hostel leave, and collaborate on
-                        notes!
+                        Access all features easily from the menu. Manage emails,
+                        sort past questions, mark attendance, apply for hostel
+                        leave, and collaborate on notes!
                     </Text>
 
                     <View className="mt-6 w-full flex-row flex-wrap justify-center gap-4">

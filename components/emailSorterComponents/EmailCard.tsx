@@ -17,7 +17,10 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, accessToken }) => {
 
     // Extract Sender Information
     const senderHeader = email.payload.headers.find((h) => h.name === 'From');
-    const senderName = senderHeader?.value.match(/^(.*?)\s*<.*>/)?.[1] || senderHeader?.value || '';
+    const senderName =
+        senderHeader?.value.match(/^(.*?)\s*<.*>/)?.[1] ||
+        senderHeader?.value ||
+        '';
     // const senderEmail = senderHeader?.value.match(/<(.*)>/)?.[1] || senderHeader?.value || '';
 
     // const fetchProfileImage = async () => {
@@ -70,15 +73,20 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, accessToken }) => {
                 source={{
                     uri:
                         profileImage ||
-                        'https://ui-avatars.com/api/?name=' + encodeURIComponent(senderName),
+                        'https://ui-avatars.com/api/?name=' +
+                            encodeURIComponent(senderName),
                 }}
                 className="aspect-square h-12 rounded-full"
             />
 
             <View className="flex-1">
                 <Text className="text-lg font-semibold">{senderName}</Text>
-                <Text className="text-gray-500" numberOfLines={1} ellipsizeMode="tail">
-                    {email.payload.headers.find((h) => h.name === 'Subject')?.value || 'No Subject'}
+                <Text
+                    className="text-gray-500"
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {email.payload.headers.find((h) => h.name === 'Subject')
+                        ?.value || 'No Subject'}
                 </Text>
             </View>
         </View>

@@ -10,7 +10,8 @@ export const Container = ({
     const isDark = false; // TODO: temporary solution
 
     return (
-        <SafeAreaView className={`flex-1 ${isDark ? 'bg-stone-900' : 'bg-stone-200'} ${className}`}>
+        <SafeAreaView
+            className={`flex-1 ${isDark ? 'bg-stone-900' : 'bg-stone-200'} ${className}`}>
             {children}
         </SafeAreaView>
     );

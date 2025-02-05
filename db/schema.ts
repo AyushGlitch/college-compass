@@ -9,8 +9,10 @@ export const preDefinedTimeTable = sqliteTable('preDefinedTimeTable', {
     isLecture: integer('isLecture', { mode: 'boolean' }),
     isLab: integer('isLab', { mode: 'boolean' }),
 });
-export type preDefinedTimeTableSelectType = typeof preDefinedTimeTable.$inferSelect;
-export type preDefinedTimeTableInsertType = typeof preDefinedTimeTable.$inferInsert;
+export type preDefinedTimeTableSelectType =
+    typeof preDefinedTimeTable.$inferSelect;
+export type preDefinedTimeTableInsertType =
+    typeof preDefinedTimeTable.$inferInsert;
 
 export const userTimeTable = sqliteTable('userTimeTable', {
     degreeId: text('degreeId'),

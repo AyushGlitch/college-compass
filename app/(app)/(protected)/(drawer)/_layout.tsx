@@ -1,8 +1,15 @@
-import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+    Ionicons,
+    FontAwesome,
+    MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import { Drawer } from 'expo-router/drawer';
 
 import { Image, Linking, Text, TouchableOpacity, View } from 'react-native';
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import {
+    DrawerContentScrollView,
+    DrawerItemList,
+} from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // function CustomDrawerContent(props: any) {
@@ -81,14 +88,18 @@ function CustomDrawerContent(props: any) {
                     className="my-auto aspect-square items-center justify-center p-2"
                     onPress={() => Linking.openURL('https://nitdelhi.ac.in/')}>
                     <MaterialCommunityIcons name="web" size={24} color="grey" />
-                    <Text className="font-pbold text-sm text-black/60">NITD</Text>
+                    <Text className="font-pbold text-sm text-black/60">
+                        NITD
+                    </Text>
                 </TouchableOpacity>
                 {/* NIT Delhi ERP */}
                 <TouchableOpacity
                     className="my-auto aspect-square items-center justify-center p-2"
                     onPress={() => Linking.openURL('https://nitdelhi.ac.in/')}>
                     <MaterialCommunityIcons name="web" size={24} color="grey" />
-                    <Text className="font-pbold text-sm text-black/60">ERP</Text>
+                    <Text className="font-pbold text-sm text-black/60">
+                        ERP
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -121,7 +132,9 @@ const DrawerLayout = () => (
             options={{
                 headerTitle: 'Home',
                 drawerLabel: 'Home',
-                drawerIcon: ({ size, color }) => <Ionicons name="home" size={size} color={color} />,
+                drawerIcon: ({ size, color }) => (
+                    <Ionicons name="home" size={size} color={color} />
+                ),
             }}
         />
 
@@ -130,7 +143,9 @@ const DrawerLayout = () => (
             options={{
                 headerTitle: 'Email Sorter',
                 drawerLabel: 'Email Sorter',
-                drawerIcon: ({ size, color }) => <Ionicons name="mail" size={size} color={color} />,
+                drawerIcon: ({ size, color }) => (
+                    <Ionicons name="mail" size={size} color={color} />
+                ),
             }}
         />
 
@@ -140,7 +155,11 @@ const DrawerLayout = () => (
                 headerTitle: 'PYQs',
                 drawerLabel: 'PYQs',
                 drawerIcon: ({ size, color }) => (
-                    <FontAwesome name="graduation-cap" size={size} color={color} />
+                    <FontAwesome
+                        name="graduation-cap"
+                        size={size}
+                        color={color}
+                    />
                 ),
             }}
         />
@@ -172,7 +191,11 @@ const DrawerLayout = () => (
                 headerTitle: 'Collab Notes',
                 drawerLabel: 'Collab Notes',
                 drawerIcon: ({ size, color }) => (
-                    <MaterialCommunityIcons name="application-edit" size={size} color={color} />
+                    <MaterialCommunityIcons
+                        name="application-edit"
+                        size={size}
+                        color={color}
+                    />
                 ),
             }}
         />

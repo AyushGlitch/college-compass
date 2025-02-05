@@ -1,6 +1,12 @@
 // Packages Imports
 import { useState } from 'react';
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
+import {
+    StyleProp,
+    StyleSheet,
+    TextStyle,
+    View,
+    ViewStyle,
+} from 'react-native';
 import Animated, {
     Extrapolation,
     interpolate,
@@ -117,7 +123,10 @@ function CircularProgress(props: CircularProgressProps) {
 
             {showLabel ? (
                 <View style={labelViewContainerStyle}>
-                    <Animated.Text style={labelTextStyles}>{`${LabelText}%`}</Animated.Text>
+                    <Animated.Text
+                        style={
+                            labelTextStyles
+                        }>{`${LabelText}%`}</Animated.Text>
                 </View>
             ) : null}
         </Svg>

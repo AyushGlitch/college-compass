@@ -96,7 +96,9 @@ export default function AppLayout() {
         if (!isInitializing) {
             const inProtectedGroup = segments[1] === '(protected)';
             if (user && !inProtectedGroup) {
-                console.log('User is logged in, redirecting to protected route');
+                console.log(
+                    'User is logged in, redirecting to protected route'
+                );
                 router.replace('/(app)/(protected)/(drawer)');
             } else if (!user && inProtectedGroup) {
                 console.log('User is not logged in, redirecting to login');
@@ -106,7 +108,12 @@ export default function AppLayout() {
     }, [user, isInitializing, segments]);
 
     if (isInitializing) {
-        return <ActivityIndicator className="flex-1 items-center justify-center" size={'large'} />;
+        return (
+            <ActivityIndicator
+                className="flex-1 items-center justify-center"
+                size={'large'}
+            />
+        );
     }
 
     const queryClient = new QueryClient();
@@ -117,7 +124,9 @@ export default function AppLayout() {
                 screenOptions={{
                     statusBarStyle: isDark ? 'light' : 'dark',
                     statusBarBackgroundColor: isDark ? '#0c0a09' : '#fafaf9',
-                    headerStyle: { backgroundColor: isDark ? '#0c0a09' : '#fafaf9' },
+                    headerStyle: {
+                        backgroundColor: isDark ? '#0c0a09' : '#fafaf9',
+                    },
                     headerTintColor: isDark ? '#fafaf9' : '#0c0a09',
                     navigationBarColor: isDark ? '#0c0a09' : '#fafaf9',
                     headerShown: false,

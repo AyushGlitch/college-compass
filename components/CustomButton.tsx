@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Alert,
+    ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 
 const CustomButton = ({
@@ -37,7 +43,11 @@ const CustomButton = ({
                     } text-center font-psemibold text-lg ${textStyles}`}>
                     {title}
                 </Text>
-                {isSubmitting ? <ActivityIndicator color={isDark ? 'black' : 'white'} /> : icon}
+                {isSubmitting ? (
+                    <ActivityIndicator color={isDark ? 'black' : 'white'} />
+                ) : (
+                    icon
+                )}
             </View>
         </TouchableOpacity>
     );

@@ -1,4 +1,8 @@
-import { FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import {
+    FontAwesome5,
+    MaterialCommunityIcons,
+    MaterialIcons,
+} from '@expo/vector-icons';
 import { Text, View } from './Themed';
 import { useState } from 'react';
 import { Button, Modal, Pressable } from 'react-native';
@@ -19,10 +23,16 @@ interface SubjectCardProps {
     };
 }
 
-export default function SubjectCard({ courseId, courseData }: SubjectCardProps) {
-    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState<boolean>(false);
-    const [isRestartModalVisible, setIsRestartModalVisible] = useState<boolean>(false);
-    const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+export default function SubjectCard({
+    courseId,
+    courseData,
+}: SubjectCardProps) {
+    const [isDeleteModalVisible, setIsDeleteModalVisible] =
+        useState<boolean>(false);
+    const [isRestartModalVisible, setIsRestartModalVisible] =
+        useState<boolean>(false);
+    const [isEditModalVisible, setIsEditModalVisible] =
+        useState<boolean>(false);
 
     const [newCourseId, setNewCourseId] = useState<string>('');
 
@@ -40,9 +50,13 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
 
     const editCourseId = useEditCourseId();
     const handleEdit = (newCourseId: string) => {
-        if (newCourseId.length === 0) return alert('Please enter a valid course name');
+        if (newCourseId.length === 0)
+            return alert('Please enter a valid course name');
 
-        const data: EditCourseIdProps = { courseId: courseId, newCourseId: newCourseId };
+        const data: EditCourseIdProps = {
+            courseId: courseId,
+            newCourseId: newCourseId,
+        };
         editCourseId.mutate(data);
         setIsEditModalVisible(false);
     };
@@ -72,7 +86,9 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                     marginTop: 12,
                     marginHorizontal: 12,
                 }}>
-                <Text style={{ fontWeight: '700', fontSize: 24 }}>{courseId}</Text>
+                <Text style={{ fontWeight: '700', fontSize: 24 }}>
+                    {courseId}
+                </Text>
                 <View
                     style={{
                         flexWrap: 'wrap',
@@ -82,11 +98,15 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                         backgroundColor: 'transparent',
                     }}>
                     <Text style={{ fontSize: 16 }}>
-                        <Text style={{ fontWeight: '700' }}>Total Classes: </Text>
+                        <Text style={{ fontWeight: '700' }}>
+                            Total Classes:{' '}
+                        </Text>
                         {courseData.totalClasses}
                     </Text>
                     <Text style={{ fontSize: 16 }}>
-                        <Text style={{ fontWeight: '700' }}>Attended Classes: </Text>
+                        <Text style={{ fontWeight: '700' }}>
+                            Attended Classes:{' '}
+                        </Text>
                         {courseData.attendedClasses}
                     </Text>
                 </View>
@@ -136,7 +156,12 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                 transparent={true}
                 visible={isDeleteModalVisible}
                 onRequestClose={() => setIsDeleteModalVisible(false)}>
-                <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                    }}>
                     <View
                         style={{
                             flexWrap: 'wrap',
@@ -151,13 +176,28 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                             gap: 20,
                             padding: 20,
                         }}>
-                        <Text style={{ fontWeight: '700', fontSize: 25 }}>Confirm Delete</Text>
-                        <Text style={{ fontWeight: '400', fontSize: 20, textAlign: 'center' }}>
+                        <Text style={{ fontWeight: '700', fontSize: 25 }}>
+                            Confirm Delete
+                        </Text>
+                        <Text
+                            style={{
+                                fontWeight: '400',
+                                fontSize: 20,
+                                textAlign: 'center',
+                            }}>
                             Are you sure you want to delete{' '}
-                            <Text style={{ fontWeight: '700' }}>{courseId}</Text> Attendance?
+                            <Text style={{ fontWeight: '700' }}>
+                                {courseId}
+                            </Text>{' '}
+                            Attendance?
                         </Text>
 
-                        <Pressable style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 20 }}>
+                        <Pressable
+                            style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                gap: 20,
+                            }}>
                             <Button
                                 title="Delete"
                                 color={'red'}
@@ -179,7 +219,12 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                 transparent={true}
                 visible={isRestartModalVisible}
                 onRequestClose={() => setIsRestartModalVisible(false)}>
-                <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                    }}>
                     <View
                         style={{
                             flexWrap: 'wrap',
@@ -194,15 +239,33 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                             gap: 20,
                             padding: 20,
                         }}>
-                        <Text style={{ fontWeight: '700', fontSize: 25 }}>Confirm Restart</Text>
-                        <Text style={{ fontWeight: '400', fontSize: 20, textAlign: 'center' }}>
+                        <Text style={{ fontWeight: '700', fontSize: 25 }}>
+                            Confirm Restart
+                        </Text>
+                        <Text
+                            style={{
+                                fontWeight: '400',
+                                fontSize: 20,
+                                textAlign: 'center',
+                            }}>
                             Are you sure you want to restart{' '}
-                            <Text style={{ fontWeight: '700' }}>{courseId} </Text> Attendance?
+                            <Text style={{ fontWeight: '700' }}>
+                                {courseId}{' '}
+                            </Text>{' '}
+                            Attendance?
                         </Text>
 
-                        <Pressable style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 20 }}>
+                        <Pressable
+                            style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                gap: 20,
+                            }}>
                             {/* <Button title='Delete' color={'red'} onPress={() => handleReset(courseId)} /> */}
-                            <Button title="Restart" onPress={() => handleReset(courseId)} />
+                            <Button
+                                title="Restart"
+                                onPress={() => handleReset(courseId)}
+                            />
                             <Button
                                 title="Cancel"
                                 color={'grey'}
@@ -218,7 +281,12 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                 transparent={true}
                 visible={isEditModalVisible}
                 onRequestClose={() => setIsEditModalVisible(false)}>
-                <View style={{ flex: 1, alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.7)' }}>
+                <View
+                    style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.7)',
+                    }}>
                     <View
                         style={{
                             flexWrap: 'wrap',
@@ -232,8 +300,17 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                             height: 250,
                             padding: 20,
                         }}>
-                        <Text style={{ fontWeight: '500', fontSize: 24, textAlign: 'center' }}>
-                            Edit the <Text style={{ fontWeight: '700' }}>{courseId}</Text> name
+                        <Text
+                            style={{
+                                fontWeight: '500',
+                                fontSize: 24,
+                                textAlign: 'center',
+                            }}>
+                            Edit the{' '}
+                            <Text style={{ fontWeight: '700' }}>
+                                {courseId}
+                            </Text>{' '}
+                            name
                         </Text>
 
                         <TextInput
@@ -252,8 +329,16 @@ export default function SubjectCard({ courseId, courseData }: SubjectCardProps) 
                             placeholderTextColor={'grey'}
                         />
 
-                        <Pressable style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 60 }}>
-                            <Button title="Change" onPress={() => handleEdit(newCourseId)} />
+                        <Pressable
+                            style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                gap: 60,
+                            }}>
+                            <Button
+                                title="Change"
+                                onPress={() => handleEdit(newCourseId)}
+                            />
                             <Button
                                 title="Cancel"
                                 color={'grey'}

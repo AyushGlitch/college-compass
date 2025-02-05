@@ -1,4 +1,8 @@
-import { AddAbsentPresentProps, useAddAbsentPresent, useUndoAttendance } from '~/db/api/mutations';
+import {
+    AddAbsentPresentProps,
+    useAddAbsentPresent,
+    useUndoAttendance,
+} from '~/db/api/mutations';
 import { Text, View } from './Themed';
 import { AntDesign, Entypo, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import CircularProgress from './CircularProgress';
@@ -21,7 +25,12 @@ export default function SubjectAttendanceCard({
     const attendPer =
         courseData.totalClasses === 0
             ? 0
-            : parseFloat(((courseData.attendedClasses / courseData.totalClasses) * 100).toFixed(2));
+            : parseFloat(
+                  (
+                      (courseData.attendedClasses / courseData.totalClasses) *
+                      100
+                  ).toFixed(2)
+              );
 
     const addAbsentPresent = useAddAbsentPresent();
     const handleAttendance = (isPresent: boolean, courseId: string) => {
@@ -45,7 +54,10 @@ export default function SubjectAttendanceCard({
                 borderRadius: 24,
                 backgroundColor: '#282928',
                 position: 'relative',
-                shadowColor: attendPer < 75 && courseData.totalClasses > 0 ? 'red' : '#50C878',
+                shadowColor:
+                    attendPer < 75 && courseData.totalClasses > 0
+                        ? 'red'
+                        : '#50C878',
                 shadowOpacity: 0.7,
                 shadowRadius: 6,
                 shadowOffset: { width: 0, height: 4 },
@@ -56,7 +68,9 @@ export default function SubjectAttendanceCard({
                     marginLeft: 5,
                     width: 8,
                     backgroundColor:
-                        attendPer < 75 && courseData.totalClasses > 0 ? 'red' : '#50C878',
+                        attendPer < 75 && courseData.totalClasses > 0
+                            ? 'red'
+                            : '#50C878',
                     borderRadius: 24,
                     height: '80%',
                 }}
@@ -71,7 +85,9 @@ export default function SubjectAttendanceCard({
                     margin: 12,
                     gap: 7,
                 }}>
-                <Text style={{ fontWeight: '700', fontSize: 24 }}>{courseId}</Text>
+                <Text style={{ fontWeight: '700', fontSize: 24 }}>
+                    {courseId}
+                </Text>
                 <Text style={{ fontSize: 18 }}>
                     <Text style={{ fontWeight: '700' }}>Attendance: </Text>
                     {courseData.attendedClasses} / {courseData.totalClasses}
@@ -85,14 +101,32 @@ export default function SubjectAttendanceCard({
                         alignItems: 'center',
                         backgroundColor: 'transparent',
                     }}>
-                    <Pressable onPress={() => handleAttendance(true, courseData.courseId)}>
-                        <AntDesign name="checkcircle" size={28} color="#50C790" />
+                    <Pressable
+                        onPress={() =>
+                            handleAttendance(true, courseData.courseId)
+                        }>
+                        <AntDesign
+                            name="checkcircle"
+                            size={28}
+                            color="#50C790"
+                        />
                     </Pressable>
-                    <Pressable onPress={() => handleAttendance(false, courseData.courseId)}>
-                        <Entypo name="circle-with-cross" size={32} color="red" />
+                    <Pressable
+                        onPress={() =>
+                            handleAttendance(false, courseData.courseId)
+                        }>
+                        <Entypo
+                            name="circle-with-cross"
+                            size={32}
+                            color="red"
+                        />
                     </Pressable>
                     <Pressable onPress={() => handleUndo(courseData.courseId)}>
-                        <Ionicons name="arrow-undo-circle" size={34} color="lightblue" />
+                        <Ionicons
+                            name="arrow-undo-circle"
+                            size={34}
+                            color="lightblue"
+                        />
                     </Pressable>
                 </View>
             </View>
@@ -109,7 +143,9 @@ export default function SubjectAttendanceCard({
                     progress={attendPer}
                     outerCircleColor="white"
                     progressCircleColor={
-                        attendPer < 75 && courseData.totalClasses > 0 ? 'red' : 'green'
+                        attendPer < 75 && courseData.totalClasses > 0
+                            ? 'red'
+                            : 'green'
                     }
                     strokeWidth={10}
                     labelStyle={{ fontWeight: '800' }}

@@ -14,7 +14,9 @@ const ColabNotesScreen = () => {
     const createRoom = () => {
         const newRoomName = uuid.v4(); // Generate unique room name
         console.log('Joining room: ', newRoomName);
-        router.push(`/(protected)/(drawer)/colabNotes/editor?roomName=${newRoomName}`);
+        router.push(
+            `/(protected)/(drawer)/colabNotes/editor?roomName=${newRoomName}`
+        );
     };
 
     const joinRoom = () => {
@@ -23,7 +25,9 @@ const ColabNotesScreen = () => {
             return;
         }
         console.log('Joining room: ', roomName);
-        router.push(`/(protected)/(drawer)/colabNotes/editor?roomName=${roomName}`);
+        router.push(
+            `/(protected)/(drawer)/colabNotes/editor?roomName=${roomName}`
+        );
     };
 
     return (
@@ -33,14 +37,19 @@ const ColabNotesScreen = () => {
                 contentContainerClassName="min-h-full justify-center items-center">
                 {/* Intro */}
                 <View className="z-50 w-full items-center gap-2 bg-white px-4 py-16 shadow shadow-black">
-                    <MaterialCommunityIcons name="application-edit" size={52} color="black" />
+                    <MaterialCommunityIcons
+                        name="application-edit"
+                        size={52}
+                        color="black"
+                    />
                     <Text className="mt-6 text-center font-pbold text-3xl">
                         Collaborate in Real Time!
                     </Text>
                     <Text className="text-center font-pregular text-lg">
-                        Create or join a shared notes room to collaborate seamlessly with your
-                        peers. Whether you're brainstorming, planning, or studying together, this
-                        app lets you edit and sync notes live.
+                        Create or join a shared notes room to collaborate
+                        seamlessly with your peers. Whether you're
+                        brainstorming, planning, or studying together, this app
+                        lets you edit and sync notes live.
                     </Text>
                 </View>
                 {/* Separator */}
@@ -52,7 +61,9 @@ const ColabNotesScreen = () => {
                         containerStyles="w-full"
                         handlePress={createRoom}
                     />
-                    <Text className="text-center font-plight text-lg text-black/60">or</Text>
+                    <Text className="text-center font-plight text-lg text-black/60">
+                        or
+                    </Text>
                     <View>
                         <View className="w-full flex-row gap-2">
                             <TextInput
@@ -61,7 +72,10 @@ const ColabNotesScreen = () => {
                                 value={roomName}
                                 onChangeText={setRoomName}
                             />
-                            <CustomButton title="Join Room" handlePress={joinRoom} />
+                            <CustomButton
+                                title="Join Room"
+                                handlePress={joinRoom}
+                            />
                         </View>
                     </View>
                 </View>

@@ -16,7 +16,9 @@ import {
 } from './mutations';
 
 export const getUserTT = async () => {
-    const fetchedUserTT: userTimeTableSelectType[] = await db.select().from(userTimeTable);
+    const fetchedUserTT: userTimeTableSelectType[] = await db
+        .select()
+        .from(userTimeTable);
     return fetchedUserTT;
 };
 
@@ -35,28 +37,35 @@ export const getPreDefinedTT = async () => {
 };
 
 export const getPreDefindedTTDistinctDegree = async () => {
-    const fetchedPreDefinedTTDistinctDegree: { degreeId: string | null }[] = await db
-        .selectDistinct({ degreeId: preDefinedTimeTable.degreeId })
-        .from(preDefinedTimeTable);
+    const fetchedPreDefinedTTDistinctDegree: { degreeId: string | null }[] =
+        await db
+            .selectDistinct({ degreeId: preDefinedTimeTable.degreeId })
+            .from(preDefinedTimeTable);
 
     return {
-        distinctDegree: fetchedPreDefinedTTDistinctDegree.map((deg) => deg.degreeId!),
+        distinctDegree: fetchedPreDefinedTTDistinctDegree.map(
+            (deg) => deg.degreeId!
+        ),
     };
 };
 
 export const getPreDefindedTTDistinctBranchSem = async (degreeId: string) => {
-    const fetchedPreDefinedTTDistinctBranch: { branchId: string | null }[] = await db
-        .selectDistinct({ branchId: preDefinedTimeTable.branchId })
-        .from(preDefinedTimeTable)
-        .where(eq(preDefinedTimeTable.degreeId, degreeId));
+    const fetchedPreDefinedTTDistinctBranch: { branchId: string | null }[] =
+        await db
+            .selectDistinct({ branchId: preDefinedTimeTable.branchId })
+            .from(preDefinedTimeTable)
+            .where(eq(preDefinedTimeTable.degreeId, degreeId));
 
-    const fetchedPreDefinedTTDistinctSem: { semester: number | null }[] = await db
-        .selectDistinct({ semester: preDefinedTimeTable.semester })
-        .from(preDefinedTimeTable)
-        .where(eq(preDefinedTimeTable.degreeId, degreeId));
+    const fetchedPreDefinedTTDistinctSem: { semester: number | null }[] =
+        await db
+            .selectDistinct({ semester: preDefinedTimeTable.semester })
+            .from(preDefinedTimeTable)
+            .where(eq(preDefinedTimeTable.degreeId, degreeId));
 
     return {
-        distinctBranch: fetchedPreDefinedTTDistinctBranch.map((branch) => branch.branchId!),
+        distinctBranch: fetchedPreDefinedTTDistinctBranch.map(
+            (branch) => branch.branchId!
+        ),
         distinctSem: fetchedPreDefinedTTDistinctSem.map((sem) => sem.semester!),
     };
 };
@@ -106,14 +115,23 @@ export const submitPredefinedTTForm = async ({
 
 export const deleteCourse = async (courseId: string) => {
     await db.delete(userTimeTable).where(eq(userTimeTable.courseId, courseId));
-    await db.delete(userAttendance).where(eq(userAttendance.courseId, courseId));
+    await db
+        .delete(userAttendance)
+        .where(eq(userAttendance.courseId, courseId));
 };
 
 export const resetCourse = async (courseId: string) => {
-    await db.delete(userAttendance).where(eq(userAttendance.courseId, courseId));
+    await db
+        .delete(userAttendance)
+        .where(eq(userAttendance.courseId, courseId));
 };
 
-export const addCourse = async ({ degreeId, branchId, semester, courseId }: AddCourseProps) => {
+export const addCourse = async ({
+    degreeId,
+    branchId,
+    semester,
+    courseId,
+}: AddCourseProps) => {
     await db.insert(userTimeTable).values({
         degreeId: degreeId,
         branchId: branchId,
@@ -123,11 +141,18 @@ export const addCourse = async ({ degreeId, branchId, semester, courseId }: AddC
 };
 
 export const deleteAllCourse = async () => {
-    await db.delete(userTimeTable).where(eq(userTimeTable.courseId, userTimeTable.courseId));
-    await db.delete(userAttendance).where(eq(userAttendance.courseId, userAttendance.courseId));
+    await db
+        .delete(userTimeTable)
+        .where(eq(userTimeTable.courseId, userTimeTable.courseId));
+    await db
+        .delete(userAttendance)
+        .where(eq(userAttendance.courseId, userAttendance.courseId));
 };
 
-export const addAbsentPresent = async ({ isPresent, courseId }: AddAbsentPresentProps) => {
+export const addAbsentPresent = async ({
+    isPresent,
+    courseId,
+}: AddAbsentPresentProps) => {
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');

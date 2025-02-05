@@ -2,7 +2,11 @@ import { Button, Modal, Pressable } from 'react-native';
 import { Text, View } from './Themed';
 import { TextInput } from 'react-native-gesture-handler';
 import { useState } from 'react';
-import { AddCourseProps, useAddCourse, useDeleteAllCourse } from '~/db/api/mutations';
+import {
+    AddCourseProps,
+    useAddCourse,
+    useDeleteAllCourse,
+} from '~/db/api/mutations';
 
 interface BottomActionSubjectsProps {
     degreeId: string | null;
@@ -16,7 +20,8 @@ export default function BottomActionSubjects({
     semester,
 }: BottomActionSubjectsProps) {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
-    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState<boolean>(false);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] =
+        useState<boolean>(false);
     const [courseId, setCourseId] = useState<string>('');
 
     const deleteAllCourse = useDeleteAllCourse();
@@ -27,7 +32,8 @@ export default function BottomActionSubjects({
 
     const addCourse = useAddCourse();
     const handleAddCourse = (courseId: string) => {
-        if (courseId.length === 0) return alert('Please enter a valid course name');
+        if (courseId.length === 0)
+            return alert('Please enter a valid course name');
 
         const data: AddCourseProps = {
             degreeId: degreeId!,
@@ -107,8 +113,16 @@ export default function BottomActionSubjects({
                             placeholderTextColor={'grey'}
                         />
 
-                        <Pressable style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 60 }}>
-                            <Button title="Add Subject" onPress={() => handleAddCourse(courseId)} />
+                        <Pressable
+                            style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                gap: 60,
+                            }}>
+                            <Button
+                                title="Add Subject"
+                                onPress={() => handleAddCourse(courseId)}
+                            />
                             <Button
                                 title="Cancel"
                                 color={'grey'}
@@ -145,13 +159,28 @@ export default function BottomActionSubjects({
                             gap: 20,
                             padding: 20,
                         }}>
-                        <Text style={{ fontWeight: '700', fontSize: 25 }}>Confirm Delete</Text>
-                        <Text style={{ fontWeight: '400', fontSize: 20, textAlign: 'center' }}>
+                        <Text style={{ fontWeight: '700', fontSize: 25 }}>
+                            Confirm Delete
+                        </Text>
+                        <Text
+                            style={{
+                                fontWeight: '400',
+                                fontSize: 20,
+                                textAlign: 'center',
+                            }}>
                             Are you sure you want to delete{' '}
-                            <Text style={{ fontWeight: '700' }}>all the courses'</Text> Attendance?
+                            <Text style={{ fontWeight: '700' }}>
+                                all the courses'
+                            </Text>{' '}
+                            Attendance?
                         </Text>
 
-                        <Pressable style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 20 }}>
+                        <Pressable
+                            style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                gap: 20,
+                            }}>
                             <Button
                                 title="Delete"
                                 color={'red'}

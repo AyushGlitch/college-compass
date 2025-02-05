@@ -13,7 +13,9 @@ export default function History() {
 
     // Fetch user timetable and attendance using useLiveQuery
     const { data: userTtData } = useLiveQuery(db.select().from(userTimeTable));
-    const { data: userAttendanceData } = useLiveQuery(db.select().from(userAttendance));
+    const { data: userAttendanceData } = useLiveQuery(
+        db.select().from(userAttendance)
+    );
 
     // Handle loading state
     if (!userTtData || !userAttendanceData) {
@@ -31,13 +33,26 @@ export default function History() {
                 paddingTop: 30,
             }}>
             {/* <View style={{flexWrap: 'wrap'}}> */}
-            <Text style={{ fontWeight: '500', fontSize: 16, marginBottom: 8, marginTop: 20 }}>
+            <Text
+                style={{
+                    fontWeight: '500',
+                    fontSize: 16,
+                    marginBottom: 8,
+                    marginTop: 20,
+                }}>
                 Select the CourseId:
             </Text>
             <Picker
                 selectedValue={selectedCourseId}
-                onValueChange={(itemValue, itemIndex) => setSelectedCourseId(itemValue)}
-                style={{ height: 50, width: '100%', backgroundColor: '#454545', color: 'white' }}>
+                onValueChange={(itemValue, itemIndex) =>
+                    setSelectedCourseId(itemValue)
+                }
+                style={{
+                    height: 50,
+                    width: '100%',
+                    backgroundColor: '#454545',
+                    color: 'white',
+                }}>
                 {userTtData.map((data) => (
                     <Picker.Item
                         label={data.courseId!}
@@ -79,16 +94,24 @@ export default function History() {
                             <View
                                 style={{
                                     width: 8,
-                                    backgroundColor: data.absOrPre ? 'green' : 'red',
+                                    backgroundColor: data.absOrPre
+                                        ? 'green'
+                                        : 'red',
                                     borderRadius: 24,
                                     height: '95%',
                                     marginRight: 10,
                                 }}
                             />
 
-                            <View style={{ flex: 1, backgroundColor: 'transparent' }}>
-                                <Text style={{ fontSize: 18, fontWeight: '700' }}>
-                                    {data.numDate} {data.month} {data.year} ( {data.date} )
+                            <View
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: 'transparent',
+                                }}>
+                                <Text
+                                    style={{ fontSize: 18, fontWeight: '700' }}>
+                                    {data.numDate} {data.month} {data.year} ({' '}
+                                    {data.date} )
                                 </Text>
 
                                 <View
@@ -99,17 +122,23 @@ export default function History() {
                                         backgroundColor: 'transparent',
                                     }}>
                                     <Text style={{ fontSize: 16 }}>
-                                        <Text style={{ fontWeight: '700' }}>Day: </Text>
+                                        <Text style={{ fontWeight: '700' }}>
+                                            Day:{' '}
+                                        </Text>
                                         {data.day}
                                     </Text>
                                     <Text style={{ fontSize: 16 }}>
-                                        <Text style={{ fontWeight: '700' }}>Time: </Text>
+                                        <Text style={{ fontWeight: '700' }}>
+                                            Time:{' '}
+                                        </Text>
                                         {data.time}
                                     </Text>
                                 </View>
 
                                 <Text style={{ fontSize: 16 }}>
-                                    <Text style={{ fontWeight: '700' }}>Status: </Text>
+                                    <Text style={{ fontWeight: '700' }}>
+                                        Status:{' '}
+                                    </Text>
                                     {data.absOrPre ? 'Present' : 'Absent'}
                                 </Text>
                             </View>

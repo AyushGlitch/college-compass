@@ -33,7 +33,9 @@ export default function RootLayout() {
     }
 
     return (
-        <SQLiteProvider databaseName="db" options={{ enableChangeListener: true }}>
+        <SQLiteProvider
+            databaseName="db"
+            options={{ enableChangeListener: true }}>
             <Slot />
         </SQLiteProvider>
     );

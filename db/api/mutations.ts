@@ -20,7 +20,8 @@ export const useSubmitPredefinedTTForm = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data: submitPredefinedTTFormProps) => submitPredefinedTTForm(data),
+        mutationFn: (data: submitPredefinedTTFormProps) =>
+            submitPredefinedTTForm(data),
 
         onSuccess: () => {
             console.log('Successfully submitted the form');
@@ -29,7 +30,9 @@ export const useSubmitPredefinedTTForm = () => {
             if (error) {
                 console.log('Error while submitting the form: ', error);
             } else {
-                await queryClient.invalidateQueries({ queryKey: ['getUserTT'] });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserTT'],
+                });
             }
         },
     });
@@ -45,9 +48,15 @@ export const useDeleteCourse = () => {
             if (error) {
                 console.log('Error while deleting the course: ', error);
             } else {
-                await queryClient.invalidateQueries({ queryKey: ['getUserTT'] });
-                await queryClient.invalidateQueries({ queryKey: ['getUserAttendance'] });
-                await queryClient.invalidateQueries({ queryKey: ['getAttendanceDate'] });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserTT'],
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserAttendance'],
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getAttendanceDate'],
+                });
             }
         },
     });
@@ -62,8 +71,12 @@ export const useResetCourse = () => {
             if (error) {
                 console.log('Error while resetting the course: ', error);
             } else {
-                await queryClient.invalidateQueries({ queryKey: ['getUserAttendance'] });
-                await queryClient.invalidateQueries({ queryKey: ['getAttendanceDate'] });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserAttendance'],
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getAttendanceDate'],
+                });
             }
         },
     });
@@ -85,7 +98,9 @@ export const useAddCourse = () => {
             if (error) {
                 console.log('Error while adding the course: ', error);
             } else {
-                await queryClient.invalidateQueries({ queryKey: ['getUserTT'] });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserTT'],
+                });
             }
         },
     });
@@ -143,8 +158,12 @@ export const useUndoAttendance = () => {
             if (error) {
                 console.log('Error while undoing the attendance: ', error);
             } else {
-                await queryClient.invalidateQueries({ queryKey: ['getUserAttendance'] });
-                await queryClient.invalidateQueries({ queryKey: ['getAttendanceDate'] });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserAttendance'],
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getAttendanceDate'],
+                });
             }
         },
     });
@@ -164,9 +183,15 @@ export const useEditCourseId = () => {
             if (error) {
                 console.log('Error while editing the course id: ', error);
             } else {
-                await queryClient.invalidateQueries({ queryKey: ['getUserTT'] });
-                await queryClient.invalidateQueries({ queryKey: ['getUserAttendance'] });
-                await queryClient.invalidateQueries({ queryKey: ['getAttendanceDate'] });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserTT'],
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getUserAttendance'],
+                });
+                await queryClient.invalidateQueries({
+                    queryKey: ['getAttendanceDate'],
+                });
             }
         },
     });

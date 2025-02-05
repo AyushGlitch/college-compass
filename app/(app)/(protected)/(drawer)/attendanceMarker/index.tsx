@@ -25,7 +25,9 @@ interface TempDataProp {
 export default function Index() {
     // Fetch user timetable and attendance using useLiveQuery
     const { data: userTtData } = useLiveQuery(db.select().from(userTimeTable));
-    const { data: userAttendanceData } = useLiveQuery(db.select().from(userAttendance));
+    const { data: userAttendanceData } = useLiveQuery(
+        db.select().from(userAttendance)
+    );
 
     // Handle loading state
     if (!userTtData || !userAttendanceData) {
@@ -77,7 +79,11 @@ export default function Index() {
                         userTtData.map((data: any) => {
                             const courseData = courseDataList[data.courseId]
                                 ? courseDataList[data.courseId]
-                                : { courseId: data.courseId, totalClasses: 0, attendedClasses: 0 };
+                                : {
+                                      courseId: data.courseId,
+                                      totalClasses: 0,
+                                      attendedClasses: 0,
+                                  };
 
                             return (
                                 <SubjectAttendanceCard
@@ -96,12 +102,23 @@ export default function Index() {
                                 gap: 60,
                                 padding: 20,
                             }}>
-                            <Text style={{ textAlign: 'center', fontWeight: '700', fontSize: 36 }}>
+                            <Text
+                                style={{
+                                    textAlign: 'center',
+                                    fontWeight: '700',
+                                    fontSize: 36,
+                                }}>
                                 No Course in Attendance List
                             </Text>
-                            <Text style={{ textAlign: 'center', fontWeight: '400', fontSize: 20 }}>
-                                Add courses to your attendance list, as per your Degree, Branch, and
-                                Semester, from our predefined timetable.
+                            <Text
+                                style={{
+                                    textAlign: 'center',
+                                    fontWeight: '400',
+                                    fontSize: 20,
+                                }}>
+                                Add courses to your attendance list, as per your
+                                Degree, Branch, and Semester, from our
+                                predefined timetable.
                             </Text>
                             <Pressable>
                                 <Button

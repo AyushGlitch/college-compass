@@ -39,7 +39,13 @@ const HostelLeave = () => {
 
     // TODO: Add rich html email template for Gmail API
     const sendEmail = () => {
-        if (!leaveDate || !returnDate || !leaveTime || !reason || !destination) {
+        if (
+            !leaveDate ||
+            !returnDate ||
+            !leaveTime ||
+            !reason ||
+            !destination
+        ) {
             Alert.alert('Error', 'Please fill in all fields before sending.');
             return;
         }
@@ -87,7 +93,9 @@ const HostelLeave = () => {
                         keyboardShouldPersistTaps="handled">
                         {/* Leave Date Picker */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">Leave Date</Text>
+                            <Text className="font-pbold text-lg">
+                                Leave Date
+                            </Text>
                             <View className="flex-row items-center justify-between rounded-md bg-white p-2">
                                 <Text className="font-pregular">
                                     {leaveDate
@@ -95,16 +103,24 @@ const HostelLeave = () => {
                                         : 'No date selected'}
                                 </Text>
                                 <TouchableOpacity
-                                    onPress={() => setShowDatePicker({ type: 'leave' })}
+                                    onPress={() =>
+                                        setShowDatePicker({ type: 'leave' })
+                                    }
                                     className="rounded-md bg-black/10 p-2">
-                                    <Ionicons name="calendar-outline" size={24} color="black" />
+                                    <Ionicons
+                                        name="calendar-outline"
+                                        size={24}
+                                        color="black"
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
 
                         {/* Return Date Picker */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">Return Date</Text>
+                            <Text className="font-pbold text-lg">
+                                Return Date
+                            </Text>
                             <View className="flex-row items-center justify-between rounded-md bg-white p-2">
                                 <Text className="font-pregular">
                                     {returnDate
@@ -112,16 +128,24 @@ const HostelLeave = () => {
                                         : 'No date selected'}
                                 </Text>
                                 <TouchableOpacity
-                                    onPress={() => setShowDatePicker({ type: 'return' })}
+                                    onPress={() =>
+                                        setShowDatePicker({ type: 'return' })
+                                    }
                                     className="rounded-md bg-black/10 p-2">
-                                    <Ionicons name="calendar-outline" size={24} color="black" />
+                                    <Ionicons
+                                        name="calendar-outline"
+                                        size={24}
+                                        color="black"
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
 
                         {/* Leave Time Picker */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">Leave time</Text>
+                            <Text className="font-pbold text-lg">
+                                Leave time
+                            </Text>
                             <View className="flex-row items-center justify-between rounded-md bg-white p-2">
                                 <Text className="font-pregular">
                                     {leaveTime
@@ -129,16 +153,24 @@ const HostelLeave = () => {
                                         : 'No time selected'}
                                 </Text>
                                 <TouchableOpacity
-                                    onPress={() => setShowDatePicker({ type: 'time' })}
+                                    onPress={() =>
+                                        setShowDatePicker({ type: 'time' })
+                                    }
                                     className="rounded-md bg-black/10 p-2">
-                                    <Ionicons name="time-outline" size={24} color="black" />
+                                    <Ionicons
+                                        name="time-outline"
+                                        size={24}
+                                        color="black"
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
 
                         {/* Destination Input */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">Destination</Text>
+                            <Text className="font-pbold text-lg">
+                                Destination
+                            </Text>
                             <TextInput
                                 placeholder="Where are you going?"
                                 value={destination}
@@ -149,7 +181,9 @@ const HostelLeave = () => {
 
                         {/* Reason Input */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">Reason for Leave</Text>
+                            <Text className="font-pbold text-lg">
+                                Reason for Leave
+                            </Text>
                             <TextInput
                                 placeholder="Why are you leaving?"
                                 value={reason}
@@ -167,8 +201,14 @@ const HostelLeave = () => {
                         {showDatePicker && (
                             <DateTimePicker
                                 value={leaveDate || new Date()}
-                                mode={showDatePicker.type === 'time' ? 'time' : 'date'}
-                                display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                                mode={
+                                    showDatePicker.type === 'time'
+                                        ? 'time'
+                                        : 'date'
+                                }
+                                display={
+                                    Platform.OS === 'ios' ? 'inline' : 'default'
+                                }
                                 onChange={handleDateChange}
                             />
                         )}

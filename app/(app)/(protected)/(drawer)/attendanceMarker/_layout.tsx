@@ -20,7 +20,11 @@ const _layout = () => {
                 options={{
                     title: 'Subjects',
                     tabBarIcon: ({ color, size }) => (
-                        <FontAwesome6 name="book-open" size={size} color={color} />
+                        <FontAwesome6
+                            name="book-open"
+                            size={size}
+                            color={color}
+                        />
                     ),
                 }}
             />
@@ -29,7 +33,11 @@ const _layout = () => {
                 options={{
                     title: 'History',
                     tabBarIcon: ({ color, size }) => (
-                        <FontAwesome5 name="history" size={size} color={color} />
+                        <FontAwesome5
+                            name="history"
+                            size={size}
+                            color={color}
+                        />
                     ),
                 }}
             />

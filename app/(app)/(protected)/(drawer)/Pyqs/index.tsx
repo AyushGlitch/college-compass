@@ -46,8 +46,15 @@ export default function PYQs() {
     };
 
     useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', handleBackButtonPress);
-        return () => BackHandler.removeEventListener('hardwareBackPress', handleBackButtonPress);
+        BackHandler.addEventListener(
+            'hardwareBackPress',
+            handleBackButtonPress
+        );
+        return () =>
+            BackHandler.removeEventListener(
+                'hardwareBackPress',
+                handleBackButtonPress
+            );
     }, [currentUrl]);
 
     return (

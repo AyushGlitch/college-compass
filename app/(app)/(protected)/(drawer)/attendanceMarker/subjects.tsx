@@ -4,7 +4,11 @@ import PreDefinedForm from '~/components/PreDefinedForm';
 import SubjectCard from '~/components/SubjectCard';
 import { Text, View } from '~/components/Themed';
 import { getUserAttendanceQuery, getUserTTQuery } from '~/db/api/queries';
-import { userAttendance, userTimeTable, userTimeTableSelectType } from '~/db/schema';
+import {
+    userAttendance,
+    userTimeTable,
+    userTimeTableSelectType,
+} from '~/db/schema';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { db } from '~/db/drizzle';
@@ -22,7 +26,9 @@ interface TempDataProp {
 export default function Subjects() {
     // Fetch user timetable and attendance using useLiveQuery
     const { data: userTtData } = useLiveQuery(db.select().from(userTimeTable));
-    const { data: userAttendanceData } = useLiveQuery(db.select().from(userAttendance));
+    const { data: userAttendanceData } = useLiveQuery(
+        db.select().from(userAttendance)
+    );
 
     // Handle loading state
     if (!userTtData || !userAttendanceData) {
@@ -80,7 +86,11 @@ export default function Subjects() {
                         userTtData.map((data: userTimeTableSelectType) => {
                             const courseData = courseDataList![data.courseId!]
                                 ? courseDataList![data.courseId!]
-                                : { courseId: data.courseId, totalClasses: 0, attendedClasses: 0 };
+                                : {
+                                      courseId: data.courseId,
+                                      totalClasses: 0,
+                                      attendedClasses: 0,
+                                  };
 
                             return (
                                 <SubjectCard

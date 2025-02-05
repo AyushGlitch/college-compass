@@ -1,4 +1,10 @@
-import { View, Text, ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+import {
+    View,
+    Text,
+    ActivityIndicator,
+    FlatList,
+    RefreshControl,
+} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { fetchEmails } from '~/utils/gmailUtils';
 import { Container } from '~/components/Container';
@@ -56,13 +62,17 @@ const EmailSorter = () => {
                 </View>
             ) : emails.length === 0 ? (
                 <View className="flex-1 items-center justify-center">
-                    <Text className="font-medium text-gray-500">No emails found.</Text>
+                    <Text className="font-medium text-gray-500">
+                        No emails found.
+                    </Text>
                 </View>
             ) : (
                 <FlatList
                     data={emails}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <EmailCard email={item} accessToken={accessToken} />}
+                    renderItem={({ item }) => (
+                        <EmailCard email={item} accessToken={accessToken} />
+                    )}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
