@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Drawer from 'expo-router/drawer';
+import { useRouter } from 'expo-router';
 import { signOut } from 'firebase/auth';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -9,6 +10,17 @@ import { FIREBASE_AUTH } from '~/firebaseConfig';
 
 export default function Home() {
     const auth = FIREBASE_AUTH;
+    const router = useRouter();
+
+    // Features and their correct routes based on the given structure
+    const features = [
+        { name: "Email Sorter", route: "/(app)/(protected)/(drawer)/emailSorter" as const },
+        { name: "PYQs", route: "/(app)/(protected)/(drawer)/pyq" as const },
+        { name: "Hostel Leave", route: "/(app)/(protected)/(drawer)/hostelLeave" as const },
+        { name: "Attendance", route: "/(app)/(protected)/(drawer)/attendance" as const },
+        { name: "Colab Notes", route: "/(app)/(protected)/(drawer)/colabNotes" as const }
+    ];
+
 
     return (
         <>
@@ -33,18 +45,18 @@ export default function Home() {
                 <View className="flex-1 items-center justify-center bg-gray-100 p-6">
                     <Text className="mb-4 text-2xl font-bold text-gray-800">Welcome to Your Dashboard 🎉</Text>
                     <Text className="text-gray-600 text-center">
-                        Access all features easily from the menu. Manage emails, sort past questions, mark attendance, 
+                        Access all features easily from the menu. Manage emails, sort past questions, mark attendance,
                         apply for hostel leave, and collaborate on notes!
                     </Text>
 
                     <View className="mt-6 w-full flex-row flex-wrap justify-center gap-4">
-                        {["Email Sorter", "PYQs", "Hostel Leave", "Attendance", "Colab Notes"].map((feature) => (
+                        {features.map(({ name, route }) => (
                             <TouchableOpacity
-                                key={feature}
+                                key={route}
                                 className="w-40 rounded-lg bg-blue-600 p-4 shadow-lg"
-                                onPress={() => alert(`Opening ${feature}`)}
+                                onPress={() => router.push(route as any)}
                             >
-                                <Text className="text-center text-lg font-semibold text-white">{feature}</Text>
+                                <Text className="text-center text-lg font-semibold text-white">{name}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
