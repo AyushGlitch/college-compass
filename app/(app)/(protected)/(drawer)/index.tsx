@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Drawer from 'expo-router/drawer';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { signOut } from 'firebase/auth';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { Container } from '~/components/Container';
 import { FIREBASE_AUTH } from '~/firebaseConfig';
+import CustomButton from '~/components/CustomButton';
 
 export default function Home() {
     const auth = FIREBASE_AUTH;
@@ -18,7 +19,7 @@ export default function Home() {
             name: 'Email Sorter',
             route: '/(app)/(protected)/(drawer)/emailSorter' as const,
         },
-        { name: 'PYQs', route: '/(app)/(protected)/(drawer)/pyq' as const },
+        { name: 'PYQs', route: '/(app)/(protected)/(drawer)/Pyqs' as const },
         {
             name: 'Hostel Leave',
             route: '/(app)/(protected)/(drawer)/hostelLeave' as const,
@@ -74,15 +75,8 @@ export default function Home() {
                     </Text>
 
                     <View className="mt-6 w-full flex-row flex-wrap justify-center gap-4">
-                        {features.map(({ name, route }) => (
-                            <TouchableOpacity
-                                key={route}
-                                className="w-40 rounded-lg bg-blue-600 p-4 shadow-lg"
-                                onPress={() => router.push(route as any)}>
-                                <Text className="text-center text-lg font-semibold text-white">
-                                    {name}
-                                </Text>
-                            </TouchableOpacity>
+                        {features.map((feature, idx) => (
+                                <CustomButton title={feature.name} key={`${feature.name}-${idx}`} handlePress={() => router.push(feature.route as any)} />
                         ))}
                     </View>
                 </View>
