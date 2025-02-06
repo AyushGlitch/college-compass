@@ -6,7 +6,7 @@ import {
     RefreshControl,
 } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
-import { fetchEmails } from '~/utils/gmailUtils';
+import { categorizeEmail, fetchEmails } from '~/utils/gmailUtils';
 import { Container } from '~/components/Container';
 import EmailCard from '~/components/emailSorterComponents/EmailCard';
 
@@ -17,6 +17,20 @@ const EmailSorter = () => {
     const [error, setError] = useState<string | null>(null);
     const [accessToken, setAccessToken] = useState<string>('');
 
+    const getCategorizedEmails = (emails: any) => {
+        if (!emails || emails.length === 0) return [];
+        const categorizedEmails = emails.reduce((acc: any, email: any) => {
+            const category = categorizeEmail(email);
+            acc[category] = acc[category] ? [...acc[category], email] : [email];
+            return acc;
+        }, {});
+
+        // console.log("Categorized emails: ", JSON.stringify(categorizedEmails, null, 4));
+        
+        return categorizedEmails;
+          
+    }
+
     // Fetch Emails Function
     const getEmails = useCallback(async () => {
         try {
@@ -25,13 +39,19 @@ const EmailSorter = () => {
             const fetchedEmails = await fetchEmails();
 
             if (fetchedEmails) {
-                setEmails(fetchedEmails);
+                console.log("Fetched emails, categorizing now...");
+                
+                const catEmails = getCategorizedEmails(fetchEmails);
+                console.log(catEmails);
+                
+                setEmails(catEmails);
             } else {
                 setError('No emails found.');
                 setEmails([]);
             }
         } catch (err) {
             setError('Failed to fetch emails. Please try again.');
+            console.log(err)
             setEmails([]);
         } finally {
             setLoading(false);
