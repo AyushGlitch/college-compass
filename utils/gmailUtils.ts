@@ -46,22 +46,46 @@ export const fetchEmails = async () => {
 
 export const categorizeEmail = (email: any) => {
     // Extract Sender Information
-    const senderHeader = email.payload.headers.find((h: any) => h.name === 'From');
-    const senderEmail = senderHeader?.value.match(/<(.*)>/)?.[1] || senderHeader?.value || '';
-    const subject = email.payload.headers.find((h: any) => h.name === 'Subject')?.value || '';
-    const body = email.payload.headers.find((h: any) => h.name === 'Body')?.value || '';
-  
-    // Define keyword-based categorization rules
-    if (senderEmail.includes("academics") || subject.includes("Urgent") || body.includes("important")) {
-      return "IMPORTANT";
+    const senderHeader = email.payload.headers.find(
+        (h: any) => h.name === 'From'
+    );
+    const senderEmail =
+        senderHeader?.value.match(/<(.*)>/)?.[1] || senderHeader?.value || '';
+    const subject =
+        email.payload.headers.find((h: any) => h.name === 'Subject')?.value ||
+        '';
+    const body = email.payload.parts?.[0]?.body?.data || ''; // Extract text from email body
+
+    // Normalize text for better matching
+    const text = `${senderEmail} ${subject} ${body}`.toLowerCase();
+
+    // Prioritized Categorization Rules
+    if (
+        /urgent|deadline|exam|important|result|grades|submission/.test(text) ||
+        senderEmail.includes('academics')
+    ) {
+        return 'IMPORTANT';
     }
-    if (senderEmail.includes("club") || subject.includes("meeting") || body.includes("event")) {
-      return "CLUBS";
+    if (
+        /club|meeting|event|workshop|hackathon|seminar|competition/.test(
+            text
+        ) ||
+        senderEmail.includes('club')
+    ) {
+        return 'CLUBS';
     }
-    if (senderEmail.includes("mess") || subject.includes("menu") || body.includes("lunch")) {
-      return "MESS";
+    if (
+        /mess|menu|lunch|dinner|breakfast|food/.test(text) ||
+        senderEmail.includes('mess')
+    ) {
+        return 'MESS';
     }
-  
-    return "OTHERS";
-  };
-  
+    if (
+        /sports|match|tournament|cricket|football|badminton/.test(text) ||
+        senderEmail.includes('sports')
+    ) {
+        return 'SPORTS';
+    }
+
+    return 'OTHERS'; // Default category if no match
+};

@@ -46,7 +46,7 @@ export default function Home() {
                     },
                     headerRight: () => (
                         <TouchableOpacity
-                            className="mr-4 rounded-lg bg-cyan-600 px-4 py-2"
+                            className="px-4"
                             onPress={() => {
                                 const storage_keys = [
                                     'accessToken',
@@ -56,7 +56,7 @@ export default function Home() {
                                 AsyncStorage.multiRemove(storage_keys);
                                 signOut(auth);
                             }}>
-                            <Text className="font-semibold text-white">
+                            <Text className="font-psemibold text-cyan-600">
                                 Sign Out
                             </Text>
                         </TouchableOpacity>
@@ -76,7 +76,13 @@ export default function Home() {
 
                     <View className="mt-6 w-full flex-row flex-wrap justify-center gap-4">
                         {features.map((feature, idx) => (
-                                <CustomButton title={feature.name} key={`${feature.name}-${idx}`} handlePress={() => router.push(feature.route as any)} />
+                            <CustomButton
+                                title={feature.name}
+                                key={`${feature.name}-${idx}`}
+                                handlePress={() =>
+                                    router.push(feature.route as any)
+                                }
+                            />
                         ))}
                     </View>
                 </View>
