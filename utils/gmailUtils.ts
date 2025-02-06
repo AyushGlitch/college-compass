@@ -55,6 +55,7 @@ export const categorizeEmail = (email: any) => {
         email.payload.headers.find((h: any) => h.name === 'Subject')?.value ||
         '';
     const body = email.payload.parts?.[0]?.body?.data || ''; // Extract text from email body
+    const labels = email.labelIds || [];
 
     // Normalize text for better matching
     const text = `${senderEmail} ${subject} ${body}`.toLowerCase();
@@ -62,6 +63,7 @@ export const categorizeEmail = (email: any) => {
     // Prioritized Categorization Rules
     if (
         /urgent|deadline|exam|important|result|grades|submission/.test(text) ||
+        labels.includes('IMPORTANT') ||
         senderEmail.includes('academics')
     ) {
         return 'IMPORTANT';

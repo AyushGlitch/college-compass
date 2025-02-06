@@ -5,14 +5,15 @@ interface Email {
     payload: {
         headers: Array<{ name: string; value: string }>;
     };
+    labelIds: string[];
 }
 
 interface EmailCardProps {
     email: Email;
-    accessToken: string;
+    category: string;
 }
 
-const EmailCard: React.FC<EmailCardProps> = ({ email, accessToken }) => {
+const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
     const [profileImage, setProfileImage] = useState<string | null>(null);
 
     // Extract Sender Information
@@ -21,54 +22,15 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, accessToken }) => {
         senderHeader?.value.match(/^(.*?)\s*<.*>/)?.[1] ||
         senderHeader?.value ||
         '';
-    // const senderEmail = senderHeader?.value.match(/<(.*)>/)?.[1] || senderHeader?.value || '';
-
-    // const fetchProfileImage = async () => {
-    //     if (!senderEmail) return;
-
-    //     // ✅ Check AsyncStorage first to avoid unnecessary API calls
-    //     const cachedImage = await AsyncStorage.getItem(`profile_${senderEmail}`);
-    //     if (cachedImage) {
-    //         setProfileImage(cachedImage);
-    //         return;
-    //     }
-
-    //     try {
-    //         // ✅ Fetch sender's profile image from Google People API
-    //         const response = await fetch(
-    //             `https://people.googleapis.com/v1/people/me?personFields=photos`,
-    //             {
-    //                 headers: { Authorization: `Bearer ${accessToken}` },
-    //             }
-    //         );
-
-    //         if (!response.ok) {
-    //             throw new Error(`Failed to fetch profile image: ${response.statusText}`);
-    //         }
-
-    //         const data = await response.json();
-    //         const photoUrl = data.photos?.[0]?.url;
-
-    //         if (photoUrl) {
-    //             setProfileImage(photoUrl);
-    //             await AsyncStorage.setItem(`profile_${senderEmail}`, photoUrl);
-    //         } else {
-    //             // ✅ Fallback Google profile URL
-    //             const fallbackUrl = `https://www.google.com/s2/u/0/photos/public/${senderEmail}`;
-    //             setProfileImage(fallbackUrl);
-    //             await AsyncStorage.setItem(`profile_${senderEmail}`, fallbackUrl);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching profile image:', error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchProfileImage();
-    // }, [senderEmail, accessToken]); // ✅ Fetch only when senderEmail or accessToken changes
+    const labels = email.labelIds || [];
+    const isUnread = labels.includes('UNREAD');
 
     return (
-        <View className="flex-row items-center gap-2 border-b border-gray-300 p-4">
+        <View
+            className={`relative flex-row items-center gap-2 border-b border-gray-300 p-4 ${isUnread ? 'bg-gray-100' : 'bg-gray-200'}`}>
+            <View
+                className={`absolute bottom-0 left-0 top-0 w-2 ${category === 'IMPORTANT' ? 'bg-red-500' : ''}`}
+            />
             <Image
                 source={{
                     uri:
@@ -80,9 +42,12 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, accessToken }) => {
             />
 
             <View className="flex-1">
-                <Text className="text-lg font-semibold">{senderName}</Text>
                 <Text
-                    className="text-gray-500"
+                    className={`text-lg ${isUnread ? 'font-psemibold' : 'font-pregular'}`}>
+                    {senderName}
+                </Text>
+                <Text
+                    className={`text-gray-500 ${isUnread ? 'font-pregular' : 'font-plight'}`}
                     numberOfLines={1}
                     ellipsizeMode="tail">
                     {email.payload.headers.find((h) => h.name === 'Subject')

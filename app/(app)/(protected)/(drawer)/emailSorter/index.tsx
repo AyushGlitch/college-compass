@@ -25,6 +25,7 @@ const EmailSorter = () => {
 
         return emails.reduce((acc: any, email: any) => {
             const category = categorizeEmail(email);
+            email.category = category;
             acc[category] = acc[category] ? [...acc[category], email] : [email];
             return acc;
         }, {});
@@ -64,10 +65,12 @@ const EmailSorter = () => {
     };
 
     // Memoized list of emails for the selected category
-    const filteredEmails = useMemo(
-        () => emails?.[selectedCategory] || [],
-        [emails, selectedCategory]
-    );
+    const filteredEmails = useMemo(() => {
+        if (selectedCategory === 'ALL') {
+            return Object.values(emails || {}).flat(); // Merge all category arrays into one
+        }
+        return emails?.[selectedCategory] || [];
+    }, [emails, selectedCategory]);
 
     return (
         <Container>
@@ -94,6 +97,7 @@ const EmailSorter = () => {
                             setSelectedCategory(itemValue)
                         }
                         className="mb-4 rounded border border-gray-300 p-2">
+                        <Picker.Item label="All" value="ALL" />
                         <Picker.Item label="Important" value="IMPORTANT" />
                         <Picker.Item label="Clubs" value="CLUBS" />
                         <Picker.Item label="Mess" value="MESS" />
@@ -106,7 +110,7 @@ const EmailSorter = () => {
                         data={filteredEmails}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <EmailCard email={item} accessToken={accessToken} />
+                            <EmailCard email={item} category={item.category} />
                         )}
                         refreshControl={
                             <RefreshControl
