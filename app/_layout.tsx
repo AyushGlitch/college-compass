@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { Slot, SplashScreen } from 'expo-router';
 import { SQLiteProvider } from 'expo-sqlite';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,10 +34,12 @@ export default function RootLayout() {
     }
 
     return (
-        <SQLiteProvider
-            databaseName="db"
-            options={{ enableChangeListener: true }}>
-            <Slot />
-        </SQLiteProvider>
+        <GestureHandlerRootView>
+            <SQLiteProvider
+                databaseName="db"
+                options={{ enableChangeListener: true }}>
+                <Slot />
+            </SQLiteProvider>
+        </GestureHandlerRootView>
     );
 }

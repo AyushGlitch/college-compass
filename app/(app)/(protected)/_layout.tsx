@@ -1,8 +1,8 @@
-import { Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import React from 'react';
 
 const ProtectedLayout = () => {
-    return <Stack screenOptions={{ headerShown: false }} />;
+    return <Slot />;
 };
 
 export default ProtectedLayout;

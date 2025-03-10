@@ -10,13 +10,21 @@ import { FIREBASE_AUTH } from '~/firebaseConfig';
 import { makeRedirectUri } from 'expo-auth-session';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+    withTiming,
+    interpolateColor,
+} from 'react-native-reanimated';
+import { AntDesign } from '@expo/vector-icons';
+
 WebBrowser.maybeCompleteAuthSession();
 
 const OnboardingScreen3 = () => {
-    const auth = FIREBASE_AUTH; // GET FIREBASE AUTH INSTANCE
+    const auth = FIREBASE_AUTH;
     const [isLoading, setIsLoading] = useState(false);
 
-    // GOOGLE AUTH FLOW REQUEST
     const [request, response, promptAsync] = Google.useAuthRequest({
         webClientId:
             '499007111473-iolrcekl6kfjh9mkc80lm59h582vtjah.apps.googleusercontent.com',
@@ -38,12 +46,11 @@ const OnboardingScreen3 = () => {
         }),
     });
 
-    // EXCHANGE TOKENS TO INTEGRATE GOOGLE LOGIN WITH FIREBASE
     useEffect(() => {
         if (response?.type === 'success') {
             console.warn('expo-auth-session response', response);
             const { idToken, accessToken, refreshToken, expiresIn }: any =
-                response.authentication; // Extract id_token instead of access_token
+                response.authentication;
 
             if (!idToken || !accessToken || !refreshToken || !expiresIn) {
                 console.error('Missing Tokens!');
@@ -71,47 +78,89 @@ const OnboardingScreen3 = () => {
         }
     }, [response]);
 
+    // Animation States
+    const scale = useSharedValue(0.8);
+    const opacity = useSharedValue(0);
+    const background = useSharedValue(0);
+
+    useEffect(() => {
+        scale.value = withSpring(1, { damping: 8 });
+        opacity.value = withTiming(1, { duration: 1500 });
+        background.value = withTiming(1, { duration: 1000 });
+    }, []);
+
+    // Animated Styles
+    const titleStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: scale.value }],
+        opacity: opacity.value,
+    }));
+
+    const buttonStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: scale.value }],
+    }));
+
+    const backgroundStyle = useAnimatedStyle(() => {
+        const bgColor = interpolateColor(
+            background.value,
+            [0, 1],
+            ['#0B0014', '#21003D']
+        );
+        return {
+            backgroundColor: bgColor,
+        };
+    });
+
     if (isLoading) {
         return (
-            <Container className="justify-center gap-4">
-                <Text className="text-center font-pbold text-3xl">
+            <View className="bg-licorice flex-1 items-center justify-center">
+                <Text className="text-center font-pbold text-3xl text-white">
                     Please wait while we Sign you in
                 </Text>
-                <ActivityIndicator size="large" />
-            </Container>
+                <ActivityIndicator size="large" color="white" />
+            </View>
         );
     }
 
     return (
-        <Container className="justify-center gap-4 p-4">
-            <View className="flex-1 justify-center gap-4">
-                <Text className="text-center font-pbold text-3xl">
-                    Login now to get started!
-                </Text>
-                <Text className="text-center text-xl font-light">
-                    Just use your institute Email to login.
-                </Text>
-            </View>
-            <CustomButton
-                title="Sign in with Google"
-                containerStyles="w-full"
-                handlePress={async () => {
-                    try {
-                        setIsLoading(true);
-                        console.log('Starting Google Sign-In...');
-                        const res = await promptAsync();
-                        console.log(
-                            'PromptAsync Response:',
-                            JSON.stringify(res, null, 2)
-                        );
-                    } catch (error) {
-                        console.error('Error during Google Sign-In:', error);
-                    } finally {
-                        setIsLoading(false);
-                    }
-                }}
-            />
-        </Container>
+        <Animated.View className="flex-1" style={[backgroundStyle]}>
+            <Container className="flex-1 justify-center gap-4 p-4">
+                <View className="flex-1 justify-center gap-4">
+                    {/* Title Text */}
+                    <Animated.Text
+                        style={titleStyle}
+                        className="text-aquamarine text-center font-pbold text-3xl">
+                        Login now to get started!
+                    </Animated.Text>
+                    <Text className="text-center text-lg font-light text-white">
+                        Just use your institute Email to login.
+                    </Text>
+                </View>
+
+                {/* Google Sign-In Button */}
+                <Animated.View style={buttonStyle}>
+                    <CustomButton
+                        title="Sign in with Google"
+                        containerStyles="w-full active:scale-95"
+                        textStyles="!text-white"
+                        icon={
+                            <AntDesign name="google" size={18} color="white" />
+                        }
+                        handlePress={async () => {
+                            try {
+                                setIsLoading(true);
+                                console.log('Starting Google Sign-In...');
+                                const res = await promptAsync();
+                                console.log('PromptAsync Response:', res);
+                            } catch (error) {
+                                console.error('Google Sign-In Error:', error);
+                            } finally {
+                                setIsLoading(false);
+                            }
+                        }}
+                    />
+                </Animated.View>
+            </Container>
+        </Animated.View>
     );
 };
 

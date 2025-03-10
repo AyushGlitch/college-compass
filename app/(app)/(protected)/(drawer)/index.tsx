@@ -3,11 +3,10 @@ import Drawer from 'expo-router/drawer';
 import { Link, useRouter } from 'expo-router';
 import { signOut } from 'firebase/auth';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 
 import { Container } from '~/components/Container';
 import { FIREBASE_AUTH } from '~/firebaseConfig';
-import CustomButton from '~/components/CustomButton';
 
 export default function Home() {
     const auth = FIREBASE_AUTH;
@@ -26,7 +25,7 @@ export default function Home() {
         },
         {
             name: 'Attendance',
-            route: '/(app)/(protected)/(drawer)/attendance' as const,
+            route: '/(app)/(protected)/(drawer)/attendanceMarker' as const,
         },
         {
             name: 'Colab Notes',
@@ -39,11 +38,6 @@ export default function Home() {
             <Drawer.Screen
                 options={{
                     headerTitle: 'Dashboard',
-                    headerTitleStyle: {
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        color: '#333',
-                    },
                     headerRight: () => (
                         <TouchableOpacity
                             className="px-4"
@@ -56,7 +50,7 @@ export default function Home() {
                                 AsyncStorage.multiRemove(storage_keys);
                                 signOut(auth);
                             }}>
-                            <Text className="font-psemibold text-cyan-600">
+                            <Text className="text-licorice-600 font-psemibold">
                                 Sign Out
                             </Text>
                         </TouchableOpacity>
@@ -64,25 +58,34 @@ export default function Home() {
                 }}
             />
             <Container>
-                <View className="flex-1 items-center justify-center bg-gray-100 p-6">
-                    <Text className="mb-4 text-2xl font-bold text-gray-800">
-                        Welcome to Your Dashboard 🎉
-                    </Text>
-                    <Text className="text-center text-gray-600">
-                        Access all features easily from the menu. Manage emails,
-                        sort past questions, mark attendance, apply for hostel
-                        leave, and collaborate on notes!
-                    </Text>
+                <View className="bg-licorice flex-1 justify-center gap-6 p-4">
+                    {/* Hero Section */}
+                    <View className="mb-6 items-center justify-center gap-4">
+                        <Text className="text-rose_pompadour text-3xl font-extrabold">
+                            Welcome to Your Dashboard 🎉
+                        </Text>
+                        <Text className="max-w-xs text-center text-white">
+                            Easily manage your emails, mark attendance, apply
+                            for hostel leave, and collaborate on notes!
+                        </Text>
+                    </View>
 
-                    <View className="mt-6 w-full flex-row flex-wrap justify-center gap-4">
+                    {/* Feature Grid */}
+                    <View className="grid grid-cols-2 gap-4">
                         {features.map((feature, idx) => (
-                            <CustomButton
-                                title={feature.name}
+                            <Link
+                                href={feature.route as any}
                                 key={`${feature.name}-${idx}`}
-                                handlePress={() =>
-                                    router.push(feature.route as any)
-                                }
-                            />
+                                asChild>
+                                <Pressable className="active:border-rose_pompadour active:bg-rose_pompadour-100 rounded-2xl border border-glass bg-black p-4 shadow-neon-glow">
+                                    <Text className="text-rose_pompadour font-psemibold text-lg">
+                                        {feature.name}
+                                    </Text>
+                                    <Text className="text-sm text-white">
+                                        This is a small feature description.
+                                    </Text>
+                                </Pressable>
+                            </Link>
                         ))}
                     </View>
                 </View>

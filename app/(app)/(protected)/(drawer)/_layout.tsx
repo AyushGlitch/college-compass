@@ -58,7 +58,7 @@ function CustomDrawerContent(props: any) {
     return (
         <View className="flex-1">
             {/* Drawer Header */}
-            <View className="w-full">
+            <View className="bg-rose_pompadour w-full gap-4">
                 <View
                     className="mx-auto aspect-square w-[50%] items-center justify-center p-4"
                     style={{ paddingTop: top + 10 }}>
@@ -88,7 +88,7 @@ function CustomDrawerContent(props: any) {
                     className="my-auto aspect-square items-center justify-center p-2"
                     onPress={() => Linking.openURL('https://nitdelhi.ac.in/')}>
                     <MaterialCommunityIcons name="web" size={24} color="grey" />
-                    <Text className="font-pbold text-sm text-black/60">
+                    <Text className="font-pbold text-sm text-white/60">
                         NITD
                     </Text>
                 </TouchableOpacity>
@@ -97,7 +97,7 @@ function CustomDrawerContent(props: any) {
                     className="my-auto aspect-square items-center justify-center p-2"
                     onPress={() => Linking.openURL('https://nitdelhi.ac.in/')}>
                     <MaterialCommunityIcons name="web" size={24} color="grey" />
-                    <Text className="font-pbold text-sm text-black/60">
+                    <Text className="font-pbold text-sm text-white/60">
                         ERP
                     </Text>
                 </TouchableOpacity>
@@ -113,7 +113,7 @@ const DrawerLayout = () => (
                 <Ionicons
                     name="menu"
                     size={30}
-                    // color="black"
+                    color="black"
                     className="flex items-center justify-center px-5"
                     style={{
                         paddingHorizontal: 20,
@@ -123,8 +123,39 @@ const DrawerLayout = () => (
             ),
             drawerStyle: {
                 width: '70%',
-                // backgroundColor: '#000000',
+                backgroundColor: '#0B0014',
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                borderRightWidth: 1,
+                overflow: 'hidden',
             },
+            headerStyle: {
+                backgroundColor: '#FF7094',
+            },
+            headerTitleStyle: {
+                color: '#000',
+                fontWeight: 'bold',
+                fontSize: 20,
+            },
+            drawerLabelStyle: {
+                color: '#E8BDFE', // Soft pastel purple that contrasts well
+                fontSize: 16,
+                fontWeight: 'bold',
+                textShadowColor: '#A102F6', // Neon purple glow effect
+                textShadowOffset: { width: 0, height: 0 },
+                textShadowRadius: 6,
+                letterSpacing: 1.2,
+            },
+
+            drawerItemStyle: {
+                shadowColor: '#A102F6', // Same neon glow effect
+                shadowOffset: { width: 0, height: 5 },
+                shadowOpacity: 0.4,
+                shadowRadius: 10,
+            },
+
+            drawerActiveTintColor: '#A102F6',
+
+            drawerInactiveTintColor: '#E8BDFE',
         })}
         drawerContent={CustomDrawerContent}>
         <Drawer.Screen
@@ -155,8 +186,8 @@ const DrawerLayout = () => (
                 headerTitle: 'PYQs',
                 drawerLabel: 'PYQs',
                 drawerIcon: ({ size, color }) => (
-                    <FontAwesome
-                        name="graduation-cap"
+                    <MaterialCommunityIcons
+                        name="book-education"
                         size={size}
                         color={color}
                     />

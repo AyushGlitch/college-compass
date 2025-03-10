@@ -7,11 +7,8 @@ export const Container = ({
     children: React.ReactNode;
     className?: string;
 }) => {
-    const isDark = false; // TODO: temporary solution
-
     return (
-        <SafeAreaView
-            className={`flex-1 ${isDark ? 'bg-stone-900' : 'bg-stone-200'} ${className}`}>
+        <SafeAreaView collapsable={false} className={`flex-1 ${className}`}>
             {children}
         </SafeAreaView>
     );
