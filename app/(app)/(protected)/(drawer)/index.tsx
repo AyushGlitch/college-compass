@@ -50,7 +50,7 @@ export default function Home() {
                                 AsyncStorage.multiRemove(storage_keys);
                                 signOut(auth);
                             }}>
-                            <Text className="text-licorice-600 font-psemibold">
+                            <Text className="font-psemibold text-licorice-600">
                                 Sign Out
                             </Text>
                         </TouchableOpacity>
@@ -58,11 +58,14 @@ export default function Home() {
                 }}
             />
             <Container>
-                <View className="bg-licorice flex-1 justify-center gap-6 p-4">
+                <View className="flex-1 justify-center gap-6 bg-licorice p-4">
                     {/* Hero Section */}
                     <View className="mb-6 items-center justify-center gap-4">
-                        <Text className="text-rose_pompadour text-3xl font-extrabold">
+                        <Text className="text-3xl font-extrabold text-rose_pompadour">
                             Welcome to Your Dashboard 🎉
+                        </Text>
+                        <Text className="text-center text-yellow-400">
+                            {auth.currentUser?.displayName ?? 'No user found'}
                         </Text>
                         <Text className="max-w-xs text-center text-white">
                             Easily manage your emails, mark attendance, apply
@@ -77,8 +80,8 @@ export default function Home() {
                                 href={feature.route as any}
                                 key={`${feature.name}-${idx}`}
                                 asChild>
-                                <Pressable className="active:border-rose_pompadour active:bg-rose_pompadour-100 rounded-2xl border border-glass bg-black p-4 shadow-neon-glow">
-                                    <Text className="text-rose_pompadour font-psemibold text-lg">
+                                <Pressable className="rounded-2xl border border-glass bg-black p-4 shadow-neon-glow active:border-rose_pompadour active:bg-rose_pompadour-100">
+                                    <Text className="font-psemibold text-lg text-rose_pompadour">
                                         {feature.name}
                                     </Text>
                                     <Text className="text-sm text-white">

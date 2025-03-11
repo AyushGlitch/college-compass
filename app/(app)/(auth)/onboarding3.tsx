@@ -42,7 +42,7 @@ const OnboardingScreen3 = () => {
         },
         redirectUri: makeRedirectUri({
             scheme: 'com.aditya221210011.collegecompass',
-            path: '/(app)/onboarding3',
+            path: '/(app)/(auth)/onboarding3',
         }),
     });
 
@@ -112,7 +112,7 @@ const OnboardingScreen3 = () => {
 
     if (isLoading) {
         return (
-            <View className="bg-licorice flex-1 items-center justify-center">
+            <View className="flex-1 items-center justify-center bg-licorice">
                 <Text className="text-center font-pbold text-3xl text-white">
                     Please wait while we Sign you in
                 </Text>
@@ -128,7 +128,7 @@ const OnboardingScreen3 = () => {
                     {/* Title Text */}
                     <Animated.Text
                         style={titleStyle}
-                        className="text-aquamarine text-center font-pbold text-3xl">
+                        className="text-center font-pbold text-3xl text-aquamarine">
                         Login now to get started!
                     </Animated.Text>
                     <Text className="text-center text-lg font-light text-white">

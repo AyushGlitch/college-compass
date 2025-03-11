@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import '../global.css';
 import { useFonts } from 'expo-font';
-import { Slot, SplashScreen } from 'expo-router';
+import { Slot } from 'expo-router';
 import { SQLiteProvider } from 'expo-sqlite';
+import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -25,7 +26,7 @@ export default function RootLayout() {
         if (error) throw error;
 
         if (fontsLoaded) {
-            SplashScreen.hideAsync();
+            // SplashScreen.hideAsync();
         }
     }, [fontsLoaded, error]);
 
@@ -38,7 +39,20 @@ export default function RootLayout() {
             <SQLiteProvider
                 databaseName="db"
                 options={{ enableChangeListener: true }}>
-                <Slot />
+                <Slot
+                    screenOptions={{
+                        statusBarStyle: 'dark',
+                        // statusBarBackgroundColor: isDark ? '#030014' : '#0B0014',
+                        statusBarBackgroundColor: 'transparent',
+                        // headerStyle: {
+                        //     backgroundColor: isDark ? '#080017' : '#0B0014',
+                        // },
+                        // headerTintColor: isDark ? '#c084fc' : '#0c0a09',
+                        // navigationBarColor: isDark ? '#030014' : '#fafaf9',
+                        headerShown: false,
+                        statusBarTranslucent: true,
+                    }}
+                />
             </SQLiteProvider>
         </GestureHandlerRootView>
     );

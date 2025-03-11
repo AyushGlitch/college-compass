@@ -9,9 +9,9 @@ import {
 } from '~/db/schema';
 import { count } from 'drizzle-orm';
 import { preDefinedTimeTableData } from '~/db/seedData';
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Slot, useRouter, useSegments } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { db } from '~/db/drizzle';
 import migrations from '~/db/migrations/migrations';
 
@@ -84,10 +84,13 @@ export default function AppLayout() {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            console.log('ONAUTHSTATECHANGED:', user);
+            console.log('ONAUTHSTATECHANGED:', user?.displayName);
 
             setUser(user);
-            if (isInitializing) setIsInitializing(false);
+            if (isInitializing) {
+                setIsInitializing(false);
+                SplashScreen.hide();
+            }
         });
         return () => unsubscribe();
     }, []);
@@ -96,44 +99,29 @@ export default function AppLayout() {
         if (!isInitializing) {
             const inProtectedGroup = segments[1] === '(protected)';
             if (user && !inProtectedGroup) {
-                console.log(
-                    'User is logged in, redirecting to protected route'
-                );
-                router.replace('/(app)/(protected)/(drawer)');
+                console.log('User is logged in, redirecting to Home Screen');
+                router.replace('/');
             } else if (!user && inProtectedGroup) {
                 console.log('User is not logged in, redirecting to login');
-                router.replace('/(app)/onboarding3');
+                router.replace('/(app)/(auth)/onboarding1');
             }
         }
     }, [user, isInitializing, segments]);
 
-    if (isInitializing) {
-        return (
-            <ActivityIndicator
-                className="flex-1 items-center justify-center"
-                size={'large'}
-            />
-        );
-    }
+    // if (isInitializing) {
+    //     return (
+    //         <ActivityIndicator
+    //             className="flex-1 items-center justify-center"
+    //             size={'large'}
+    //         />
+    //     );
+    // }
 
     const queryClient = new QueryClient();
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Stack
-                screenOptions={{
-                    statusBarStyle: 'dark',
-                    // statusBarBackgroundColor: isDark ? '#030014' : '#0B0014',
-                    statusBarBackgroundColor: 'transparent',
-                    // headerStyle: {
-                    //     backgroundColor: isDark ? '#080017' : '#0B0014',
-                    // },
-                    // headerTintColor: isDark ? '#c084fc' : '#0c0a09',
-                    // navigationBarColor: isDark ? '#030014' : '#fafaf9',
-                    headerShown: false,
-                    statusBarTranslucent: true,
-                }}
-            />
+            <Slot />
         </QueryClientProvider>
     );
 }

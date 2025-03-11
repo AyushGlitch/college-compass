@@ -1,8 +1,8 @@
 import { Redirect, Stack } from 'expo-router';
-import React from 'react';
+import { View, Text } from 'react-native';
 import { FIREBASE_AUTH } from '~/firebaseConfig';
 
-const ProtectedLayout = () => {
+const AuthLayout = () => {
     return (
         <Stack
             screenOptions={{
@@ -21,4 +21,4 @@ const ProtectedLayout = () => {
     );
 };
 
-export default ProtectedLayout;
+export default AuthLayout;
