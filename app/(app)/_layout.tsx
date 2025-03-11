@@ -2,16 +2,12 @@
 import { ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
-import {
-    preDefinedTimeTable,
-    preDefinedTimeTableInsertType,
-    preDefinedTimeTableSelectType,
-} from '~/db/schema';
+import { preDefinedTimeTable } from '~/db/schema';
 import { count } from 'drizzle-orm';
 import { preDefinedTimeTableData } from '~/db/seedData';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '~/db/drizzle';
 import migrations from '~/db/migrations/migrations';
 
@@ -25,99 +21,83 @@ type Result = {
 
 async function seedData(db: ExpoSQLiteDatabase) {
     try {
-        // await db.delete(preDefinedTimeTable) //
         const preDefinedData: Result = await db
             .select({ count: count() })
             .from(preDefinedTimeTable);
 
-        if (preDefinedData[0].count == preDefinedTimeTableData.length) {
-            console.log('Updated Data Present');
+        if (preDefinedData[0].count === preDefinedTimeTableData.length) {
+            console.log('✅ Data is already seeded');
         } else {
             await db.delete(preDefinedTimeTable);
-            //@ts-ignore
-            const insertRes: preDefinedTimeTableInsertType = await db
+            await db
                 .insert(preDefinedTimeTable)
-                //@ts-ignore
-                .values(preDefinedTimeTableData);
-            if (insertRes) {
-                console.log('Updated Data Seeded');
-            }
+                .values(preDefinedTimeTableData as any);
+            console.log('✅ Data Seeded Successfully');
         }
-        // await db.delete(preDefinedTimeTable) //
-        const seededData: preDefinedTimeTableSelectType[] = await db
-            .select()
-            .from(preDefinedTimeTable);
-        // console.log("Data Present of Length", seededData.length)
     } catch (error) {
-        console.log('Error seeding data', error);
+        console.log('❌ Error seeding data', error);
     }
 }
 
 export default function AppLayout() {
-    const auth = FIREBASE_AUTH; // IMPORTING AUTH INSTANCE
+    const auth = FIREBASE_AUTH;
     const router = useRouter();
     const segments = useSegments();
-    console.log('CURRENT ROUTE:', segments);
-
-    const isDark = false; // TODO: Temporary fix for dark mode
 
     const [isInitializing, setIsInitializing] = useState(true);
     const [user, setUser] = useState<User | null>(null);
+
     const { success, error } = useMigrations(db, migrations);
     useDrizzleStudio(db);
 
-    const initializeApp = useCallback(async () => {
-        if (error) {
-            console.error('Migration error:', error);
-            return;
-        }
-        if (success) {
-            console.log('Migrations ran successfully');
-            await seedData(db);
-            // setIsInitializing(false);
-        }
+    // Run Migrations + Seed Data
+    useEffect(() => {
+        const initializeApp = async () => {
+            try {
+                if (error) throw new Error('Migration error');
+
+                if (success) {
+                    console.log('✅ Migrations successful');
+                    await seedData(db);
+                }
+            } catch (error) {
+                console.log('❌ Initialization error:', error);
+            } finally {
+                await SplashScreen.hideAsync();
+                setIsInitializing(false);
+            }
+        };
+
+        initializeApp();
     }, [success, error]);
 
-    useEffect(() => {
-        initializeApp();
-    }, [initializeApp]);
-
+    // Firebase Auth State listener
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            console.log('ONAUTHSTATECHANGED:', user?.displayName);
-
+            console.log('🔑 User:', user?.displayName);
             setUser(user);
-            if (isInitializing) {
-                setIsInitializing(false);
-                SplashScreen.hide();
-            }
         });
+
         return () => unsubscribe();
     }, []);
 
+    // Handle Navigation Based on Auth State
     useEffect(() => {
-        if (!isInitializing) {
-            const inProtectedGroup = segments[1] === '(protected)';
-            if (user && !inProtectedGroup) {
-                console.log('User is logged in, redirecting to Home Screen');
-                router.replace('/');
-            } else if (!user && inProtectedGroup) {
-                console.log('User is not logged in, redirecting to login');
-                router.replace('/(app)/(auth)/onboarding1');
-            }
+        if (isInitializing) return;
+
+        const inProtectedGroup = segments[1] === '(protected)';
+
+        if (user && !inProtectedGroup) {
+            router.replace('/');
+        } else if (!user && inProtectedGroup) {
+            router.replace('/(app)/(auth)/onboarding1');
         }
     }, [user, isInitializing, segments]);
 
-    // if (isInitializing) {
-    //     return (
-    //         <ActivityIndicator
-    //             className="flex-1 items-center justify-center"
-    //             size={'large'}
-    //         />
-    //     );
-    // }
-
+    // Provide Tanstack Query Client
     const queryClient = new QueryClient();
+
+    if (isInitializing) return null;
 
     return (
         <QueryClientProvider client={queryClient}>
