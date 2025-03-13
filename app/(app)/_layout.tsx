@@ -19,6 +19,8 @@ type Result = {
     count: number;
 }[];
 
+SplashScreen.preventAutoHideAsync();
+
 async function seedData(db: ExpoSQLiteDatabase) {
     try {
         const preDefinedData: Result = await db
@@ -63,8 +65,8 @@ export default function AppLayout() {
             } catch (error) {
                 console.log('❌ Initialization error:', error);
             } finally {
-                await SplashScreen.hideAsync();
-                setIsInitializing(false);
+                // await SplashScreen.hideAsync();
+                // setIsInitializing(false);
             }
         };
 
@@ -76,6 +78,7 @@ export default function AppLayout() {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             console.log('🔑 User:', user?.displayName);
             setUser(user);
+            setIsInitializing(false);
         });
 
         return () => unsubscribe();
@@ -83,15 +86,23 @@ export default function AppLayout() {
 
     // Handle Navigation Based on Auth State
     useEffect(() => {
-        if (isInitializing) return;
+        const authRedirect = async () => {
+            if (isInitializing) return;
 
-        const inProtectedGroup = segments[1] === '(protected)';
+            const inProtectedGroup = segments[1] === '(protected)';
 
-        if (user && !inProtectedGroup) {
-            router.replace('/');
-        } else if (!user && inProtectedGroup) {
-            router.replace('/(app)/(auth)/onboarding1');
-        }
+            if (user && !inProtectedGroup) {
+                console.log('🚀 Redirecting to: Dashboard');
+                router.replace('/');
+            } else if (!user && inProtectedGroup) {
+                console.log('🚀 Redirecting to: Onboarding');
+                router.replace('/(app)/(auth)/onboarding1');
+            }
+
+            // await SplashScreen.hideAsync();
+        };
+
+        authRedirect();
     }, [user, isInitializing, segments]);
 
     // Provide Tanstack Query Client

@@ -33,15 +33,6 @@
         "orientation": "portrait",
         "icon": "./assets/icons/Light.png",
         "userInterfaceStyle": "dark",
-        "splash": {
-            "image": "./assets/icons/splash-icon-dark.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff",
-            "dark": {
-                "image": "./assets/icons/splash-icon-light.png",
-                "backgroundColor": "#000000"
-            }
-        },
         "assetBundlePatterns": ["**/*"],
         "ios": {
             "supportsTablet": true,

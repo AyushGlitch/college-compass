@@ -12,53 +12,13 @@ import {
 } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// function CustomDrawerContent(props: any) {
-//     const { top, bottom } = useSafeAreaInsets();
-
-//     return (
-//         <View style={{ flex: 1 }}>
-//             <DrawerContentScrollView {...props} scrollEnabled={true}>
-//                 <View
-//                     style={{
-//                         backgroundColor: '#021520',
-//                         height: 150,
-//                         flex: 1,
-//                         justifyContent: 'center',
-//                         alignItems: 'center',
-//                     }}>
-//                     {/* <Image source={require("../assets/images/adaptive-icon.png")} style={{width:'100%', flex:1}} /> */}
-//                 </View>
-
-//                 <View style={{ marginVertical: 30 }}>
-//                     <DrawerItemList {...props} />
-//                 </View>
-//             </DrawerContentScrollView>
-
-//             {/* <View style={{ borderTopWidth: 2, borderTopColor: '#414141', paddingVertical: bottom + 20, paddingLeft:20, gap:17}}>
-//         <TouchableOpacity style={{flexWrap:'wrap', flexDirection:'row', gap:20, alignItems:'center'}}  onPress={() => Linking.openURL('https://github.com/AyushGlitch/nitd-attend')}>
-//           <AntDesign name="github" size={30} color="grey" />
-//           <Text style={{ fontSize: 17, fontWeight:'500', marginBottom: 10 }}>GitHub</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={{flexWrap:'wrap', flexDirection:'row', gap:20, alignItems:'center'}} onPress={() => Linking.openURL('https://www.linkedin.com/in/ayush-aryan-singh-877989204/')}>
-//           <AntDesign name="linkedin-square" size={30} color="grey" />
-//           <Text style={{ fontSize: 17, fontWeight:'500', marginBottom: 10 }}>LinkedIn</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={{flexWrap:'wrap', flexDirection:'row', gap:20, alignItems:'center'}} onPress={() => Linking.openURL('https://x.com/AyushAryanSgh')}>
-//           <FontAwesome6 name="square-x-twitter" size={30} color="grey" />
-//           <Text style={{ fontSize: 17, fontWeight:'500', marginBottom: 10 }}>Twitter</Text>
-//         </TouchableOpacity>
-//       </View>   */}
-//         </View>
-//     );
-// }
-
 function CustomDrawerContent(props: any) {
     const { top, bottom } = useSafeAreaInsets();
 
     return (
         <View className="flex-1">
             {/* Drawer Header */}
-            <View className="bg-rose_pompadour w-full gap-4">
+            <View className="w-full gap-4 bg-rose_pompadour">
                 <View
                     className="mx-auto aspect-square w-[50%] items-center justify-center p-4"
                     style={{ paddingTop: top + 10 }}>

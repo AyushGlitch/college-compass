@@ -81,7 +81,7 @@ const HostelLeave = () => {
     };
 
     return (
-        <Container className="p-4">
+        <Container className="bg-licorice p-4">
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -93,11 +93,11 @@ const HostelLeave = () => {
                         keyboardShouldPersistTaps="handled">
                         {/* Leave Date Picker */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">
+                            <Text className="font-pbold text-lg text-aquamarine">
                                 Leave Date
                             </Text>
-                            <View className="flex-row items-center justify-between rounded-md bg-white p-2">
-                                <Text className="font-pregular">
+                            <View className="flex-row items-center justify-between rounded-md border border-glass bg-licorice p-2 shadow-neon-glow backdrop-blur-lg">
+                                <Text className="font-pregular text-white">
                                     {leaveDate
                                         ? dayjs(leaveDate).format('DD/MM/YYYY')
                                         : 'No date selected'}
@@ -106,11 +106,11 @@ const HostelLeave = () => {
                                     onPress={() =>
                                         setShowDatePicker({ type: 'leave' })
                                     }
-                                    className="rounded-md bg-black/10 p-2">
+                                    className="rounded-md p-2">
                                     <Ionicons
                                         name="calendar-outline"
                                         size={24}
-                                        color="black"
+                                        color="white"
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -118,11 +118,11 @@ const HostelLeave = () => {
 
                         {/* Return Date Picker */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">
+                            <Text className="font-pbold text-lg text-aquamarine">
                                 Return Date
                             </Text>
-                            <View className="flex-row items-center justify-between rounded-md bg-white p-2">
-                                <Text className="font-pregular">
+                            <View className="flex-row items-center justify-between rounded-md border border-glass bg-licorice p-2 shadow-neon-glow backdrop-blur-lg">
+                                <Text className="font-pregular text-white">
                                     {returnDate
                                         ? dayjs(returnDate).format('DD/MM/YYYY')
                                         : 'No date selected'}
@@ -131,11 +131,11 @@ const HostelLeave = () => {
                                     onPress={() =>
                                         setShowDatePicker({ type: 'return' })
                                     }
-                                    className="rounded-md bg-black/10 p-2">
+                                    className="rounded-md p-2">
                                     <Ionicons
                                         name="calendar-outline"
                                         size={24}
-                                        color="black"
+                                        color="white"
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -143,11 +143,11 @@ const HostelLeave = () => {
 
                         {/* Leave Time Picker */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">
+                            <Text className="font-pbold text-lg text-aquamarine">
                                 Leave time
                             </Text>
-                            <View className="flex-row items-center justify-between rounded-md bg-white p-2">
-                                <Text className="font-pregular">
+                            <View className="flex-row items-center justify-between rounded-md border border-glass bg-licorice p-2 shadow-neon-glow backdrop-blur-lg">
+                                <Text className="font-pregular text-white">
                                     {leaveTime
                                         ? dayjs(leaveTime).format('hh:mm A')
                                         : 'No time selected'}
@@ -156,11 +156,11 @@ const HostelLeave = () => {
                                     onPress={() =>
                                         setShowDatePicker({ type: 'time' })
                                     }
-                                    className="rounded-md bg-black/10 p-2">
+                                    className="rounded-md p-2">
                                     <Ionicons
                                         name="time-outline"
                                         size={24}
-                                        color="black"
+                                        color="white"
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -168,31 +168,35 @@ const HostelLeave = () => {
 
                         {/* Destination Input */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">
+                            <Text className="font-pbold text-lg text-rose_pompadour">
                                 Destination
                             </Text>
-                            <TextInput
-                                placeholder="Where are you going?"
-                                value={destination}
-                                onChangeText={setDestination}
-                                className="h-12 rounded-md bg-white p-2 font-pregular"
-                            />
+                            <View className="flex-row items-center justify-between rounded-md border border-glass bg-licorice p-2 shadow-neon-glow backdrop-blur-lg">
+                                <TextInput
+                                    placeholder="Where are you going?"
+                                    value={destination}
+                                    onChangeText={setDestination}
+                                    className="w-full rounded-md p-2 font-pregular text-white placeholder:text-white"
+                                />
+                            </View>
                         </View>
 
                         {/* Reason Input */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg">
+                            <Text className="font-pbold text-lg text-rose_pompadour">
                                 Reason for Leave
                             </Text>
-                            <TextInput
-                                placeholder="Why are you leaving?"
-                                value={reason}
-                                onChangeText={setReason}
-                                className="rounded-md bg-white p-2 font-pregular"
-                                textAlignVertical="top"
-                                numberOfLines={10}
-                                multiline
-                            />
+                            <View className="flex-row rounded-md border border-glass bg-licorice p-2 shadow-neon-glow backdrop-blur-lg">
+                                <TextInput
+                                    placeholder="Why are you leaving?"
+                                    value={reason}
+                                    onChangeText={setReason}
+                                    className="w-full rounded-md p-2 font-pregular text-white placeholder:text-white"
+                                    numberOfLines={20}
+                                    multiline
+                                    scrollEnabled={false}
+                                />
+                            </View>
                         </View>
 
                         {/* <Button title="Send Email" onPress={sendEmail} /> */}

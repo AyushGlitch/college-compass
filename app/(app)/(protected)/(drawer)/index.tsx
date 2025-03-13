@@ -68,8 +68,9 @@ export default function Home() {
                             {auth.currentUser?.displayName ?? 'No user found'}
                         </Text>
                         <Text className="max-w-xs text-center text-white">
-                            Easily manage your emails, mark attendance, apply
-                            for hostel leave, and collaborate on notes!
+                            Easily manage your emails, mark attendance, view
+                            PYQ's, apply for hostel leave, and collaborate on
+                            notes!
                         </Text>
                     </View>
 

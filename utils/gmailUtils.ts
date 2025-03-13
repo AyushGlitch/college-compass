@@ -49,8 +49,7 @@ export const categorizeEmail = (email: any) => {
     const senderHeader = email.payload.headers.find(
         (h: any) => h.name === 'From'
     );
-    const senderEmail =
-        senderHeader?.value.match(/<(.*)>/)?.[1] || senderHeader?.value || '';
+    const senderEmail = senderHeader?.value || '';
     const subject =
         email.payload.headers.find((h: any) => h.name === 'Subject')?.value ||
         '';
@@ -62,7 +61,9 @@ export const categorizeEmail = (email: any) => {
 
     // Prioritized Categorization Rules
     if (
-        /urgent|deadline|exam|important|result|grades|submission/.test(text) ||
+        /urgent|deadline|exam|important|result|grades|submission|placement/.test(
+            text
+        ) ||
         labels.includes('IMPORTANT') ||
         senderEmail.includes('academics')
     ) {

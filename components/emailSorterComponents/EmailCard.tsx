@@ -27,7 +27,7 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
 
     return (
         <View
-            className={`relative flex-row items-center gap-2 border-b border-gray-300 p-4 ${isUnread ? 'bg-gray-100' : 'bg-gray-200'}`}>
+            className={`relative flex-row items-center gap-2 border-b border-t border-glass p-4 ${isUnread ? 'bg-gray-900' : ''}`}>
             <View
                 className={`absolute bottom-0 left-0 top-0 w-2 ${category === 'IMPORTANT' ? 'bg-red-500' : ''}`}
             />
@@ -38,16 +38,16 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
                         'https://ui-avatars.com/api/?name=' +
                             encodeURIComponent(senderName),
                 }}
-                className="aspect-square h-12 rounded-full"
+                className={`aspect-square h-12 rounded-full ${isUnread ? '' : 'opacity-60'}`}
             />
 
             <View className="flex-1">
                 <Text
-                    className={`text-lg ${isUnread ? 'font-psemibold' : 'font-pregular'}`}>
+                    className={`text-lg ${isUnread ? 'font-psemibold text-white' : 'font-pregular text-white/60'}`}>
                     {senderName}
                 </Text>
                 <Text
-                    className={`text-gray-500 ${isUnread ? 'font-pregular' : 'font-plight'}`}
+                    className={`${isUnread ? 'font-pregular text-white/80' : 'font-plight text-white/30'}`}
                     numberOfLines={1}
                     ellipsizeMode="tail">
                     {email.payload.headers.find((h) => h.name === 'Subject')
