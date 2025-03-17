@@ -1,6 +1,5 @@
-import { Button, Modal, Pressable } from 'react-native';
-import { Text, View } from './Themed';
-import { TextInput } from 'react-native-gesture-handler';
+import { Modal, Pressable, TextInput } from 'react-native';
+import { Text, View } from 'react-native';
 import { useState } from 'react';
 import {
     AddCourseProps,
@@ -46,156 +45,106 @@ export default function BottomActionSubjects({
     };
 
     return (
-        <View
-            style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginHorizontal: 20,
-                marginVertical: 10,
-                backgroundColor: 'transparent',
-            }}>
-            <View style={{ width: '60%', backgroundColor: 'transparent' }}>
-                <Button
-                    title="Add a Course"
-                    onPress={() => setIsAddModalVisible(true)}
-                    color={'#06c710'}
-                />
-            </View>
-            <Button
-                title="Delete all"
-                onPress={() => setIsDeleteModalVisible(true)}
-                color={'#d62035'}
-            />
+        <>
+            <View className="flex-row overflow-hidden rounded-full border border-glass bg-licorice shadow-sm shadow-black">
+                <Pressable
+                    className="bg-white p-2"
+                    onPress={() => setIsAddModalVisible(true)}>
+                    <Text className="text-center font-psemibold text-licorice">
+                        Add a Course
+                    </Text>
+                </Pressable>
 
+                <Pressable
+                    className="bg-red-700 p-2"
+                    onPress={() => setIsDeleteModalVisible(true)}>
+                    <Text className="text-center font-psemibold text-white">
+                        Delete All
+                    </Text>
+                </Pressable>
+            </View>
+
+            {/* Add Course Modal */}
             <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={isAddModalVisible}
                 onRequestClose={() => setIsAddModalVisible(false)}>
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                    }}>
-                    <View
-                        style={{
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                            borderWidth: 4,
-                            borderColor: 'white',
-                            borderRadius: 24,
-                            marginHorizontal: 10,
-                            marginVertical: 150,
-                            height: 250,
-                            padding: 20,
-                        }}>
-                        <Text style={{ fontWeight: '700', fontSize: 24 }}>
+                <View className="flex-1 items-center justify-center bg-black/40">
+                    <View className="w-[85%] rounded-2xl border-4 border-white bg-licorice p-6">
+                        <Text className="mb-4 text-center text-xl font-bold text-white">
                             Add a Course / Subject
                         </Text>
 
                         <TextInput
-                            style={{
-                                height: 40,
-                                borderColor: 'gray',
-                                borderWidth: 2,
-                                width: 200,
-                                color: 'grey',
-                                justifyContent: 'center',
-                                paddingLeft: 10,
-                            }}
+                            className="mb-4 w-full rounded-md border-2 border-gray-400 p-3 text-white"
                             onChangeText={(text) => setCourseId(text)}
                             value={courseId}
                             placeholder="Enter Course Name"
-                            placeholderTextColor={'grey'}
+                            placeholderTextColor={'#a1a1a1'}
                         />
 
-                        <Pressable
-                            style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                gap: 60,
-                            }}>
-                            <Button
-                                title="Add Subject"
-                                onPress={() => handleAddCourse(courseId)}
-                            />
-                            <Button
-                                title="Cancel"
-                                color={'grey'}
-                                onPress={() => setIsAddModalVisible(false)}
-                            />
-                        </Pressable>
+                        <View className="flex-row justify-between">
+                            <Pressable
+                                className="rounded-lg bg-green-600 px-5 py-3"
+                                onPress={() => handleAddCourse(courseId)}>
+                                <Text className="font-bold text-white">
+                                    Add Subject
+                                </Text>
+                            </Pressable>
+
+                            <Pressable
+                                className="rounded-lg bg-gray-500 px-5 py-3"
+                                onPress={() => setIsAddModalVisible(false)}>
+                                <Text className="font-bold text-white">
+                                    Cancel
+                                </Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
 
+            {/* Delete Confirmation Modal */}
             <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={isDeleteModalVisible}
                 onRequestClose={() => setIsDeleteModalVisible(false)}>
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                    }}>
-                    <View
-                        style={{
-                            flexWrap: 'wrap',
-                            borderWidth: 4,
-                            borderColor: 'white',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 25,
-                            marginHorizontal: 10,
-                            marginVertical: 150,
-                            height: '40%',
-                            gap: 20,
-                            padding: 20,
-                        }}>
-                        <Text style={{ fontWeight: '700', fontSize: 25 }}>
+                <View className="flex-1 items-center justify-center bg-black/40">
+                    <View className="w-[85%] rounded-2xl border-4 border-white bg-licorice p-6">
+                        <Text className="mb-3 text-center text-xl font-bold text-white">
                             Confirm Delete
                         </Text>
-                        <Text
-                            style={{
-                                fontWeight: '400',
-                                fontSize: 20,
-                                textAlign: 'center',
-                            }}>
+
+                        <Text className="mb-4 text-center text-lg text-gray-300">
                             Are you sure you want to delete{' '}
-                            <Text style={{ fontWeight: '700' }}>
+                            <Text className="font-bold text-white">
                                 all the courses'
                             </Text>{' '}
                             Attendance?
                         </Text>
 
-                        <Pressable
-                            style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                gap: 20,
-                            }}>
-                            <Button
-                                title="Delete"
-                                color={'red'}
-                                onPress={() => handleDeleteAll()}
-                            />
-                            {/* <Button title='Delete' color={'red'} onPress={() => setIsDeleteModalVisible(false)} /> */}
-                            <Button
-                                title="Cancel"
-                                color={'grey'}
-                                onPress={() => setIsDeleteModalVisible(false)}
-                            />
-                        </Pressable>
+                        <View className="flex-row justify-between">
+                            <Pressable
+                                className="rounded-lg bg-red-600 px-5 py-3"
+                                onPress={() => handleDeleteAll()}>
+                                <Text className="font-bold text-white">
+                                    Delete
+                                </Text>
+                            </Pressable>
+
+                            <Pressable
+                                className="rounded-lg bg-gray-500 px-5 py-3"
+                                onPress={() => setIsDeleteModalVisible(false)}>
+                                <Text className="font-bold text-white">
+                                    Cancel
+                                </Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
-        </View>
+        </>
     );
 }

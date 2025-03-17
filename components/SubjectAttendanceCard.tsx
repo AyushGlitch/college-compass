@@ -3,11 +3,10 @@ import {
     useAddAbsentPresent,
     useUndoAttendance,
 } from '~/db/api/mutations';
-import { Text, View } from './Themed';
-import { AntDesign, Entypo, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
+import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import CircularProgress from './CircularProgress';
-import { Button, Modal, Pressable } from 'react-native';
-import { useState } from 'react';
+import { Pressable } from 'react-native';
 
 interface SubjectAttendanceCardProps {
     courseId: string;
@@ -45,62 +44,35 @@ export default function SubjectAttendanceCard({
 
     return (
         <View
-            style={{
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '93%',
-                borderRadius: 24,
-                backgroundColor: '#282928',
-                position: 'relative',
-                shadowColor:
-                    attendPer < 75 && courseData.totalClasses > 0
-                        ? 'red'
-                        : '#50C878',
-                shadowOpacity: 0.7,
-                shadowRadius: 6,
-                shadowOffset: { width: 0, height: 4 },
-                elevation: 10,
-            }}>
+            className={`relative w-full flex-row flex-wrap items-center justify-between gap-2 rounded-3xl border border-glass bg-licorice p-4 py-3 shadow-lg ${
+                attendPer < 75 && courseData.totalClasses > 0
+                    ? 'shadow-red-500'
+                    : 'shadow-green-500'
+            }`}
+            style={{ elevation: 10 }}>
+            {/* Left Status Indicator */}
             <View
-                style={{
-                    marginLeft: 5,
-                    width: 8,
-                    backgroundColor:
-                        attendPer < 75 && courseData.totalClasses > 0
-                            ? 'red'
-                            : '#50C878',
-                    borderRadius: 24,
-                    height: '80%',
-                }}
+                className={`h-full w-2 rounded-3xl ${
+                    attendPer < 75 && courseData.totalClasses > 0
+                        ? 'bg-red-500'
+                        : 'bg-green-400'
+                }`}
             />
 
-            <View
-                style={{
-                    backgroundColor: 'transparent',
-                    flexWrap: 'wrap',
-                    width: '60%',
-                    justifyContent: 'center',
-                    margin: 12,
-                    gap: 7,
-                }}>
-                <Text style={{ fontWeight: '700', fontSize: 24 }}>
+            {/* Course Info & Attendance Details */}
+            <View className="flex-1 flex-wrap justify-center gap-1">
+                <Text className="font-psemibold text-2xl text-white">
                     {courseId}
                 </Text>
-                <Text style={{ fontSize: 18 }}>
-                    <Text style={{ fontWeight: '700' }}>Attendance: </Text>
+                <Text className="font-plight text-lg text-white">
+                    <Text className="font-psemibold text-white">
+                        Attendance:{' '}
+                    </Text>
                     {courseData.attendedClasses} / {courseData.totalClasses}
                 </Text>
 
-                <View
-                    style={{
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        gap: 20,
-                        alignItems: 'center',
-                        backgroundColor: 'transparent',
-                    }}>
+                {/* Attendance Action Buttons */}
+                <View className="flex-row flex-wrap items-center gap-x-6">
                     <Pressable
                         onPress={() =>
                             handleAttendance(true, courseData.courseId)
@@ -131,14 +103,8 @@ export default function SubjectAttendanceCard({
                 </View>
             </View>
 
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'flex-end',
-                    margin: 12,
-                    backgroundColor: 'transparent',
-                }}>
+            {/* Circular Progress Bar */}
+            <View className="flex">
                 <CircularProgress
                     progress={attendPer}
                     outerCircleColor="white"

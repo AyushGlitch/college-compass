@@ -1,12 +1,12 @@
 import Loader from '~/components/Loader';
-import { Text, View } from '~/components/Themed';
+import { ScrollView, Text, View } from 'react-native';
 import { getAttendanceDateQuery, getUserTTQuery } from '~/db/api/queries';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { db } from '~/db/drizzle';
 import { userAttendance, userTimeTable } from '~/db/schema';
+import { Container } from '~/components/Container';
 
 export default function History() {
     const [selectedCourseId, setSelectedCourseId] = useState<string>('');
@@ -23,165 +23,124 @@ export default function History() {
     }
 
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: '#414141',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                paddingHorizontal: 20,
-                paddingTop: 30,
-            }}>
-            {/* <View style={{flexWrap: 'wrap'}}> */}
-            <Text
-                style={{
-                    fontWeight: '500',
-                    fontSize: 16,
-                    marginBottom: 8,
-                    marginTop: 20,
-                }}>
-                Select the CourseId:
-            </Text>
-            <Picker
-                selectedValue={selectedCourseId}
-                onValueChange={(itemValue, itemIndex) =>
-                    setSelectedCourseId(itemValue)
-                }
-                style={{
-                    height: 50,
-                    width: '100%',
-                    backgroundColor: '#454545',
-                    color: 'white',
-                }}>
-                {userTtData.map((data) => (
-                    <Picker.Item
-                        label={data.courseId!}
-                        value={data.courseId}
-                        key={data.courseId}
-                        style={{ color: 'white', backgroundColor: '#454545' }}
-                    />
-                ))}
-            </Picker>
-            {/* </View> */}
+        <Container className="gap-6 bg-licorice p-4">
+            {/* Course Selection */}
+            <View className="flex-row gap-2 rounded-lg border border-glass bg-licorice px-4">
+                <Text className="mb-2 mt-4 text-lg font-medium text-white">
+                    Select Course:
+                </Text>
 
-            <ScrollView
-                style={{
-                    marginTop: 30,
-                    backgroundColor: 'transparent',
-                    width: '100%',
-                    marginBottom: 20,
-                }}>
-                <View
+                <Picker
+                    selectedValue={selectedCourseId}
+                    onValueChange={(itemValue, itemIndex) =>
+                        setSelectedCourseId(itemValue)
+                    }
                     style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        height: 50,
                         backgroundColor: 'transparent',
-                        gap: 10,
-                    }}>
-                    {/* TODO: Reverse order */}
-                    {userAttendanceData.map((data, i) => (
+                        color: 'lightgreen',
+                        flex: 1,
+                    }}
+                    mode="dropdown">
+                    {userTtData.map((data) => (
+                        <Picker.Item
+                            label={data.courseId!}
+                            value={data.courseId}
+                            key={data.courseId}
+                            // style={{ color: 'white', backgroundColor: '#454545' }}
+                        />
+                    ))}
+                </Picker>
+            </View>
+
+            {/* Attendance List */}
+            <ScrollView>
+                <View className="flex items-center justify-center gap-3">
+                    {[...userAttendanceData].reverse().map((data, i) => (
                         <View
                             key={`${data.courseId}-${data.createdAt}-${i}`}
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                width: '100%',
-                                borderRadius: 24,
-                                backgroundColor: '#282928',
-                                padding: 12,
-                            }}>
+                            className="w-full flex-row items-center gap-4 rounded-2xl border border-glass bg-licorice p-2 shadow-neon-glow">
+                            {/* Status Indicator */}
                             <View
+                                className="h-full w-2 rounded-full"
                                 style={{
-                                    width: 8,
                                     backgroundColor: data.absOrPre
-                                        ? 'green'
-                                        : 'red',
-                                    borderRadius: 24,
-                                    height: '95%',
-                                    marginRight: 10,
+                                        ? '#16a34a'
+                                        : '#dc2626', // Green if Present, Red if Absent
                                 }}
                             />
 
-                            <View
-                                style={{
-                                    flex: 1,
-                                    backgroundColor: 'transparent',
-                                }}>
-                                <Text
-                                    style={{ fontSize: 18, fontWeight: '700' }}>
-                                    {data.numDate} {data.month} {data.year} ({' '}
-                                    {data.date} )
+                            {/* Attendance Details */}
+                            <View className="flex-1">
+                                <Text className="text-lg font-bold text-white">
+                                    {data.numDate} {data.month} {data.year} (
+                                    {data.date})
                                 </Text>
 
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        backgroundColor: 'transparent',
-                                    }}>
-                                    <Text style={{ fontSize: 16 }}>
-                                        <Text style={{ fontWeight: '700' }}>
-                                            Day:{' '}
-                                        </Text>
+                                <View className="mt-1 flex-row justify-between">
+                                    <Text className="text-gray-300">
+                                        <Text className="font-bold">Day: </Text>
                                         {data.day}
                                     </Text>
-                                    <Text style={{ fontSize: 16 }}>
-                                        <Text style={{ fontWeight: '700' }}>
+                                    <Text className="text-gray-300">
+                                        <Text className="font-bold">
                                             Time:{' '}
                                         </Text>
                                         {data.time}
                                     </Text>
                                 </View>
 
-                                <Text style={{ fontSize: 16 }}>
-                                    <Text style={{ fontWeight: '700' }}>
-                                        Status:{' '}
-                                    </Text>
-                                    {data.absOrPre ? 'Present' : 'Absent'}
+                                <Text className="mt-1 text-gray-300">
+                                    <Text className="font-bold">Status: </Text>
+                                    {data.absOrPre ? '✅ Present' : '❌ Absent'}
                                 </Text>
                             </View>
                         </View>
                     ))}
                 </View>
 
-                {/* <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'transparent', gap:10}}>
-                    {
-                        fetchAttendanceDateQuery.data?.map( (data) => (
-                            <View key={data.createdAt} style={{flexDirection: 'row', alignItems: 'center', width: '100%', borderRadius: 24, backgroundColor: '#282928', padding: 12}}>
-                                <View style={{
-                                    width: 8,
-                                    backgroundColor: (data.absOrPre) ? 'green' : 'red',
-                                    borderRadius: 24,
-                                    height: '95%',
-                                    marginRight: 10
-                                }} />
-
-                                <View style={{flex: 1, backgroundColor:'transparent'}}>
-                                    <Text style={{fontSize: 18, fontWeight: '700'}}>
-                                        {data.numDate} {data.month} {data.year} ( {data.date} )
+                {/* <View className="flex items-center justify-center gap-3">
+                    {[...fetchAttendanceDateQuery.data]
+                        .reverse()
+                        .map((data) => (
+                            <View
+                                key={data.createdAt}
+                                className="w-full flex-row items-center rounded-2xl bg-[#282928] p-4">
+                                <View
+                                    className={`w-2 bg-${data.absOrPre ? 'green-500' : 'red-500'} mr-3 h-full rounded-2xl`}
+                                />
+                                <View className="flex-1">
+                                    <Text className="text-lg font-bold text-white">
+                                        {data.numDate} {data.month} {data.year}{' '}
+                                        ({data.date})
                                     </Text>
 
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor:'transparent'}}>
-                                        <Text style={{fontSize: 16}}>
-                                            <Text style={{fontWeight: '700'}}>Day: </Text>{data.day}
+                                    <View className="flex-row justify-between">
+                                        <Text className="text-gray-300">
+                                            <Text className="font-bold">
+                                                Day:{' '}
+                                            </Text>
+                                            {data.day}
                                         </Text>
-                                        <Text style={{fontSize: 16}}>
-                                            <Text style={{fontWeight: '700'}}>Time: </Text>{data.time}
+                                        <Text className="text-gray-300">
+                                            <Text className="font-bold">
+                                                Time:{' '}
+                                            </Text>
+                                            {data.time}
                                         </Text>
                                     </View>
 
-                                    <Text style={{fontSize: 16}}>
-                                        <Text style={{fontWeight: '700'}}>Status: </Text>{data.absOrPre ? 'Present' : 'Absent'}
+                                    <Text className="text-gray-300">
+                                        <Text className="font-bold">
+                                            Status:{' '}
+                                        </Text>
+                                        {data.absOrPre ? 'Present' : 'Absent'}
                                     </Text>
                                 </View>
                             </View>
-
-                        ) )
-                    }
+                        ))}
                 </View> */}
             </ScrollView>
-        </View>
+        </Container>
     );
 }

@@ -1,16 +1,12 @@
 import { db } from '~/db/drizzle';
-import { Text, View } from '~/components/Themed';
 import Loader from '~/components/Loader';
 import SubjectAttendanceCard from '~/components/SubjectAttendanceCard';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Pressable, Button } from 'react-native';
+import { Pressable, Button, View, Text } from 'react-native';
 import { router } from 'expo-router';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { userAttendance, userTimeTable } from '~/db/schema';
-
-// Define SQL queries for fetching data
-const USER_TT_QUERY = 'SELECT * FROM userTimeTable;';
-const USER_ATTENDANCE_QUERY = 'SELECT * FROM userAttendance;';
+import { Container } from '~/components/Container';
 
 interface CourseDataProp {
     courseId: string;
@@ -64,58 +60,32 @@ export default function Index() {
     const courseDataList = processData();
 
     return (
-        <View style={{ flex: 1 }}>
+        <Container className="bg-licorice">
             <ScrollView>
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: 30,
-                        marginTop: '7%',
-                        marginBottom: '5%',
-                    }}>
+                <View className="flex-1 items-center justify-center gap-8 p-4">
                     {userTtData && userTtData.length > 0 ? (
                         userTtData.map((data: any) => {
-                            const courseData = courseDataList[data.courseId]
-                                ? courseDataList[data.courseId]
-                                : {
-                                      courseId: data.courseId,
-                                      totalClasses: 0,
-                                      attendedClasses: 0,
-                                  };
-
+                            const courseData = courseDataList[
+                                data.courseId
+                            ] || {
+                                courseId: data.courseId,
+                                totalClasses: 0,
+                                attendedClasses: 0,
+                            };
                             return (
                                 <SubjectAttendanceCard
+                                    key={data.courseId}
                                     courseId={data.courseId}
                                     courseData={courseData}
-                                    key={data.courseId}
                                 />
                             );
                         })
                     ) : (
-                        <View
-                            style={{
-                                height: '100%',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                gap: 60,
-                                padding: 20,
-                            }}>
-                            <Text
-                                style={{
-                                    textAlign: 'center',
-                                    fontWeight: '700',
-                                    fontSize: 36,
-                                }}>
+                        <View className="h-full items-center justify-center gap-16 p-5">
+                            <Text className="text-center text-3xl font-bold">
                                 No Course in Attendance List
                             </Text>
-                            <Text
-                                style={{
-                                    textAlign: 'center',
-                                    fontWeight: '400',
-                                    fontSize: 20,
-                                }}>
+                            <Text className="text-center text-xl font-medium">
                                 Add courses to your attendance list, as per your
                                 Degree, Branch, and Semester, from our
                                 predefined timetable.
@@ -134,6 +104,6 @@ export default function Index() {
                     )}
                 </View>
             </ScrollView>
-        </View>
+        </Container>
     );
 }

@@ -3,7 +3,7 @@ import {
     MaterialCommunityIcons,
     MaterialIcons,
 } from '@expo/vector-icons';
-import { Text, View } from './Themed';
+import { Text, View } from 'react-native';
 import { useState } from 'react';
 import { Button, Modal, Pressable } from 'react-native';
 import {
@@ -63,288 +63,144 @@ export default function SubjectCard({
 
     return (
         <View
-            style={{
-                flex: 1,
-                borderWidth: 4,
-                borderColor: '#888888',
-                justifyContent: 'space-around',
-                width: '90%',
-                height: '15%',
-                borderRadius: 25,
-                backgroundColor: '#333333',
-                shadowColor: 'white',
-                shadowOffset: { width: 0, height: 8 },
-                shadowOpacity: 0.7,
-                shadowRadius: 6,
-                elevation: 10,
-            }}>
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    backgroundColor: 'transparent',
-                    marginTop: 12,
-                    marginHorizontal: 12,
-                }}>
-                <Text style={{ fontWeight: '700', fontSize: 24 }}>
+            className="w-full flex-row items-center justify-between gap-2 rounded-3xl border border-glass bg-licorice p-4 shadow-neon-glow"
+            style={{ elevation: 10 }}>
+            {/* Course Info */}
+            <View className="w-full flex-1 flex-col gap-2">
+                <Text className="font-psemibold text-2xl text-white">
                     {courseId}
                 </Text>
-                <View
-                    style={{
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        gap: 12,
-                        justifyContent: 'space-between',
-                        backgroundColor: 'transparent',
-                    }}>
-                    <Text style={{ fontSize: 16 }}>
-                        <Text style={{ fontWeight: '700' }}>
-                            Total Classes:{' '}
-                        </Text>
-                        {courseData.totalClasses}
-                    </Text>
-                    <Text style={{ fontSize: 16 }}>
-                        <Text style={{ fontWeight: '700' }}>
-                            Attended Classes:{' '}
-                        </Text>
-                        {courseData.attendedClasses}
-                    </Text>
-                </View>
+
+                <Text className="font-plight text-lg text-white">
+                    <Text className="font-psemibold">Total Classes: </Text>
+                    {courseData.totalClasses}
+                </Text>
+                <Text className="font-plight text-lg text-white">
+                    <Text className="font-psemibold">Attended Classes: </Text>
+                    {courseData.attendedClasses}
+                </Text>
             </View>
 
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    gap: 20,
-                    margin: 12,
-                    backgroundColor: 'transparent',
-                }}>
-                <TouchableOpacity>
-                    <FontAwesome5
-                        name="pen"
-                        size={24}
-                        color="white"
-                        onPress={() => {
-                            setNewCourseId(courseId);
-                            setIsEditModalVisible(true);
-                        }}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity>
+            {/* Action Buttons */}
+            <View className="items-center justify-between gap-2">
+                <Pressable
+                    onPress={() => {
+                        setNewCourseId(courseId);
+                        setIsEditModalVisible(true);
+                    }}>
+                    <FontAwesome5 name="pen" size={20} color="lightgreen" />
+                </Pressable>
+                <Pressable onPress={() => setIsRestartModalVisible(true)}>
                     <MaterialCommunityIcons
                         name="restart"
-                        size={29}
-                        color="white"
-                        onPress={() => setIsRestartModalVisible(true)}
+                        size={28}
+                        color="lightblue"
                     />
-                </TouchableOpacity>
-                <TouchableOpacity>
+                </Pressable>
+                <Pressable onPress={() => setIsDeleteModalVisible(true)}>
                     <MaterialIcons
                         name="delete-forever"
-                        size={29}
-                        color="white"
-                        onPress={() => setIsDeleteModalVisible(true)}
+                        size={28}
+                        color="red"
                     />
-                </TouchableOpacity>
+                </Pressable>
             </View>
 
+            {/* Delete Modal */}
             <Modal
                 animationType="slide"
-                transparent={true}
+                transparent
                 visible={isDeleteModalVisible}
                 onRequestClose={() => setIsDeleteModalVisible(false)}>
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                    }}>
-                    <View
-                        style={{
-                            flexWrap: 'wrap',
-                            borderWidth: 4,
-                            borderColor: 'white',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 24,
-                            marginHorizontal: 10,
-                            marginVertical: 150,
-                            height: '40%',
-                            gap: 20,
-                            padding: 20,
-                        }}>
-                        <Text style={{ fontWeight: '700', fontSize: 25 }}>
+                <View className="flex-1 items-center bg-black/50">
+                    <View className="my-[20%] w-[85%] gap-5 rounded-3xl border border-white p-5">
+                        <Text className="text-center text-2xl font-bold text-white">
                             Confirm Delete
                         </Text>
-                        <Text
-                            style={{
-                                fontWeight: '400',
-                                fontSize: 20,
-                                textAlign: 'center',
-                            }}>
+                        <Text className="text-center text-lg text-white">
                             Are you sure you want to delete{' '}
-                            <Text style={{ fontWeight: '700' }}>
-                                {courseId}
-                            </Text>{' '}
-                            Attendance?
+                            <Text className="font-bold">{courseId}</Text>{' '}
+                            attendance?
                         </Text>
-
-                        <Pressable
-                            style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                gap: 20,
-                            }}>
+                        <View className="flex-row justify-center gap-6">
                             <Button
                                 title="Delete"
-                                color={'red'}
+                                color="red"
                                 onPress={() => handleDelete(courseId)}
                             />
-                            {/* <Button title='Delete' color={'red'} onPress={() => setIsDeleteModalVisible(false)} /> */}
                             <Button
                                 title="Cancel"
-                                color={'grey'}
+                                color="grey"
                                 onPress={() => setIsDeleteModalVisible(false)}
                             />
-                        </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
 
+            {/* Restart Modal */}
             <Modal
                 animationType="slide"
-                transparent={true}
+                transparent
                 visible={isRestartModalVisible}
                 onRequestClose={() => setIsRestartModalVisible(false)}>
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                    }}>
-                    <View
-                        style={{
-                            flexWrap: 'wrap',
-                            borderWidth: 4,
-                            borderColor: 'white',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 24,
-                            marginHorizontal: 10,
-                            marginVertical: 150,
-                            height: '40%',
-                            gap: 20,
-                            padding: 20,
-                        }}>
-                        <Text style={{ fontWeight: '700', fontSize: 25 }}>
+                <View className="flex-1 items-center bg-black/50">
+                    <View className="my-[20%] w-[85%] gap-5 rounded-3xl border border-white p-5">
+                        <Text className="text-center text-2xl font-bold text-white">
                             Confirm Restart
                         </Text>
-                        <Text
-                            style={{
-                                fontWeight: '400',
-                                fontSize: 20,
-                                textAlign: 'center',
-                            }}>
+                        <Text className="text-center text-lg text-white">
                             Are you sure you want to restart{' '}
-                            <Text style={{ fontWeight: '700' }}>
-                                {courseId}{' '}
-                            </Text>{' '}
-                            Attendance?
+                            <Text className="font-bold">{courseId}</Text>{' '}
+                            attendance?
                         </Text>
-
-                        <Pressable
-                            style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                gap: 20,
-                            }}>
-                            {/* <Button title='Delete' color={'red'} onPress={() => handleReset(courseId)} /> */}
+                        <View className="flex-row justify-center gap-6">
                             <Button
                                 title="Restart"
                                 onPress={() => handleReset(courseId)}
                             />
                             <Button
                                 title="Cancel"
-                                color={'grey'}
+                                color="grey"
                                 onPress={() => setIsRestartModalVisible(false)}
                             />
-                        </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
 
+            {/* Edit Modal */}
             <Modal
                 animationType="slide"
-                transparent={true}
+                transparent
                 visible={isEditModalVisible}
                 onRequestClose={() => setIsEditModalVisible(false)}>
-                <View
-                    style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(0,0,0,0.7)',
-                    }}>
-                    <View
-                        style={{
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                            borderWidth: 4,
-                            borderColor: 'white',
-                            borderRadius: 24,
-                            marginHorizontal: 10,
-                            marginVertical: 150,
-                            height: 250,
-                            padding: 20,
-                        }}>
-                        <Text
-                            style={{
-                                fontWeight: '500',
-                                fontSize: 24,
-                                textAlign: 'center',
-                            }}>
+                <View className="flex-1 items-center bg-black/70">
+                    <View className="my-[20%] w-[85%] gap-5 rounded-3xl border border-white p-5">
+                        <Text className="text-center text-2xl font-bold text-white">
                             Edit the{' '}
-                            <Text style={{ fontWeight: '700' }}>
-                                {courseId}
-                            </Text>{' '}
-                            name
+                            <Text className="font-bold">{courseId}</Text> name
                         </Text>
 
                         <TextInput
-                            style={{
-                                height: 40,
-                                borderColor: 'gray',
-                                borderWidth: 2,
-                                width: 200,
-                                color: 'grey',
-                                justifyContent: 'center',
-                                paddingLeft: 10,
-                            }}
+                            className="h-10 w-full rounded-md border border-gray-400 p-2 text-white"
                             onChangeText={(text) => setNewCourseId(text)}
                             value={newCourseId}
                             placeholder="Enter New Course Name"
-                            placeholderTextColor={'grey'}
+                            placeholderTextColor="gray"
                         />
 
-                        <Pressable
-                            style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                gap: 60,
-                            }}>
+                        <View className="flex-row justify-center gap-6">
                             <Button
                                 title="Change"
                                 onPress={() => handleEdit(newCourseId)}
                             />
                             <Button
                                 title="Cancel"
-                                color={'grey'}
+                                color="grey"
                                 onPress={() => setIsEditModalVisible(false)}
                             />
-                        </Pressable>
+                        </View>
                     </View>
                 </View>
             </Modal>
