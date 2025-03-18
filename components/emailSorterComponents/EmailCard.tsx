@@ -1,7 +1,9 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import React, { useState } from 'react';
+import { Link } from 'expo-router';
 
 interface Email {
+    id: string;
     payload: {
         headers: Array<{ name: string; value: string }>;
     };
@@ -31,15 +33,17 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
             <View
                 className={`absolute bottom-0 left-0 top-0 w-2 ${category === 'IMPORTANT' ? 'bg-red-500' : ''}`}
             />
-            <Image
-                source={{
-                    uri:
-                        profileImage ||
-                        'https://ui-avatars.com/api/?name=' +
-                            encodeURIComponent(senderName),
-                }}
-                className={`aspect-square h-12 rounded-full ${isUnread ? '' : 'opacity-60'}`}
-            />
+            <View className="w-fit rounded-full bg-black">
+                <Image
+                    source={{
+                        uri:
+                            profileImage ||
+                            'https://ui-avatars.com/api/?name=' +
+                                encodeURIComponent(senderName),
+                    }}
+                    className={`aspect-square h-12 rounded-full ${isUnread ? '' : 'opacity-60'}`}
+                />
+            </View>
 
             <View className="flex-1">
                 <Text

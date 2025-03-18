@@ -4,12 +4,14 @@ import {
     ActivityIndicator,
     FlatList,
     RefreshControl,
+    Pressable,
 } from 'react-native';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Picker } from '@react-native-picker/picker'; // Import Dropdown Picker
 import { categorizeEmail, fetchEmails } from '~/utils/gmailUtils';
 import { Container } from '~/components/Container';
 import EmailCard from '~/components/emailSorterComponents/EmailCard';
+import { useRouter } from 'expo-router';
 
 const EmailSorter = () => {
     const [emails, setEmails] = useState<any>(null);
@@ -18,7 +20,9 @@ const EmailSorter = () => {
     const [error, setError] = useState<string | null>(null);
     const [accessToken, setAccessToken] = useState<string>('');
     const [selectedCategory, setSelectedCategory] =
-        useState<string>('IMPORTANT'); // Default category
+        useState<string>('IMPORTANT');
+
+    const router = useRouter();
 
     const getCategorizedEmails = useCallback((emails: any) => {
         if (!emails) return {};
@@ -122,7 +126,19 @@ const EmailSorter = () => {
                         data={filteredEmails}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <EmailCard email={item} category={item.category} />
+                            <Pressable
+                                onPress={() =>
+                                    router.push({
+                                        pathname:
+                                            '/(app)/(protected)/(drawer)/emailSorter/emailDetail',
+                                        params: { email: JSON.stringify(item) },
+                                    })
+                                }>
+                                <EmailCard
+                                    email={item}
+                                    category={item.category}
+                                />
+                            </Pressable>
                         )}
                         // contentContainerClassName="flex-1"
                         refreshControl={
