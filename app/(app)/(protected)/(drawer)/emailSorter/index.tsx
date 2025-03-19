@@ -12,9 +12,12 @@ import { categorizeEmail, fetchEmails } from '~/utils/gmailUtils';
 import { Container } from '~/components/Container';
 import EmailCard from '~/components/emailSorterComponents/EmailCard';
 import { useRouter } from 'expo-router';
+import { useStore } from '~/store/store';
 
 const EmailSorter = () => {
-    const [emails, setEmails] = useState<any>(null);
+    const { emails, setEmails, loadEmailsFromDB } = useStore();
+
+    const [categorizedEmails, setCategorizedEmails] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -39,20 +42,26 @@ const EmailSorter = () => {
         try {
             setLoading(true);
             setError(null);
+
+            loadEmailsFromDB();
+
+            // Make API call to Gmail
             const fetchedEmails = await fetchEmails();
+            // Store fetched emails to DB
+            setEmails(fetchedEmails);
 
             if (fetchedEmails) {
                 console.log('Fetched emails, categorizing now...');
-                setEmails(getCategorizedEmails(fetchedEmails));
+                setCategorizedEmails(getCategorizedEmails(fetchedEmails));
                 console.log('Emails categorized successfully.');
             } else {
                 setError('No emails found.');
-                setEmails([]);
+                setCategorizedEmails([]);
             }
         } catch (err) {
             setError('Failed to fetch emails. Please try again.');
             console.error(err);
-            setEmails([]);
+            setCategorizedEmails([]);
         } finally {
             setLoading(false);
         }
@@ -71,10 +80,10 @@ const EmailSorter = () => {
     // Memoized list of emails for the selected category
     const filteredEmails = useMemo(() => {
         if (selectedCategory === 'ALL') {
-            return Object.values(emails || {}).flat(); // Merge all category arrays into one
+            return Object.values(categorizedEmails || {}).flat(); // Merge all category arrays into one
         }
-        return emails?.[selectedCategory] || [];
-    }, [emails, selectedCategory]);
+        return categorizedEmails?.[selectedCategory] || [];
+    }, [categorizedEmails, selectedCategory]);
 
     return (
         <Container className="bg-licorice">
@@ -86,7 +95,7 @@ const EmailSorter = () => {
                 <View className="flex-1 items-center justify-center">
                     <Text className="font-semibold text-red-500">{error}</Text>
                 </View>
-            ) : emails.length === 0 ? (
+            ) : categorizedEmails.length === 0 ? (
                 <View className="flex-1 items-center justify-center">
                     <Text className="font-medium text-aquamarine">
                         No emails found.

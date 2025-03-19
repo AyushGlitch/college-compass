@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
+// Attendance Tracker Tables
 export const preDefinedTimeTable = sqliteTable('preDefinedTimeTable', {
     degreeId: text('degreeId'),
     branchId: text('branchId'),
@@ -33,3 +34,10 @@ export const userAttendance = sqliteTable('userAttendance', {
 });
 export type userAttendanceSelectType = typeof userAttendance.$inferSelect;
 export type userAttendanceInsertType = typeof userAttendance.$inferInsert;
+
+// Email Sorter Tables
+export const emails = sqliteTable('emails', {
+    id: text('id').primaryKey(),
+    data: text('data').notNull(),
+    timestamp: text('timestamp').notNull(),
+});
