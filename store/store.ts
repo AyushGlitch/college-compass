@@ -11,15 +11,17 @@ export interface Email {
 
 interface EmailState {
     emails: Email[];
+    lastFetched: number | null;
     setEmails: (emails: any[]) => Promise<void>;
     loadEmailsFromDB: () => Promise<void>;
 }
 
-export const useStore = create<EmailState>((set) => ({
+export const useStore = create<EmailState>((set, get) => ({
     emails: [],
+    lastFetched: null,
 
     setEmails: async (newEmails) => {
-        set({ emails: newEmails });
+        set({ emails: newEmails, lastFetched: Date.now() });
 
         const formattedEmailsforDB = newEmails.map((email) => ({
             id: email.id,

@@ -15,8 +15,6 @@ import { useRouter } from 'expo-router';
 import { useStore } from '~/store/store';
 
 const EmailSorter = () => {
-    const { emails, setEmails, loadEmailsFromDB } = useStore();
-
     const [categorizedEmails, setCategorizedEmails] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -38,34 +36,48 @@ const EmailSorter = () => {
         }, {});
     }, []);
 
-    const getEmails = useCallback(async () => {
-        try {
-            setLoading(true);
-            setError(null);
+    const getEmails = useCallback(
+        async (forceRefresh = false) => {
+            const {
+                emails: storedEmails,
+                lastFetched,
+                loadEmailsFromDB,
+                setEmails,
+            } = useStore.getState();
 
-            loadEmailsFromDB();
+            const now = Date.now();
+            const THROTTLE_TIME = 60 * 1000; // 30 seconds
 
-            // Make API call to Gmail
-            const fetchedEmails = await fetchEmails();
-            // Store fetched emails to DB
-            setEmails(fetchedEmails);
+            try {
+                setLoading(true);
+                setError(null);
 
-            if (fetchedEmails) {
-                console.log('Fetched emails, categorizing now...');
+                // 🛑 If last fetch was within 60s & not a manual refresh, load from SQLite
+                if (
+                    !forceRefresh &&
+                    lastFetched &&
+                    now - lastFetched < THROTTLE_TIME
+                ) {
+                    console.log('Using cached emails from SQLite.');
+                    await loadEmailsFromDB();
+                    setCategorizedEmails(getCategorizedEmails(storedEmails));
+                    return;
+                }
+
+                console.log('Fetching new emails from Gmail API...');
+                const fetchedEmails = await fetchEmails();
+                await setEmails(fetchedEmails); // Save to SQLite & update Zustand state
+
                 setCategorizedEmails(getCategorizedEmails(fetchedEmails));
-                console.log('Emails categorized successfully.');
-            } else {
-                setError('No emails found.');
-                setCategorizedEmails([]);
+            } catch (err) {
+                setError('Failed to fetch emails. Please try again.');
+                console.error(err);
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            setError('Failed to fetch emails. Please try again.');
-            console.error(err);
-            setCategorizedEmails([]);
-        } finally {
-            setLoading(false);
-        }
-    }, [getCategorizedEmails]);
+        },
+        [getCategorizedEmails]
+    );
 
     useEffect(() => {
         getEmails();
@@ -73,7 +85,7 @@ const EmailSorter = () => {
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await getEmails();
+        await getEmails(true);
         setRefreshing(false);
     };
 
