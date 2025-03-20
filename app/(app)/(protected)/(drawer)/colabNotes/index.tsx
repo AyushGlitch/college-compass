@@ -9,14 +9,20 @@ import uuid from 'react-native-uuid';
 const ColabNotesScreen = () => {
     // TODO: Add Zod
 
+    const [newRoomName, setNewRoomName] = useState('')
+
+    const [creatorId, setCreatorId] = useState('');
     const [roomName, setRoomName] = useState('');
 
     const createRoom = () => {
-        const newRoomName = uuid.v4(); // Generate unique room name
         console.log('Joining room: ', newRoomName);
-        router.push(
-            `/(protected)/(drawer)/colabNotes/editor?roomName=${newRoomName}`
-        );
+        router.push({
+            pathname: "/(app)/(protected)/(drawer)/colabNotes/webquill",
+            params: {
+                creatorId: "me",
+                roomName: newRoomName
+            }
+        });
     };
 
     const joinRoom = () => {
@@ -25,27 +31,31 @@ const ColabNotesScreen = () => {
             return;
         }
         console.log('Joining room: ', roomName);
-        router.push(
-            `/(protected)/(drawer)/colabNotes/editor?roomName=${roomName}`
-        );
+        router.push({
+            pathname: "/(app)/(protected)/(drawer)/colabNotes/webquill",
+            params: {
+                creatorId: "add own creator Id here",
+                roomName: newRoomName
+            }
+        });
     };
 
     return (
-        <Container>
+        <Container className='bg-licorice'>
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 contentContainerClassName="min-h-full justify-center items-center">
                 {/* Intro */}
-                <View className="z-50 w-full items-center gap-2 bg-white px-4 py-16 shadow shadow-black">
+                <View className="z-50 w-full items-center gap-2 px-4 py-16">
                     <MaterialCommunityIcons
                         name="application-edit"
                         size={52}
                         color="black"
                     />
-                    <Text className="mt-6 text-center font-pbold text-3xl">
+                    <Text className="mt-6 text-center font-pbold text-white text-3xl">
                         Collaborate in Real Time!
                     </Text>
-                    <Text className="text-center font-pregular text-lg">
+                    <Text className="text-center font-pregular text-white/80 text-lg">
                         Create or join a shared notes room to collaborate
                         seamlessly with your peers. Whether you're
                         brainstorming, planning, or studying together, this app
@@ -53,30 +63,55 @@ const ColabNotesScreen = () => {
                     </Text>
                 </View>
                 {/* Separator */}
-                <View className="h-[1px] w-full bg-gray-300" />
+                <View className="h-[1px] w-full bg-glass" />
                 {/* Inputs */}
-                <View className="w-full flex-1 items-center justify-center gap-8 bg-stone-100 px-4">
-                    <CustomButton
-                        title="Create Room"
-                        containerStyles="w-full"
-                        handlePress={createRoom}
-                    />
-                    <Text className="text-center font-plight text-lg text-black/60">
-                        or
-                    </Text>
-                    <View>
-                        <View className="w-full flex-row gap-2">
+                <View className="w-full flex-1 items-center justify-center gap-8 px-4">
+                    <View className='gap-2 w-full flex-row'>
+                        <View className='border border-glass p-4 flex-1 justify-center rounded-full'>
                             <TextInput
-                                placeholder="Enter Room name to Join"
-                                className="h-16 flex-1 rounded-full border p-4 font-pregular text-xl"
-                                value={roomName}
-                                onChangeText={setRoomName}
-                            />
-                            <CustomButton
-                                title="Join Room"
-                                handlePress={joinRoom}
+                                placeholder="New Room Name"
+                                className="text-folly placeholder:text-folly text-xl"
+                                value={newRoomName}
+                                onChangeText={setNewRoomName}
+                                textAlign="center"
+                                multiline={false}
                             />
                         </View>
+                        <CustomButton
+                            title="Create Room"
+                            handlePress={createRoom}
+                        />
+                    </View>
+                    <Text className="text-center font-plight text-lg z-10 bg-licorice p-2 text-white/60">
+                        or
+                    </Text>
+                    <View className='gap-4'>
+                        <View className="w-full flex-row justify-between gap-2">
+                            <View className='border border-glass flex-1 p-4 justify-center rounded-full'>
+                                <TextInput
+                                    placeholder="Creator ID"
+                                    className="text-folly placeholder:text-folly text-xl"
+                                    value={creatorId}
+                                    onChangeText={setCreatorId}
+                                    textAlign="center"
+                                    multiline={false}
+                                />
+                            </View>
+                            <View className='border border-glass p-4 flex-1 justify-center rounded-full'>
+                                <TextInput
+                                    placeholder="Room Name"
+                                    className="text-folly placeholder:text-folly text-xl"
+                                    value={roomName}
+                                    onChangeText={setRoomName}
+                                    textAlign="center"
+                                    multiline={false}
+                                />
+                            </View>
+                        </View>
+                        <CustomButton
+                            title="Join Room"
+                            handlePress={joinRoom}
+                        />
                     </View>
                 </View>
             </ScrollView>

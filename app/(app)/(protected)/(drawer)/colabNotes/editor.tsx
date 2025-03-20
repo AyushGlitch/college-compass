@@ -10,7 +10,7 @@ import * as Clipboard from 'expo-clipboard';
 import { Ionicons } from '@expo/vector-icons';
 
 const TextEditorScreen = () => {
-    const { roomName } = useLocalSearchParams<{ roomName: string }>();
+    const { creatorId, roomName } = useLocalSearchParams<{ creatorId: string, roomName: string }>();
 
     const editorUrl = `https://notepad.pw/${roomName}`;
 
