@@ -18,20 +18,17 @@ function CustomDrawerContent(props: any) {
     return (
         <View className="flex-1">
             {/* Drawer Header */}
-            <View className="w-full gap-4 bg-rose_pompadour">
+            <View className="w-full bg-licorice-600 py-8">
                 <View
-                    className="mx-auto aspect-square w-[50%] items-center justify-center p-4"
+                    className="mx-auto aspect-video w-[60%] items-center justify-center"
                     style={{ paddingTop: top + 10 }}>
-                    {/* <View className="aspect-square h-32 bg-red-500" /> */}
                     <Image
-                        source={require('assets/app-assets/NIT-Delhi_Logo.png')}
+                        source={require('assets/icons/text-logo.png')}
                         resizeMode="contain"
                         className="w-full"
+                        style={{ tintColor: 'white' }}
                     />
                 </View>
-                <Text className="border-b border-gray-300 pb-4 text-center font-pblack text-sm">
-                    National Institute of Technology, Delhi
-                </Text>
             </View>
 
             {/* Drawer Items */}
