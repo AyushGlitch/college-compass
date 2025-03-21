@@ -7,6 +7,7 @@ import { router } from 'expo-router';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { userAttendance, userTimeTable } from '~/db/schema';
 import { Container } from '~/components/Container';
+import CustomButton from '~/components/CustomButton';
 
 interface CourseDataProp {
     courseId: string;
@@ -61,8 +62,11 @@ export default function Index() {
 
     return (
         <Container className="bg-licorice">
-            <ScrollView>
-                <View className="flex-1 items-center justify-center gap-8 p-4">
+            <ScrollView
+                contentContainerStyle={{
+                    flexGrow: 1,
+                }}>
+                <View className="flex-1 items-center justify-start gap-4 p-4">
                     {userTtData && userTtData.length > 0 ? (
                         userTtData.map((data: any) => {
                             const courseData = courseDataList[
@@ -81,25 +85,23 @@ export default function Index() {
                             );
                         })
                     ) : (
-                        <View className="h-full items-center justify-center gap-16 p-5">
-                            <Text className="text-center text-3xl font-bold">
+                        <View className="flex-1 items-center justify-center gap-8 p-4">
+                            <Text className="text-center font-pbold text-2xl text-white">
                                 No Course in Attendance List
                             </Text>
-                            <Text className="text-center text-xl font-medium">
+                            <Text className="text-center font-pregular text-white/60">
                                 Add courses to your attendance list, as per your
                                 Degree, Branch, and Semester, from our
                                 predefined timetable.
                             </Text>
-                            <Pressable>
-                                <Button
-                                    title="Click Here !!"
-                                    onPress={() =>
-                                        router.push(
-                                            '/(app)/(protected)/(drawer)/attendanceMarker/subjects'
-                                        )
-                                    }
-                                />
-                            </Pressable>
+                            <CustomButton
+                                title="Click Here to add Subjects"
+                                handlePress={() =>
+                                    router.push(
+                                        '/(app)/(protected)/(drawer)/attendanceMarker/subjects'
+                                    )
+                                }
+                            />
                         </View>
                     )}
                 </View>

@@ -107,7 +107,7 @@ const EmailSorter = () => {
                 <View className="flex-1 items-center justify-center">
                     <Text className="font-semibold text-red-500">{error}</Text>
                 </View>
-            ) : categorizedEmails.length === 0 ? (
+            ) : !categorizedEmails || categorizedEmails.length === 0 ? (
                 <View className="flex-1 items-center justify-center">
                     <Text className="font-medium text-aquamarine">
                         No emails found.

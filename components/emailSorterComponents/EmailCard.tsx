@@ -29,11 +29,11 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
 
     return (
         <View
-            className={`relative flex-row items-center gap-2 border-b border-t border-glass p-4 ${isUnread ? 'bg-gray-900' : ''}`}>
+            className={`relative flex-row items-center gap-2 border-b border-t border-glass p-4 py-2 ${isUnread ? 'bg-gray-900' : ''}`}>
             <View
-                className={`absolute bottom-0 left-0 top-0 w-2 ${category === 'IMPORTANT' ? 'bg-red-500' : ''}`}
+                className={`absolute inset-y-2 left-2 w-1 rounded-full ${category === 'IMPORTANT' ? 'bg-red-500' : ''}`}
             />
-            <View className="w-fit rounded-full bg-black">
+            {/* <View className="w-fit rounded-full bg-black">
                 <Image
                     source={{
                         uri:
@@ -43,7 +43,7 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
                     }}
                     className={`aspect-square h-12 rounded-full ${isUnread ? '' : 'opacity-60'}`}
                 />
-            </View>
+            </View> */}
 
             <View className="flex-1">
                 <Text
