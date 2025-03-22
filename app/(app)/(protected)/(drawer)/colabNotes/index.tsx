@@ -9,7 +9,7 @@ import uuid from 'react-native-uuid';
 const ColabNotesScreen = () => {
     // TODO: Add Zod
 
-    const [newRoomName, setNewRoomName] = useState('')
+    const [newRoomName, setNewRoomName] = useState('');
 
     const [creatorId, setCreatorId] = useState('');
     const [roomName, setRoomName] = useState('');
@@ -17,11 +17,11 @@ const ColabNotesScreen = () => {
     const createRoom = () => {
         console.log('Joining room: ', newRoomName);
         router.push({
-            pathname: "/(app)/(protected)/(drawer)/colabNotes/webquill",
+            pathname: '/(app)/(protected)/(drawer)/colabNotes/webquill',
             params: {
-                creatorId: "me",
-                roomName: newRoomName
-            }
+                creatorId: 'me',
+                roomName: newRoomName,
+            },
         });
     };
 
@@ -32,16 +32,16 @@ const ColabNotesScreen = () => {
         }
         console.log('Joining room: ', roomName);
         router.push({
-            pathname: "/(app)/(protected)/(drawer)/colabNotes/webquill",
+            pathname: '/(app)/(protected)/(drawer)/colabNotes/webquill',
             params: {
-                creatorId: "add own creator Id here",
-                roomName: newRoomName
-            }
+                creatorId: 'add own creator Id here',
+                roomName: newRoomName,
+            },
         });
     };
 
     return (
-        <Container className='bg-licorice'>
+        <Container className="bg-licorice">
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 contentContainerClassName="min-h-full justify-center items-center">
@@ -50,12 +50,12 @@ const ColabNotesScreen = () => {
                     <MaterialCommunityIcons
                         name="application-edit"
                         size={52}
-                        color="black"
+                        color="white"
                     />
-                    <Text className="mt-6 text-center font-pbold text-white text-3xl">
+                    <Text className="mt-6 text-center font-pbold text-3xl text-white">
                         Collaborate in Real Time!
                     </Text>
-                    <Text className="text-center font-pregular text-white/80 text-lg">
+                    <Text className="text-center font-pregular text-lg text-white/80">
                         Create or join a shared notes room to collaborate
                         seamlessly with your peers. Whether you're
                         brainstorming, planning, or studying together, this app
@@ -66,11 +66,11 @@ const ColabNotesScreen = () => {
                 <View className="h-[1px] w-full bg-glass" />
                 {/* Inputs */}
                 <View className="w-full flex-1 items-center justify-center gap-8 px-4">
-                    <View className='gap-2 w-full flex-row'>
-                        <View className='border border-glass p-4 flex-1 justify-center rounded-full'>
+                    <View className="w-full flex-row gap-2">
+                        <View className="flex-1 justify-center rounded-full border border-glass p-4">
                             <TextInput
                                 placeholder="New Room Name"
-                                className="text-folly placeholder:text-folly text-xl"
+                                className="text-xl text-folly placeholder:text-folly"
                                 value={newRoomName}
                                 onChangeText={setNewRoomName}
                                 textAlign="center"
@@ -82,25 +82,25 @@ const ColabNotesScreen = () => {
                             handlePress={createRoom}
                         />
                     </View>
-                    <Text className="text-center font-plight text-lg z-10 bg-licorice p-2 text-white/60">
+                    <Text className="z-10 bg-licorice p-2 text-center font-plight text-lg text-white/60">
                         or
                     </Text>
-                    <View className='gap-4'>
+                    <View className="gap-4">
                         <View className="w-full flex-row justify-between gap-2">
-                            <View className='border border-glass flex-1 p-4 justify-center rounded-full'>
+                            <View className="flex-1 justify-center rounded-full border border-glass p-4">
                                 <TextInput
                                     placeholder="Creator ID"
-                                    className="text-folly placeholder:text-folly text-xl"
+                                    className="text-xl text-folly placeholder:text-folly"
                                     value={creatorId}
                                     onChangeText={setCreatorId}
                                     textAlign="center"
                                     multiline={false}
                                 />
                             </View>
-                            <View className='border border-glass p-4 flex-1 justify-center rounded-full'>
+                            <View className="flex-1 justify-center rounded-full border border-glass p-4">
                                 <TextInput
                                     placeholder="Room Name"
-                                    className="text-folly placeholder:text-folly text-xl"
+                                    className="text-xl text-folly placeholder:text-folly"
                                     value={roomName}
                                     onChangeText={setRoomName}
                                     textAlign="center"

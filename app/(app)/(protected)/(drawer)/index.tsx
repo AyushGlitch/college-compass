@@ -50,7 +50,7 @@ export default function Home() {
                                 AsyncStorage.multiRemove(storage_keys);
                                 signOut(auth);
                             }}>
-                            <Text className="font-psemibold text-licorice-600">
+                            <Text className="font-psemibold text-folly">
                                 Sign Out
                             </Text>
                         </TouchableOpacity>

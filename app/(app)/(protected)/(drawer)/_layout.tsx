@@ -18,7 +18,7 @@ function CustomDrawerContent(props: any) {
     return (
         <View className="flex-1">
             {/* Drawer Header */}
-            <View className="w-full bg-licorice-600 py-8">
+            <View className="w-full border-b border-glass bg-licorice-600/20 py-8">
                 <View
                     className="mx-auto aspect-video w-[60%] items-center justify-center"
                     style={{ paddingTop: top + 10 }}>
@@ -70,7 +70,7 @@ const DrawerLayout = () => (
                 <Ionicons
                     name="menu"
                     size={30}
-                    color="black"
+                    color="white"
                     className="flex items-center justify-center px-5"
                     style={{
                         paddingHorizontal: 20,
@@ -86,25 +86,29 @@ const DrawerLayout = () => (
                 overflow: 'hidden',
             },
             headerStyle: {
-                backgroundColor: '#FF7094',
+                backgroundColor: '#0b0014',
+                borderBottomWidth: 1,
+                borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+                shadowColor: '#8A2BE2',
+                elevation: 10,
             },
             headerTitleStyle: {
-                color: '#000',
+                color: '#fff',
                 fontWeight: 'bold',
                 fontSize: 20,
             },
             drawerLabelStyle: {
-                color: '#E8BDFE', // Soft pastel purple that contrasts well
+                color: '#E8BDFE',
                 fontSize: 16,
                 fontWeight: 'bold',
-                textShadowColor: '#A102F6', // Neon purple glow effect
+                textShadowColor: '#A102F6',
                 textShadowOffset: { width: 0, height: 0 },
                 textShadowRadius: 6,
                 letterSpacing: 1.2,
             },
 
             drawerItemStyle: {
-                shadowColor: '#A102F6', // Same neon glow effect
+                shadowColor: '#A102F6',
                 shadowOffset: { width: 0, height: 5 },
                 shadowOpacity: 0.4,
                 shadowRadius: 10,
