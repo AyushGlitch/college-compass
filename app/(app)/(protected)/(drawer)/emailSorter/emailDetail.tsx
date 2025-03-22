@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { Container } from '~/components/Container';
@@ -7,7 +7,6 @@ import WebView from 'react-native-webview';
 
 const EmailDetailScreen = () => {
     const { email: emailString } = useLocalSearchParams();
-    const { width } = useWindowDimensions();
 
     if (!emailString) {
         return (

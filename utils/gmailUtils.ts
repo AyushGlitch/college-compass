@@ -13,7 +13,7 @@ export const fetchEmails = async () => {
             return [];
         }
 
-        const response = await fetch(GMAIL_API_URL, {
+        const response = await fetch(`${GMAIL_API_URL}?labelIds=INBOX`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
