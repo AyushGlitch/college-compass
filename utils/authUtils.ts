@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { signOut } from 'firebase/auth';
+import { FIREBASE_AUTH } from '~/firebaseConfig';
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
@@ -88,4 +90,12 @@ export const startTokenAutoRefresh = async () => {
             }, delay);
         }
     }
+};
+
+export const firebaseSignOut = () => {
+    const auth = FIREBASE_AUTH;
+
+    const storage_keys = ['accessToken', 'refreshToken', 'expiryTime'];
+    AsyncStorage.multiRemove(storage_keys);
+    signOut(auth);
 };

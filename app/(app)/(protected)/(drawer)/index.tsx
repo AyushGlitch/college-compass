@@ -1,16 +1,13 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Drawer from 'expo-router/drawer';
-import { Link, useRouter } from 'expo-router';
-import { signOut } from 'firebase/auth';
+import { Link } from 'expo-router';
 import React from 'react';
-import { Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 
 import { Container } from '~/components/Container';
 import { FIREBASE_AUTH } from '~/firebaseConfig';
+import UserProfileCard from '~/components/UserProfileCard';
 
 export default function Home() {
     const auth = FIREBASE_AUTH;
-    const router = useRouter();
 
     // Features and their correct routes based on the given structure
     const features = [
@@ -35,47 +32,35 @@ export default function Home() {
 
     return (
         <>
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 options={{
                     headerTitle: 'Dashboard',
                     headerRight: () => (
                         <TouchableOpacity
                             className="px-4"
-                            onPress={() => {
-                                const storage_keys = [
-                                    'accessToken',
-                                    'refreshToken',
-                                    'expiryTime',
-                                ];
-                                AsyncStorage.multiRemove(storage_keys);
-                                signOut(auth);
-                            }}>
+                            onPress={() => firebaseSignOut()}>
                             <Text className="font-psemibold text-folly">
                                 Sign Out
                             </Text>
                         </TouchableOpacity>
                     ),
                 }}
-            />
+            /> */}
             <Container>
-                <View className="flex-1 justify-center gap-6 bg-licorice p-4">
-                    {/* Hero Section */}
-                    <View className="mb-6 items-center justify-center gap-4">
-                        <Text className="text-3xl font-extrabold text-rose_pompadour">
-                            Welcome to Your Dashboard 🎉
-                        </Text>
-                        <Text className="text-center text-yellow-400">
-                            {auth.currentUser?.displayName ?? 'No user found'}
-                        </Text>
-                        <Text className="max-w-xs text-center text-white">
-                            Easily manage your emails, mark attendance, view
-                            PYQ's, apply for hostel leave, and collaborate on
-                            notes!
-                        </Text>
-                    </View>
-
+                <View className="flex-1 gap-2 bg-licorice p-4">
                     {/* Feature Grid */}
-                    <View className="grid grid-cols-2 gap-4">
+                    <View className="absolute inset-x-0 items-center justify-center">
+                        <Image
+                            source={require('assets/icons/text-logo.png')}
+                            resizeMode="contain"
+                            style={{
+                                tintColor: 'white',
+                                width: 150,
+                                height: 150,
+                            }}
+                        />
+                    </View>
+                    <View className="grid flex-1 grid-cols-2 justify-center gap-4">
                         {features.map((feature, idx) => (
                             <Link
                                 href={feature.route as any}
@@ -92,6 +77,9 @@ export default function Home() {
                             </Link>
                         ))}
                     </View>
+
+                    {/* Hero Section */}
+                    <UserProfileCard user={auth.currentUser} />
                 </View>
             </Container>
         </>
