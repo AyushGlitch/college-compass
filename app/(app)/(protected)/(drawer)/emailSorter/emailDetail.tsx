@@ -3,8 +3,7 @@ import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { Container } from '~/components/Container';
 import { extractEmailBody } from '~/utils/gmailUtils';
-import Drawer from 'expo-router/drawer';
-import RenderHTML from 'react-native-render-html';
+import WebView from 'react-native-webview';
 
 const EmailDetailScreen = () => {
     const { email: emailString } = useLocalSearchParams();
@@ -29,28 +28,64 @@ const EmailDetailScreen = () => {
         email.payload.headers.find((h: any) => h.name === 'Subject')?.value ||
         'No Subject';
 
-    const body = extractEmailBody(email);
+    const body: string = extractEmailBody(email);
+    const htmlBody = body
+        ? body.startsWith('<')
+            ? body
+            : `<pre>${body}</pre>`
+        : `<pre>No body</pre>`;
+
+    // console.log('🚀 Email body: ', htmlBody);
 
     return (
-        <Container className="bg-white">
-            <ScrollView contentContainerClassName="p-4 pb-8">
-                {/* Subject */}
-                <Text className="font-psemibold text-xl text-licorice">
-                    {subject}
-                </Text>
+        <Container className="bg-black/5">
+            <ScrollView
+                contentContainerStyle={{
+                    flexGrow: 1,
+                }}>
+                <View className="p-4">
+                    {/* Subject */}
+                    <Text className="font-psemibold text-xl text-licorice">
+                        {subject}
+                    </Text>
 
-                {/* Sender */}
-                <Text className="mt-1 font-pregular text-licorice/60">
-                    From: {sender}
-                </Text>
+                    {/* Sender */}
+                    <Text className="mt-1 font-pregular text-licorice/60">
+                        From: {sender}
+                    </Text>
+                </View>
 
                 {/* Divider */}
-                <View className="my-3 mb-8 h-px bg-gray-700" />
+                <View className="h-px bg-gray-700" />
 
                 {/* Body */}
-                <RenderHTML
-                    contentWidth={width}
-                    source={{ html: body || '<p>No content available</p>' }}
+                <WebView
+                    originWhitelist={['*']}
+                    source={{ html: htmlBody }}
+                    className="flex-1"
+                    injectedJavaScript={`
+                        const meta = document.createElement('meta');
+                        meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1');
+                        meta.setAttribute('name', 'viewport');
+                        document.head.appendChild(meta);
+
+                        const style = document.createElement('style');
+                        style.innerHTML = \`
+                            body {
+                                font-size: 16px;
+                                line-height: 1.5;
+                                padding: 16px;
+                            }
+                            img {
+                                max-width: 100%;
+                                height: auto;
+                            }
+                        \`;
+                        document.head.appendChild(style);
+                    `}
+                    onMessage={(event) => {
+                        console.log('WebView message:', event.nativeEvent.data);
+                    }}
                 />
             </ScrollView>
         </Container>
