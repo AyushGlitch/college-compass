@@ -73,8 +73,8 @@ export default function Subjects() {
 
     return (
         <Container className="bg-licorice">
-            <ScrollView>
-                <View className="items-center justify-center gap-4 p-4 pb-20">
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <View className="flex-1 items-center justify-center gap-4 p-4 pb-20">
                     {userTtData && userTtData.length > 0 ? (
                         userTtData.map((data: userTimeTableSelectType) => {
                             const courseData = courseDataList?.[

@@ -26,8 +26,8 @@ export default function History() {
         <Container className="gap-6 bg-licorice p-4">
             {/* Course Selection */}
             <View className="flex-row gap-2 rounded-lg border border-glass bg-licorice px-4">
-                <Text className="mb-2 mt-4 text-lg font-medium text-white">
-                    Select Course:
+                <Text className="mb-2 mt-4 font-psemibold text-lg text-folly">
+                    Course
                 </Text>
 
                 <Picker
@@ -38,16 +38,16 @@ export default function History() {
                     style={{
                         height: 50,
                         backgroundColor: 'transparent',
-                        color: 'lightgreen',
+                        color: 'white',
                         flex: 1,
                     }}
+                    dropdownIconColor="#99edcc"
                     mode="dropdown">
                     {userTtData.map((data) => (
                         <Picker.Item
                             label={data.courseId!}
                             value={data.courseId}
                             key={data.courseId}
-                            // style={{ color: 'white', backgroundColor: '#454545' }}
                         />
                     ))}
                 </Picker>

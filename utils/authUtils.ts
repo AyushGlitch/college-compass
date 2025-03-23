@@ -92,10 +92,10 @@ export const startTokenAutoRefresh = async () => {
     }
 };
 
-export const firebaseSignOut = () => {
+export const firebaseSignOut = async () => {
     const auth = FIREBASE_AUTH;
 
     const storage_keys = ['accessToken', 'refreshToken', 'expiryTime'];
-    AsyncStorage.multiRemove(storage_keys);
-    signOut(auth);
+    await AsyncStorage.multiRemove(storage_keys);
+    await signOut(auth);
 };

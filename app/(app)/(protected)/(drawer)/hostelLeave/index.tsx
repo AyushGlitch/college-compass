@@ -75,9 +75,7 @@ const HostelLeave = () => {
         const recipientEmail = '221210006@nitdelhi.ac.in';
         const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
-        Linking.openURL(mailtoUrl)
-            .then(() => Alert.alert('Success', 'Email app opened!'))
-            .catch(() => Alert.alert('Error', 'Could not open email app'));
+        Linking.openURL(mailtoUrl);
     };
 
     return (

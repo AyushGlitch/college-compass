@@ -5,13 +5,14 @@ import {
 } from '~/db/api/queries';
 import { useState } from 'react';
 import Loader from './Loader';
-import { Text, View } from './Themed';
+import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Button, Pressable } from 'react-native';
 import { useSubmitPredefinedTTForm } from '~/db/api/mutations';
+import CustomButton from './CustomButton';
 
 export default function PreDefinedForm() {
-    const [selectedDegreeId, setSelectedDegreeId] = useState<string>('');
+    const [selectedDegreeId, setSelectedDegreeId] = useState<string>('B.Tech');
     const [selectedBranchId, setSelectedBranchId] = useState<string>('');
     const [selectedSemester, setSelectedSemester] = useState<number>();
 
@@ -38,146 +39,107 @@ export default function PreDefinedForm() {
     };
 
     return (
-        <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: 20,
-                }}>
-                <Text
-                    style={{
-                        fontWeight: '700',
-                        fontSize: 26,
-                        textAlign: 'center',
-                    }}>
-                    No Subject in Time Table
+        <View className="flex-1 justify-center gap-12 p-4">
+            <View className="gap-2">
+                <Text className="text-center text-2xl font-semibold text-white">
+                    No Subjects in Time Table
                 </Text>
-                <Text
-                    style={{
-                        fontWeight: '500',
-                        fontSize: 20,
-                        textAlign: 'center',
-                    }}>
-                    Select for your need{' '}
-                    <Text style={{ fontWeight: '800' }}>
-                        ( Open dropdown menu once and select )
-                    </Text>{' '}
+                <Text className="font-regular text-center text-xl text-white/60">
+                    Select for your need
                 </Text>
             </View>
 
-            {/* <View style={{flexWrap: 'wrap'}}> */}
-            <Text
-                style={{
-                    fontWeight: '500',
-                    fontSize: 16,
-                    marginBottom: 8,
-                    marginTop: 20,
-                }}>
-                Select the Degree:
-            </Text>
-            <Picker
-                selectedValue={selectedDegreeId}
-                onValueChange={(itemValue, itemIndex) =>
-                    setSelectedDegreeId(itemValue)
-                }
-                style={{
-                    height: 50,
-                    width: 250,
-                    backgroundColor: '#414141',
-                    color: 'white',
-                }}>
-                {fetchPreDefinedTTDistinctQuery.data?.distinctDegree.map(
-                    (degree) => (
-                        <Picker.Item
-                            label={degree}
-                            value={degree}
-                            key={degree}
+            <View className="gap-6">
+                <View>
+                    <Text className="font-psemibold text-sm text-red-500">
+                        Degree
+                    </Text>
+                    <View className="overflow-hidden rounded-lg border border-glass">
+                        <Picker
+                            selectedValue={selectedDegreeId}
+                            onValueChange={(itemValue) =>
+                                setSelectedDegreeId(itemValue)
+                            }
+                            dropdownIconColor="#99edcc"
+                            mode="dropdown"
                             style={{
                                 color: 'white',
-                                backgroundColor: '#414141',
-                            }}
-                        />
-                    )
-                )}
-            </Picker>
+                            }}>
+                            {fetchPreDefinedTTDistinctQuery.data?.distinctDegree.map(
+                                (degree) => (
+                                    <Picker.Item
+                                        label={degree}
+                                        value={degree}
+                                        key={degree}
+                                    />
+                                )
+                            )}
+                        </Picker>
+                    </View>
+                </View>
 
-            <Text
-                style={{
-                    fontWeight: '500',
-                    fontSize: 16,
-                    marginBottom: 8,
-                    marginTop: 20,
-                }}>
-                Select the Branch:
-            </Text>
-            <Picker
-                selectedValue={selectedBranchId}
-                onValueChange={(itemValue, itemIndex) =>
-                    setSelectedBranchId(itemValue)
-                }
-                style={{
-                    height: 50,
-                    width: 250,
-                    backgroundColor: '#414141',
-                    color: 'white',
-                }}>
-                {fetchPreDefinedTTDistinctBranchSemQuery.data?.distinctBranch.map(
-                    (branch) => (
-                        <Picker.Item
-                            label={branch}
-                            value={branch}
-                            key={branch}
+                <View>
+                    <Text className="font-psemibold text-sm text-red-500">
+                        Branch
+                    </Text>
+                    <View className="overflow-hidden rounded-lg border border-glass">
+                        <Picker
+                            selectedValue={selectedBranchId}
+                            onValueChange={(itemValue) =>
+                                setSelectedBranchId(itemValue)
+                            }
+                            dropdownIconColor="#99edcc"
+                            mode="dropdown"
                             style={{
                                 color: 'white',
-                                backgroundColor: '#414141',
-                            }}
-                        />
-                    )
-                )}
-            </Picker>
+                            }}>
+                            {fetchPreDefinedTTDistinctBranchSemQuery.data?.distinctBranch.map(
+                                (branch) => (
+                                    <Picker.Item
+                                        label={branch}
+                                        value={branch}
+                                        key={branch}
+                                    />
+                                )
+                            )}
+                        </Picker>
+                    </View>
+                </View>
 
-            <Text
-                style={{
-                    fontWeight: '500',
-                    fontSize: 16,
-                    marginBottom: 8,
-                    marginTop: 20,
-                }}>
-                Select the Semester:
-            </Text>
-            <Picker
-                selectedValue={selectedSemester}
-                onValueChange={(itemValue, itemIndex) =>
-                    setSelectedSemester(itemValue)
-                }
-                style={{
-                    height: 50,
-                    width: 250,
-                    backgroundColor: '#414141',
-                    color: 'white',
-                }}>
-                {fetchPreDefinedTTDistinctBranchSemQuery.data?.distinctSem.map(
-                    (semester) => (
-                        <Picker.Item
-                            label={semester.toString()}
-                            value={semester}
-                            key={semester}
+                <View>
+                    <Text className="font-psemibold text-sm text-red-500">
+                        Semester
+                    </Text>
+                    <View className="overflow-hidden rounded-lg border border-glass">
+                        <Picker
+                            selectedValue={selectedSemester}
+                            onValueChange={(itemValue) =>
+                                setSelectedSemester(itemValue)
+                            }
+                            dropdownIconColor="#99edcc"
+                            mode="dropdown"
                             style={{
                                 color: 'white',
-                                backgroundColor: '#414141',
-                            }}
-                        />
-                    )
-                )}
-            </Picker>
-            {/* </View> */}
+                            }}>
+                            {fetchPreDefinedTTDistinctBranchSemQuery.data?.distinctSem.map(
+                                (semester) => (
+                                    <Picker.Item
+                                        label={semester.toString()}
+                                        value={semester}
+                                        key={semester}
+                                    />
+                                )
+                            )}
+                        </Picker>
+                    </View>
+                </View>
+            </View>
 
-            <Pressable style={{ padding: 20 }}>
-                <Button title="Submit" onPress={onSubmit} />
-            </Pressable>
+            <CustomButton
+                title="Submit"
+                handlePress={onSubmit}
+                containerStyles="rounded-lg"
+            />
         </View>
     );
 }
