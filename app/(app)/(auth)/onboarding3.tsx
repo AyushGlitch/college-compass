@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Container } from '~/components/Container';
 import CustomButton from '~/components/CustomButton';
@@ -124,7 +124,14 @@ const OnboardingScreen3 = () => {
     return (
         <Animated.View className="flex-1" style={[backgroundStyle]}>
             <Container className="flex-1 justify-center gap-4 p-4">
-                <View className="flex-1 justify-center gap-4">
+                <View className="flex-1 items-center justify-center gap-4">
+                    {/* Logo Image */}
+                    <Image
+                        source={require('assets/icons/splash-icon-light.png')}
+                        resizeMode="contain"
+                        className="aspect-square h-[200]"
+                    />
+
                     {/* Title Text */}
                     <Animated.Text
                         style={titleStyle}
