@@ -17,12 +17,24 @@ import dayjs from 'dayjs';
 import { Container } from '~/components/Container';
 import { Ionicons } from '@expo/vector-icons';
 import CustomButton from '~/components/CustomButton';
+import { FIREBASE_AUTH } from '~/firebaseConfig';
+
+
+type DestinationType = 'Home' | 'Doctor' | 'Other';
+
+const destinations_array: DestinationType[] = ['Home', 'Doctor', 'Other'];
+
 
 const HostelLeave = () => {
+    const auth = FIREBASE_AUTH;
+    const user = auth.currentUser;
+    
+
     const [leaveDate, setLeaveDate] = useState<Date | undefined>(new Date());
     const [returnDate, setReturnDate] = useState<Date | undefined>(new Date());
-    const [leaveTime, setLeaveTime] = useState<Date | undefined>();
+    // const [leaveTime, setLeaveTime] = useState<Date | undefined>();
     const [reason, setReason] = useState('');
+    const [selectedDestination, setSelectedDestination] = useState<DestinationType>('Home');
     const [destination, setDestination] = useState('');
     const [showDatePicker, setShowDatePicker] = useState<{
         type: 'leave' | 'return' | 'time';
@@ -32,51 +44,52 @@ const HostelLeave = () => {
         if (selectedDate) {
             if (showDatePicker?.type === 'leave') setLeaveDate(selectedDate);
             if (showDatePicker?.type === 'return') setReturnDate(selectedDate);
-            if (showDatePicker?.type === 'time') setLeaveTime(selectedDate);
+            // if (showDatePicker?.type === 'time') setLeaveTime(selectedDate);
         }
         setShowDatePicker(null);
     };
 
     // TODO: Add rich html email template for Gmail API
     const sendEmail = () => {
-        if (
-            !leaveDate ||
-            !returnDate ||
-            !leaveTime ||
-            !reason ||
-            !destination
-        ) {
+        if (!leaveDate || !returnDate || !reason || !selectedDestination || 
+            (selectedDestination === 'Other' && !destination.trim())) {
             Alert.alert('Error', 'Please fill in all fields before sending.');
             return;
         }
-
+    
+        // Prevent selecting past dates
+        // const today = new Date();
+        // if (leaveDate < today || returnDate < leaveDate) {
+        //     Alert.alert('Error', 'Please select valid dates.');
+        //     return;
+        // }
+    
         const emailSubject = 'Hostel Leave Application';
-
         const emailBody = `
-  Dear Warden,
-  
-  I am writing to formally request leave from the hostel. Below are the details of my leave:
-  
-  📅 *Date of Leaving:* ${dayjs(leaveDate).format('DD/MM/YYYY')}
-  📅 *Date of Return:* ${dayjs(returnDate).format('DD/MM/YYYY')}
-  ⏰ *Leaving Time:* ${dayjs(leaveTime).format('hh:mm A')}
-  📍 *Destination:* ${destination}
-  📝 *Reason for Leave:* ${reason}
-  
-  I assure you that I will abide by all hostel rules and return on the mentioned date. Kindly grant me permission for the leave.
-  
-  Looking forward to your approval.
-  
-  Sincerely,  
-  [Your Name]  
-  [Your Roll Number] | [Your Room Number] | [Your Contact Number]
-      `;
-
+      Dear Warden,
+      
+      I am writing to formally request leave from the hostel. Below are the details of my leave:
+      
+      📅 *Date of Leaving:* ${dayjs(leaveDate).format('DD/MM/YYYY')}
+      📅 *Date of Return:* ${dayjs(returnDate).format('DD/MM/YYYY')}
+      📍 *Destination:* ${selectedDestination === 'Other' ? destination.trim() : selectedDestination}
+      📝 *Reason for Leave:* ${reason.trim()}
+      
+      I assure you that I will abide by all hostel rules and return on the mentioned date. Kindly grant me permission for the leave.
+      
+      Looking forward to your approval.
+      
+      Sincerely,  
+      ${user?.displayName || '[Your Name]'}  
+      ${user?.email?.split('@')[0] || '[Your Roll Number]'} | [Your Room Number] | [Your Contact Number]
+          `;
+    
         const recipientEmail = '221210006@nitdelhi.ac.in';
         const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
+    
         Linking.openURL(mailtoUrl);
     };
+    
 
     return (
         <Container className="bg-licorice p-4">
@@ -140,7 +153,7 @@ const HostelLeave = () => {
                         </View>
 
                         {/* Leave Time Picker */}
-                        <View className="my-4">
+                        {/* <View className="my-4">
                             <Text className="font-pbold text-lg text-aquamarine">
                                 Leave time
                             </Text>
@@ -162,21 +175,28 @@ const HostelLeave = () => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </View> */}
 
                         {/* Destination Input */}
+                        {/* Destination Selection */}
                         <View className="my-4">
-                            <Text className="font-pbold text-lg text-rose_pompadour">
-                                Destination
-                            </Text>
-                            <View className="flex-row items-center justify-between rounded-md border border-glass bg-licorice p-2 shadow-neon-glow backdrop-blur-lg">
-                                <TextInput
-                                    placeholder="Where are you going?"
-                                    value={destination}
-                                    onChangeText={setDestination}
-                                    className="w-full rounded-md p-2 font-pregular text-white placeholder:text-white"
-                                />
+                            <Text className="font-pbold text-lg text-rose_pompadour">Destination</Text>
+                            <View className="flex-row space-x-2">
+                                {destinations_array.map((option) => (
+                                    <TouchableOpacity key={option} onPress={() => setSelectedDestination(prev => option)} className={`p-2 border rounded-md ${selectedDestination === option ? 'bg-aquamarine' : 'bg-licorice'}`}>
+                                        <Text className={`${selectedDestination === option ? 'text-black' : 'text-white'}`}>{option}</Text>
+                                    </TouchableOpacity>
+                                ))}
                             </View>
+                            {selectedDestination === 'Other' && (
+                                <TextInput
+                                    placeholder="Enter destination"
+                                    value={destination}
+                                    style={{elevation: 10}}
+                                    onChangeText={setDestination}
+                                    className="w-full rounded-md p-4 shadow-neon-glow bg-licorice font-pregular border border-glass text-white placeholder:text-white mt-2"
+                                />
+                            )}
                         </View>
 
                         {/* Reason Input */}
