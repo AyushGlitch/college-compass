@@ -133,12 +133,22 @@ const EmailSorter = () => {
                                 color: '#ff7094',
                             }}
                             mode="dropdown">
-                            <Picker.Item label="All" value="ALL" />
+                            {/* <Picker.Item label="All" value="ALL" />
                             <Picker.Item label="Important" value="IMPORTANT" />
                             <Picker.Item label="Clubs" value="CLUBS" />
                             <Picker.Item label="Mess" value="MESS" />
                             <Picker.Item label="Sports" value="SPORTS" />
-                            <Picker.Item label="Others" value="OTHERS" />
+                            <Picker.Item label="Others" value="OTHERS" /> */}
+                            <Picker.Item label="ALL" value="ALL" />
+                            {Object.keys(categorizedEmails).map(
+                                (category, i) => (
+                                    <Picker.Item
+                                        key={`${category}-${i}`}
+                                        label={category}
+                                        value={category}
+                                    />
+                                )
+                            )}
                         </Picker>
                     </View>
 

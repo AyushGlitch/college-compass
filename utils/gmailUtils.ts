@@ -61,20 +61,37 @@ export const categorizeEmail = (email: any) => {
     // 🔹 Normalize text for matching
     const text = `${senderEmail} ${subject} ${body}`.toLowerCase();
 
-    // 🔹 Dynamically check against category definitions
+    // // 🔹 Dynamically check against category definitions
+    // for (const category of emailCategories) {
+    //     if (
+    //         category.keywords.some((kw) => text.includes(kw)) ||
+    //         (category.labelMatch &&
+    //             category.labelMatch.some((lbl) => labels.includes(lbl))) ||
+    //         (category.senderMatch &&
+    //             category.senderMatch.some((sm) => senderEmail.includes(sm)))
+    //     ) {
+    //         return category.name;
+    //     }
+    // }
+
+    // return 'OTHERS'; // Default category
+
+    let bestMatch = { category: 'OTHERS', score: 0 };
+
     for (const category of emailCategories) {
-        if (
-            category.keywords.some((kw) => text.includes(kw)) ||
-            (category.labelMatch &&
-                category.labelMatch.some((lbl) => labels.includes(lbl))) ||
-            (category.senderMatch &&
-                category.senderMatch.some((sm) => senderEmail.includes(sm)))
-        ) {
-            return category.name;
+        let score = 0;
+        if (category.keywords.some((kw) => text.includes(kw))) score += 2;
+        if (category.labelMatch?.some((lbl) => labels.includes(lbl)))
+            score += 1;
+        if (category.senderMatch?.some((sm) => senderEmail.includes(sm)))
+            score += 1;
+
+        if (score > bestMatch.score) {
+            bestMatch = { category: category.name, score };
         }
     }
 
-    return 'OTHERS'; // Default category
+    return bestMatch.category;
 };
 
 // export const extractEmailBody = (
