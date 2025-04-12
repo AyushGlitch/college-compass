@@ -1,4 +1,4 @@
-export const emailCategories = [
+export const defaultEmailCategories = [
     {
         name: 'IMPORTANT',
         keywords: [
@@ -8,7 +8,6 @@ export const emailCategories = [
             'important',
             'result',
             'grades',
-            'submission',
             'placement',
             'interview',
             'scholarship',
@@ -59,8 +58,16 @@ export const emailCategories = [
             'team',
             'chapter',
             'community',
+            'photography',
+            'film',
         ],
-        senderMatch: ['club', 'society', 'chapter', 'community'],
+        senderMatch: [
+            'club',
+            'society',
+            'chapter',
+            'community',
+            'clairvoyance',
+        ],
     },
     {
         name: 'MESS',

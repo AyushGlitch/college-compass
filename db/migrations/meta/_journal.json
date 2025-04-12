@@ -15,6 +15,13 @@
       "when": 1742388664940,
       "tag": "0001_amazing_johnny_blaze",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1744457469888,
+      "tag": "0002_secret_black_tarantula",
+      "breakpoints": true
     }
   ]
 }

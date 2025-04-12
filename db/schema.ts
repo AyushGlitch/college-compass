@@ -41,3 +41,13 @@ export const emails = sqliteTable('emails', {
     data: text('data').notNull(),
     timestamp: text('timestamp').notNull(),
 });
+
+// Email Categories Table
+export const emailCategories = sqliteTable('email_categories', {
+    name: text('name').primaryKey(),
+    keywords: text('keywords').notNull(), // JSON.stringify'ed array
+    senderMatch: text('senderMatch'), // JSON.stringify'ed array
+    labelMatch: text('labelMatch'), // optional, JSON.stringify'ed array
+});
+
+export type EmailCategoriesType = typeof emailCategories.$inferSelect;

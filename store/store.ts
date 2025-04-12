@@ -1,7 +1,8 @@
-import { desc } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { create } from 'zustand';
+import { defaultEmailCategories } from '~/constants/EmailCategories';
 import { db } from '~/db/drizzle';
-import { emails } from '~/db/schema';
+import { emailCategories, EmailCategoriesType, emails } from '~/db/schema';
 
 export interface Email {
     id: string;
@@ -16,7 +17,21 @@ interface EmailState {
     loadEmailsFromDB: () => Promise<void>;
 }
 
-export const useStore = create<EmailState>((set, get) => ({
+type TEmailCategory = {
+    name: string;
+    keywords: string[];
+    senderMatch?: string[];
+    labelMatch?: string[];
+};
+
+type EmailCategoryStore = {
+    categories: TEmailCategory[];
+    setCategories: (cats: TEmailCategory[]) => void;
+    addCategory: (cat: TEmailCategory) => void;
+    removeCategory: (name: string) => void;
+};
+
+export const useStore = create<EmailState & EmailCategoryStore>((set, get) => ({
     emails: [],
     lastFetched: null,
 
@@ -46,5 +61,44 @@ export const useStore = create<EmailState>((set, get) => ({
         );
 
         set({ emails: parsedEmails });
+    },
+
+    // -------------------------------------------
+
+    categories: [],
+
+    setCategories: async (cats) => {
+        set({ categories: cats });
+
+        // for (const cat of cats) {
+        //     await db.insert(emailCategories).values({
+        //         name: cat.name,
+        //         keywords: JSON.stringify(cat.keywords),
+        //         senderMatch: JSON.stringify(cat.senderMatch),
+        //         labelMatch: JSON.stringify(cat.labelMatch || []),
+        //     });
+        // }
+    },
+
+    addCategory: async (cat) => {
+        set((prev) => ({ categories: [...prev.categories, cat] }));
+
+        await db
+            .insert(emailCategories)
+            .values({
+                name: cat.name,
+                keywords: JSON.stringify(cat.keywords),
+                senderMatch: JSON.stringify(cat.senderMatch),
+                labelMatch: JSON.stringify(cat.labelMatch),
+            })
+            .onConflictDoNothing();
+    },
+
+    removeCategory: async (name) => {
+        set((prev) => ({
+            categories: prev.categories.filter((c) => c.name !== name),
+        }));
+
+        await db.delete(emailCategories).where(eq(emailCategories.name, name));
     },
 }));

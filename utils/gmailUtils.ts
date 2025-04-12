@@ -1,6 +1,7 @@
-import { emailCategories } from '~/constants/EmailCategories';
+import { defaultEmailCategories } from '~/constants/EmailCategories';
 import { getAccessToken } from './authUtils';
 import { Buffer } from 'buffer';
+import { useStore } from '~/store/store';
 
 const GMAIL_API_URL = 'https://www.googleapis.com/gmail/v1/users/me/messages';
 
@@ -61,6 +62,9 @@ export const categorizeEmail = (email: any) => {
     // 🔹 Normalize text for matching
     const text = `${senderEmail} ${subject} ${body}`.toLowerCase();
 
+    // 🔹 Access dynamic categories from Zustand store
+    const categories = useStore.getState().categories;
+
     // // 🔹 Dynamically check against category definitions
     // for (const category of emailCategories) {
     //     if (
@@ -78,7 +82,7 @@ export const categorizeEmail = (email: any) => {
 
     let bestMatch = { category: 'OTHERS', score: 0 };
 
-    for (const category of emailCategories) {
+    for (const category of categories) {
         let score = 0;
         if (category.keywords.some((kw) => text.includes(kw))) score += 2;
         if (category.labelMatch?.some((lbl) => labels.includes(lbl)))
