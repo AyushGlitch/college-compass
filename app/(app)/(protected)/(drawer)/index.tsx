@@ -39,11 +39,11 @@ export default function Home() {
             route: '/(app)/(protected)/(drawer)/attendanceMarker' as const,
             description: 'Track your class attendance records',
         },
-        {
-            name: 'Colab Notes',
-            route: '/(app)/(protected)/(drawer)/colabNotes' as const,
-            description: 'Collaborative notes with classmates',
-        },
+        // {
+        //     name: 'Colab Notes',
+        //     route: '/(app)/(protected)/(drawer)/colabNotes' as const,
+        //     description: 'Collaborative notes with classmates',
+        // },
     ];
 
     return (
