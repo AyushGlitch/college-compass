@@ -31,7 +31,7 @@ const EmailCard: React.FC<EmailCardProps> = ({ email, category }) => {
         <View
             className={`relative flex-row items-center gap-2 border-b border-t border-glass p-4 py-2 ${isUnread ? 'bg-gray-900' : ''}`}>
             <View
-                className={`absolute inset-y-2 left-2 w-1 rounded-full ${category === 'IMPORTANT' ? 'bg-red-500' : ''}`}
+                className={`absolute inset-y-2 left-2 w-1 rounded-full ${category.includes('IMPORTANT') ? 'bg-red-500' : ''}`}
             />
             {/* <View className="w-fit rounded-full bg-black">
                 <Image

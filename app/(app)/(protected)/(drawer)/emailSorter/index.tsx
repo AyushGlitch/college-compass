@@ -29,9 +29,15 @@ const EmailSorter = () => {
         if (!emails) return {};
 
         return emails.reduce((acc: any, email: any) => {
-            const category = categorizeEmail(email);
-            email.category = category;
-            acc[category] = acc[category] ? [...acc[category], email] : [email];
+            const categories = categorizeEmail(email);
+            email.categories = categories;
+
+            // Add email to each category bucket
+            categories.forEach((category: string) => {
+                acc[category] = acc[category]
+                    ? [...acc[category], email]
+                    : [email];
+            });
             return acc;
         }, {});
     }, []);
@@ -92,7 +98,15 @@ const EmailSorter = () => {
     // Memoized list of emails for the selected category
     const filteredEmails = useMemo(() => {
         if (selectedCategory === 'ALL') {
-            return Object.values(categorizedEmails || {}).flat(); // Merge all category arrays into one
+            const uniqueEmails = new Map(); // Uses email.id as key
+            Object.values(categorizedEmails || {})
+                .flat()
+                .forEach((email: any) => {
+                    if (!uniqueEmails.has(email.id)) {
+                        uniqueEmails.set(email.id, email);
+                    }
+                });
+            return Array.from(uniqueEmails.values());
         }
         return categorizedEmails?.[selectedCategory] || [];
     }, [categorizedEmails, selectedCategory]);
@@ -167,7 +181,7 @@ const EmailSorter = () => {
                                 }>
                                 <EmailCard
                                     email={item}
-                                    category={item.category}
+                                    category={item.categories}
                                 />
                             </Pressable>
                         )}

@@ -81,6 +81,7 @@ export const defaultEmailCategories = [
             'meal',
             'catering',
             'diet',
+            'dues',
             'nutrition',
             'vegetarian',
             'non-veg',
@@ -312,6 +313,7 @@ export const defaultEmailCategories = [
     {
         name: 'HOSTEL',
         keywords: [
+            'hostel',
             'room',
             'allotment',
             'vacate',
