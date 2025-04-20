@@ -1,5 +1,10 @@
 import { sql } from 'drizzle-orm';
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import {
+    sqliteTable,
+    text,
+    integer,
+    uniqueIndex,
+} from 'drizzle-orm/sqlite-core';
 
 // Attendance Tracker Tables
 export const preDefinedTimeTable = sqliteTable('preDefinedTimeTable', {
@@ -51,3 +56,14 @@ export const emailCategories = sqliteTable('email_categories', {
 });
 
 export type EmailCategoriesType = typeof emailCategories.$inferSelect;
+
+// Colab Notes Table
+export const colabRooms = sqliteTable(
+    'colabRooms',
+    {
+        id: text('id').primaryKey().notNull(),
+        creatorId: text('creator_id').notNull(),
+        roomName: text('room_name').notNull(),
+    },
+    (t) => [uniqueIndex('creator_id_room_name').on(t.creatorId, t.roomName)]
+);

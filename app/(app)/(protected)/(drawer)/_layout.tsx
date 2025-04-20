@@ -180,9 +180,6 @@ const DrawerLayout = () => (
         <Drawer.Screen
             name="colabNotes"
             options={{
-                drawerItemStyle: {
-                    display: "none"
-                },
                 headerTitle: 'Collab Notes',
                 drawerLabel: 'Collab Notes',
                 drawerIcon: ({ size, color }) => (
