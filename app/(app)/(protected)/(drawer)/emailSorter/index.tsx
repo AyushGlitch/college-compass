@@ -5,6 +5,7 @@ import {
     FlatList,
     RefreshControl,
     Pressable,
+    TextInput,
 } from 'react-native';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Picker } from '@react-native-picker/picker'; // Import Dropdown Picker
@@ -13,6 +14,8 @@ import { Container } from '~/components/Container';
 import EmailCard from '~/components/emailSorterComponents/EmailCard';
 import { useRouter } from 'expo-router';
 import { useStore } from '~/store/store';
+import CustomButton from '~/components/CustomButton';
+import { AntDesign } from '@expo/vector-icons';
 
 const EmailSorter = () => {
     const [categorizedEmails, setCategorizedEmails] = useState<any>(null);
@@ -20,8 +23,12 @@ const EmailSorter = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [accessToken, setAccessToken] = useState<string>('');
+    const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] =
         useState<string>('IMPORTANT');
+
+    // const { categories } = useStore();
+    // console.log(JSON.stringify(categories, null, 2));
 
     const router = useRouter();
 
@@ -52,7 +59,7 @@ const EmailSorter = () => {
             } = useStore.getState();
 
             const now = Date.now();
-            const THROTTLE_TIME = 60 * 1000; // 30 seconds
+            const THROTTLE_TIME = 60 * 1000; // 60 seconds
 
             try {
                 setLoading(true);
@@ -91,7 +98,7 @@ const EmailSorter = () => {
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await getEmails(true);
+        await getEmails(true); // Force reload = true
         setRefreshing(false);
     };
 
@@ -113,6 +120,24 @@ const EmailSorter = () => {
 
     return (
         <Container className="bg-licorice">
+            <View className="mt-4 flex-row items-center justify-center self-center overflow-hidden rounded-full">
+                <Pressable
+                    onPress={() => setShowAddCategoryModal(true)}
+                    className="text-psemibold bg-white p-2">
+                    <Text className="font-psemibold text-sm text-licorice">
+                        Add Category
+                    </Text>
+                </Pressable>
+                <Pressable className="text-psemibold bg-red-600 p-2">
+                    {/* TODO: Complete this */}
+                    <Text className="font-psemibold text-sm text-white">
+                        Delete Category
+                    </Text>
+                </Pressable>
+            </View>
+            {showAddCategoryModal && (
+                <AddCategoryModal setVisible={setShowAddCategoryModal} />
+            )}
             {loading ? (
                 <View className="flex-1 items-center justify-center">
                     <ActivityIndicator size="large" color="white" />
@@ -147,12 +172,6 @@ const EmailSorter = () => {
                                 color: '#ff7094',
                             }}
                             mode="dropdown">
-                            {/* <Picker.Item label="All" value="ALL" />
-                            <Picker.Item label="Important" value="IMPORTANT" />
-                            <Picker.Item label="Clubs" value="CLUBS" />
-                            <Picker.Item label="Mess" value="MESS" />
-                            <Picker.Item label="Sports" value="SPORTS" />
-                            <Picker.Item label="Others" value="OTHERS" /> */}
                             <Picker.Item label="ALL" value="ALL" />
                             {Object.keys(categorizedEmails).map(
                                 (category, i) => (
@@ -176,7 +195,9 @@ const EmailSorter = () => {
                                     router.push({
                                         pathname:
                                             '/(app)/(protected)/(drawer)/emailSorter/emailDetail',
-                                        params: { email: JSON.stringify(item) },
+                                        params: {
+                                            email: JSON.stringify(item),
+                                        },
                                     })
                                 }>
                                 <EmailCard
@@ -208,3 +229,95 @@ const EmailSorter = () => {
 };
 
 export default EmailSorter;
+
+// New Component (add category modal)
+import Groq from 'groq-sdk';
+
+const groq = new Groq({
+    apiKey: process.env.EXPO_PUBLIC_VITE_GROQ_API_KEY,
+    dangerouslyAllowBrowser: true,
+});
+
+async function getGroqChatCompletion(userInput: string) {
+    return groq.chat.completions.create({
+        messages: [
+            {
+                role: 'system',
+                content: `You are a smart assistant that helps organize emails in college id into categories. Given a category name, generate at least 10 keywords and sender matches without @domain that can be used to filter emails using an "isPresent" function on the email's title and body.
+    
+        Return the result as a single JavaScript object with this exact format:
+        {
+            name: 'CATEGORY_NAME',
+            keywords: ['keyword1', 'keyword2'],
+            senderMatch: ['sender1', 'sender2']
+        }
+        
+        Do not include any explanations or extra text. Only output the object in the exact format.`,
+            },
+            {
+                role: 'user',
+                content: userInput, // This is the category name like "Sports" or "Finance"
+            },
+        ],
+        model: 'llama3-70b-8192',
+    });
+}
+
+const AddCategoryModal = ({
+    setVisible,
+}: {
+    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+    const [customCategoryName, setCustomCategoryName] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleGroqApiCall = async () => {
+        if (!customCategoryName.trim()) {
+            setVisible(false);
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const chatCompletion =
+                await getGroqChatCompletion(customCategoryName);
+            const rawResponse =
+                chatCompletion.choices[0]?.message?.content || '';
+            const cleaned = rawResponse
+                .replace(/([a-zA-Z0-9_]+):/g, '"$1":') // wrap keys with quotes
+                .replace(/'/g, '"'); // replace single quotes with double quotes
+
+            console.log('Cleaned JSON:', cleaned);
+
+            const { addCategory } = useStore.getState();
+            const parsedCategory = JSON.parse(cleaned);
+            await addCategory(parsedCategory);
+        } catch (error: any) {
+            alert(`Error! ${error.message}`);
+        } finally {
+            setIsLoading(false);
+            setVisible(false);
+        }
+    };
+
+    return (
+        <View className="absolute inset-0 z-10 items-center justify-center bg-licorice/90 p-4">
+            <View className="w-full flex-row items-center overflow-hidden rounded-full border border-glass bg-licorice shadow-neon-glow">
+                <TextInput
+                    className="flex-1 px-4 font-psemibold text-xl text-white"
+                    value={customCategoryName}
+                    onChangeText={setCustomCategoryName}
+                />
+                <CustomButton
+                    title="Add"
+                    icon={
+                        <AntDesign name="pluscircle" size={24} color="white" />
+                    }
+                    handlePress={handleGroqApiCall}
+                    isLoading={isLoading}
+                    containerStyles="rounded-none border-0 border-l"
+                />
+            </View>
+        </View>
+    );
+};

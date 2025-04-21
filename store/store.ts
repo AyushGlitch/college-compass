@@ -81,12 +81,20 @@ export const useStore = create<EmailState & EmailCategoryStore>((set, get) => ({
     },
 
     addCategory: async (cat) => {
-        set((prev) => ({ categories: [...prev.categories, cat] }));
+        set((prev) => ({
+            categories: [
+                ...prev.categories,
+                {
+                    ...cat,
+                    name: cat.name.toUpperCase(),
+                },
+            ],
+        }));
 
         await db
             .insert(emailCategories)
             .values({
-                name: cat.name,
+                name: cat.name.toUpperCase(),
                 keywords: JSON.stringify(cat.keywords),
                 senderMatch: JSON.stringify(cat.senderMatch),
                 labelMatch: JSON.stringify(cat.labelMatch),
