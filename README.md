@@ -2,6 +2,12 @@
 
 A comprehensive mobile application designed to streamline academic and campus management tasks for college students. College Compass serves as a one-stop solution for managing emails, attendance, hostel arrangements, and collaborative study materials.
 
+## 📄 Project Presentation
+[![View Slides](https://img.shields.io/badge/Google%20Slides-View-yellow?logo=google-slides&logoColor=white)](https://docs.google.com/presentation/d/18jsDDPSOgZAhFhkYGRSuEUjHkZkU74CoOoLCPisHdjo/edit?usp=sharing)
+
+## 📝 Project Report
+[![View Report](https://img.shields.io/badge/Google%20Drive-View%20Report-blue?logo=google-drive&logoColor=white)](https://drive.google.com/file/d/1XelsW98ii_aGWW75wkAWOxf-uLmMjHZY/view?usp=drive_link)
+
 ## Features
 
 ### 🔤 Email Sorter
@@ -65,11 +71,3 @@ This technology stack was chosen to provide:
 
 ## Project Timeline
 ![Project Timeline](image.png)
-
-## 📄 Project Presentation
-[![View Slides](https://img.shields.io/badge/Google%20Slides-View-yellow?logo=google-slides&logoColor=white)](https://docs.google.com/presentation/d/18jsDDPSOgZAhFhkYGRSuEUjHkZkU74CoOoLCPisHdjo/edit?usp=sharing)
-
-
-## 📝 Project Report
-[![View Report](https://img.shields.io/badge/Google%20Drive-View%20Report-blue?logo=google-drive&logoColor=white)](https://drive.google.com/file/d/1XelsW98ii_aGWW75wkAWOxf-uLmMjHZY/view?usp=drive_link)
-
