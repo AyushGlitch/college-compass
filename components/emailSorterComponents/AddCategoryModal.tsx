@@ -24,7 +24,7 @@ async function getGroqChatCompletion(userInput: string) {
             senderMatch: ['sender1', 'sender2']
         }
         
-        Do not include any explanations or extra text. Only output the object in the exact format.`,
+        Do not include any explanations or extra text. Only output the object in the exact format. The CATEGORY_NAME must be included in both keywords and senderMatch.`,
             },
             {
                 role: 'user',
@@ -74,7 +74,7 @@ const AddCategoryModal = ({
     };
 
     return (
-        <View className="absolute inset-0 z-50 items-center justify-between bg-licorice/95 p-4 py-24">
+        <View className="absolute inset-0 z-50 items-center justify-between bg-licorice/95 p-4 py-56">
             <View className="w-full flex-row items-center overflow-hidden rounded-full border border-glass bg-licorice shadow-neon-glow">
                 <TextInput
                     className="flex-1 px-4 text-xl text-white placeholder:text-white"

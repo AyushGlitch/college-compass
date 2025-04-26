@@ -23,8 +23,7 @@ const EmailSorter = () => {
     const [error, setError] = useState<string | null>(null);
     const [accessToken, setAccessToken] = useState<string>('');
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-    const [selectedCategory, setSelectedCategory] =
-        useState<string>('IMPORTANT');
+    const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
 
     // const { categories } = useStore();
     // console.log(JSON.stringify(categories, null, 2));
@@ -36,6 +35,8 @@ const EmailSorter = () => {
         try {
             await removeCategory(selectedCategory);
             alert('Deleted category: ' + selectedCategory);
+            setSelectedCategory('ALL');
+            getEmails(true);
         } catch (error: any) {
             alert('Error! ' + error.message);
         }

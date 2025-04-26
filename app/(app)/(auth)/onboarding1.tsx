@@ -33,7 +33,7 @@ const OnboardingScreen = () => {
     }, []);
 
     const navigateToNextPage = () => {
-        router.push('/(app)/onboarding2');
+        router.push('/(app)/(auth)/onboarding2');
     };
 
     const panGesture = Gesture.Pan().onEnd((e) => {
@@ -74,11 +74,11 @@ const OnboardingScreen = () => {
                     <View className="flex-1 items-center justify-center gap-2">
                         {/* App Name Animation */}
                         <Animated.View style={appNameStyle}>
-                            <Text className="text-aquamarine text-center font-pregular text-2xl opacity-80">
+                            <Text className="text-center font-pregular text-2xl text-aquamarine opacity-80">
                                 Welcome to
                             </Text>
                             <Text
-                                className="text-aquamarine relative font-pblack text-5xl"
+                                className="relative font-pblack text-5xl text-aquamarine"
                                 style={{
                                     textShadowColor: '#99EDCC',
                                     textShadowOffset: {
@@ -105,7 +105,7 @@ const OnboardingScreen = () => {
                             title="Continue"
                             containerStyles="w-full active:scale-95"
                             handlePress={() =>
-                                router.push('/(app)/onboarding2')
+                                router.push('/(app)/(auth)/onboarding2')
                             }
                         />
                     </Animated.View>

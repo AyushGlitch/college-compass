@@ -45,7 +45,7 @@ const OnboardingScreen2 = () => {
 
     // Handle navigation with swipe gestures
     const navigateToNextPage = () => {
-        router.push('/(app)/onboarding3');
+        router.push('/(app)/(auth)/onboarding3');
     };
 
     const navigateToPreviousPage = () => {
@@ -85,7 +85,7 @@ const OnboardingScreen2 = () => {
                         {/* Animated Title */}
                         <Animated.Text
                             style={titleStyle}
-                            className="text-aquamarine font-pbold text-3xl">
+                            className="font-pbold text-3xl text-aquamarine">
                             Get access to awesome features!
                         </Animated.Text>
 
@@ -101,7 +101,10 @@ const OnboardingScreen2 = () => {
                                 ✅ Hostel Leave Mailer
                             </Text>
                             <Text className="font-pregular text-lg text-white">
-                                ✅ College Layout Navigator
+                                ✅ PYQs Database
+                            </Text>
+                            <Text className="font-pregular text-lg text-white">
+                                ✅ Collaborative Notes
                             </Text>
                         </View>
                     </View>
@@ -112,7 +115,7 @@ const OnboardingScreen2 = () => {
                             title="Continue"
                             containerStyles="w-full active:scale-95"
                             handlePress={() =>
-                                router.push('/(app)/onboarding3')
+                                router.push('/(app)/(auth)/onboarding3')
                             }
                         />
                     </Animated.View>
